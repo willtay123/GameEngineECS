@@ -4,14 +4,14 @@
 #include <typeindex>
 #include <string>
 
-class IComponent;
-
 using std::map;
 using std::make_pair;
 using std::type_index;
 using std::string;
 
 namespace EngineECS {
+	class IComponent;
+
 	class ComponentManager {
 	private:
 		static int idCount;

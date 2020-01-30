@@ -1,40 +1,39 @@
 #include "MessageManager.h"
 
+using namespace EngineECS;
 
-namespace EngineECS {
-	vector<IMessage*>* MessageManager::_toBroadcast;
+vector<IMessage*>* MessageManager::_toBroadcast;
 
-	void MessageManager::ClearBroadcasts() {
-		// Delete all messages in _toBroadcast
+void MessageManager::ClearBroadcasts() {
+	// Delete all messages in _toBroadcast
+	for (IMessage* message : (*_toBroadcast)) {
+		delete message;
+	}
+
+	// Clear _toBroadcast
+	_toBroadcast->clear();
+}
+
+void MessageManager::Initialise() {
+	_toBroadcast = new vector<IMessage*>();
+}
+
+void MessageManager::AddBroadcast(IMessage* message) {
+	_toBroadcast->push_back(message);
+}
+
+void MessageManager::Broadcast() {
+	const vector<Entity*>* entities = EntityManager::GetEntities();
+
+	for (Entity* entity : (*entities)) {
 		for (IMessage* message : (*_toBroadcast)) {
-			delete message;
+			entity->Message(message);
 		}
-
-		// Clear _toBroadcast
-		_toBroadcast->clear();
 	}
 
-	void MessageManager::Initialise() {
-		_toBroadcast = new vector<IMessage*>();
-	}
+	ClearBroadcasts();
+}
 
-	void MessageManager::AddBroadcast(IMessage* message) {
-		_toBroadcast->push_back(message);
-	}
+void MessageManager::End() {
 
-	void MessageManager::Broadcast() {
-		const vector<Entity*>* entities = EntityManager::GetEntities();
-
-		for (Entity* entity : (*entities)) {
-			for (IMessage* message : (*_toBroadcast)) {
-				entity->Message(message);
-			}
-		}
-
-		ClearBroadcasts();
-	}
-
-	void MessageManager::End() {
-
-	}
 }
