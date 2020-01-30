@@ -70,7 +70,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir);$(IncludePath)</IncludePath>
     <LibraryPath>..\Engine Build;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -83,7 +83,8 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>..\Engine Build;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\External Resources\libs;..\Engine Build;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glfw3dll.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -128,10 +129,48 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Assets\Shaders\ShaderGLSL.cpp" />
+    <ClCompile Include="Buffers\GLBufferID.cpp" />
+    <ClCompile Include="Components\ComponentBoxCollider.cpp" />
+    <ClCompile Include="Components\ComponentModelGL.cpp" />
+    <ClCompile Include="Components\ComponentPhysics.cpp" />
+    <ClCompile Include="Components\ComponentScore.cpp" />
+    <ClCompile Include="Components\ComponentSphereCollider.cpp" />
+    <ClCompile Include="glad.c" />
+    <ClCompile Include="Implementations\CollisionDetector.cpp" />
+    <ClCompile Include="Implementations\CollisionManifold.cpp" />
+    <ClCompile Include="Implementations\CollisionResponder.cpp" />
+    <ClCompile Include="Implementations\OpenGLModel.cpp" />
+    <ClCompile Include="Implementations\RendererGL.cpp" />
+    <ClCompile Include="Implementations\ResourceLoader.cpp" />
+    <ClCompile Include="IO\Keyboard.cpp" />
+    <ClCompile Include="IO\Mouse.cpp" />
+    <ClCompile Include="Scenes\EndScene.cpp" />
+    <ClCompile Include="Scenes\TestScene.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Systems\SystemPhysics.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Assets\Shaders\ShaderGLSL.h" />
+    <ClInclude Include="Buffers\GLBufferID.h" />
+    <ClInclude Include="Components\BasicGL.h" />
+    <ClInclude Include="Components\ComponentBoxCollider.h" />
+    <ClInclude Include="Components\ComponentModelGL.h" />
+    <ClInclude Include="Components\ComponentPhysics.h" />
+    <ClInclude Include="Components\ComponentScore.h" />
+    <ClInclude Include="Components\ComponentSphereCollider.h" />
     <ClInclude Include="Externals.h" />
+    <ClInclude Include="Implementations\CollisionDetector.h" />
+    <ClInclude Include="Implementations\CollisionManifold.h" />
+    <ClInclude Include="Implementations\CollisionResponder.h" />
+    <ClInclude Include="Implementations\OpenGLModel.h" />
+    <ClInclude Include="Implementations\RendererGL.h" />
+    <ClInclude Include="Implementations\ResourceLoader.h" />
+    <ClInclude Include="IO\Keyboard.h" />
+    <ClInclude Include="IO\Mouse.h" />
+    <ClInclude Include="Scenes\EndScene.h" />
+    <ClInclude Include="Scenes\TestScene.h" />
+    <ClInclude Include="Systems\SystemPhysics.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

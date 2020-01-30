@@ -154,6 +154,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Components\ComponentCollider.h" />
+    <ClInclude Include="Components\ComponentTexture.h" />
     <ClInclude Include="Components\ComponentTransform.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="framework.h" />
@@ -187,6 +189,8 @@
     <ClInclude Include="Scenes\DefaultScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Components\ComponentCollider.cpp" />
+    <ClCompile Include="Components\ComponentTexture.cpp" />
     <ClCompile Include="Components\ComponentTransform.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Managers\CollisionManager.cpp" />

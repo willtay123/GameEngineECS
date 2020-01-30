@@ -1,6 +1,5 @@
 #pragma once
 
-#include "pch.h"
 #include <vector>
 #include <GLM/glm/vec3.hpp>
 #include <GLM/glm/vec4.hpp>

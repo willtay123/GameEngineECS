@@ -76,3 +76,8 @@ Debug/
 Engine/Debug/
 /src/External Resources/GLM/doc
 /src/External Resources/GLFW/docs/html
+
+#Exceptions
+!glfw3.lib
+!glfw3dll.lib
+!SOIL.lib
