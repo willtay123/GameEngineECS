@@ -1,36 +1,38 @@
 #pragma once
 
+#include "pch.h"
+#include "framework.h"
+
 #include <iostream>
 #include <time.h>
-
-#include "IO\Mouse.h"
-#include "IO\Keyboard.h"
 
 #include "Managers/Managers.h"
 #include "Interfaces/IRenderer.h"
 #include "Interfaces/IShader.h"
 #include "Interfaces/IResourceLoader.h"
 
-class Engine {
-private:
-	bool initialised;
+namespace EngineECS {
+	class Engine {
+	private:
+		bool initialised;
 
-	static double dt;
-	clock_t now;
-	clock_t lastTime;
+		static double dt;
+		clock_t now;
+		clock_t lastTime;
 
-	SceneManager* sceneManager;
+		SceneManager* sceneManager;
 
-public:
-	static double GetDT();
+	public:
+		static double GetDT();
 
-	Engine();
-	~Engine();
+		Engine();
+		~Engine();
 
-	bool Initialise(IRenderer* renderer, IShader* shader, IResourceLoader* resourceLoader, ICollisionDetector* collisionDetector, ICollisionResponder* collisionResponder);
-	void SetInitialScene(const char* sceneID, IScene* scene);
+		bool Initialise(IRenderer* renderer, IShader* shader, IResourceLoader* resourceLoader, ICollisionDetector* collisionDetector, ICollisionResponder* collisionResponder);
+		void SetInitialScene(const char* sceneID, IScene* scene);
 
-	void Update();
-	void Render();
-	static void End();
-};
+		void Update();
+		void Render();
+		static void End();
+	};
+}

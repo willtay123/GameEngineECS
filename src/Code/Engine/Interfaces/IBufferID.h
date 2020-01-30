@@ -1,10 +1,11 @@
 #pragma once
 
 
+namespace EngineECS {
+	class IBufferID {
+	private:
 
-class IBufferID {
-private:
-
-public:
-	virtual const char* GetName() = 0;
-};
+	public:
+		virtual const char* GetName() = 0;
+	};
+}

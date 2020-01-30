@@ -7,18 +7,19 @@
 
 using std::vector;
 
+namespace EngineECS {
+	class MessageManager {
+	private:
+		static vector<IMessage*>* _toBroadcast;
 
-class MessageManager {
-private:
-	static vector<IMessage*>* _toBroadcast;
+		static void ClearBroadcasts();
 
-	static void ClearBroadcasts();
+	public:
+		static void Initialise();
 
-public:
-	static void Initialise();
+		static void AddBroadcast(IMessage* message);
+		static void Broadcast();
 
-	static void AddBroadcast(IMessage* message);
-	static void Broadcast();
-
-	static void End();
-};
+		static void End();
+	};
+}

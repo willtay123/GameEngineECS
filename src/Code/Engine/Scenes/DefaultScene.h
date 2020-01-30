@@ -3,15 +3,17 @@
 #include <iostream>
 #include "Interfaces/IScene.h"
 
-class DefaultScene : public IScene {
-private:
+namespace EngineECS {
+	class DefaultScene : public IScene {
+	private:
 
-public:
-	DefaultScene();
-	~DefaultScene();
+	public:
+		DefaultScene();
+		~DefaultScene();
 
-	void Initialise();
-	void Update(double dt);
-	void Render();
-	void Close();
-};
+		void Initialise();
+		void Update(double dt);
+		void Render();
+		void Close();
+	};
+}

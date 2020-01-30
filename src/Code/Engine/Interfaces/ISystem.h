@@ -7,10 +7,12 @@
 using std::string;
 using std::vector;
 
-class ISystem {
-public:
-	virtual const string* GetName() = 0;
+namespace EngineECS {
+	class ISystem {
+	public:
+		virtual const string* GetName() = 0;
 
-	virtual void GiveEntities(vector<Entity*>* entityList) = 0;
-	virtual void OnAction(double deltaTime) = 0;
-};
+		virtual void GiveEntities(vector<Entity*>* entityList) = 0;
+		virtual void OnAction(double deltaTime) = 0;
+	};
+}

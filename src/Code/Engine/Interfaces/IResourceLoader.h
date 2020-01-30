@@ -5,11 +5,13 @@
 #include "Interfaces/IResource.h"
 
 
-class IResourceLoader {
-private:
+namespace EngineECS {
+	class IResourceLoader {
+	private:
 
-public:
-	virtual Texture* LoadTexture(const char* filepath) = 0;
-	virtual Geometry* LoadGeometry(const char* filepath) = 0;
-	virtual IResource* LoadResource(const char* filepath) = 0;
-};
+	public:
+		virtual Texture* LoadTexture(const char* filepath) = 0;
+		virtual Geometry* LoadGeometry(const char* filepath) = 0;
+		virtual IResource* LoadResource(const char* filepath) = 0;
+	};
+}

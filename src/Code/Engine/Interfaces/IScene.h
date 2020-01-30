@@ -3,21 +3,23 @@
 
 using namespace std;
 
-class IScene {
-private:
+namespace EngineECS {
+	class IScene {
+	private:
 
-protected:
-	string _name;
+	protected:
+		string _name;
 
-public:
-	IScene();
+	public:
+		IScene();
 
-	const string* GetName() const;
+		const string* GetName() const;
 
-	virtual void Initialise() = 0;
-	
-	virtual void Render() = 0;
-	virtual void Update(double dt) = 0;
-	
-	virtual void Close() = 0;
-};
+		virtual void Initialise() = 0;
+
+		virtual void Render() = 0;
+		virtual void Update(double dt) = 0;
+
+		virtual void Close() = 0;
+	};
+}

@@ -4,8 +4,9 @@
 
 using std::string;
 
-class IMessage {
-
-private:
-	virtual const string* GetSenderID() const = 0;
-};
+namespace EngineECS {
+	class IMessage {
+	private:
+		virtual const string* GetSenderID() const = 0;
+	};
+}

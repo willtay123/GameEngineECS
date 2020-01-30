@@ -1,10 +1,11 @@
 #pragma once
 
 
+namespace EngineECS {
+	class IResource {
+	private:
 
-class IResource {
-private:
+	public:
 
-public:
-
-};
+	};
+}

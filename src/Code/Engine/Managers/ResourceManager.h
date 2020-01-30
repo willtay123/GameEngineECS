@@ -14,25 +14,27 @@ using std::make_pair;
 using std::cout;
 using std::endl;
 
-class ResourceManager {
-private:
-	static map<const char*, Texture*> _textureMap;
-	static map<const char*, Geometry*> _modelMap;
-	static map<const char*, IResource*> _resourceMap;
+namespace EngineECS {
+	class ResourceManager {
+	private:
+		static map<const char*, Texture*> _textureMap;
+		static map<const char*, Geometry*> _modelMap;
+		static map<const char*, IResource*> _resourceMap;
 
-	static IResourceLoader* _resourceLoader;
+		static IResourceLoader* _resourceLoader;
 
-public:
-	static void Initialise(IResourceLoader* resourceLoader);
+	public:
+		static void Initialise(IResourceLoader* resourceLoader);
 
-	static Texture* LoadTexture(const char* filepath);
-	static void ClearTextures();
+		static Texture* LoadTexture(const char* filepath);
+		static void ClearTextures();
 
-	static Geometry* LoadGeometry(const char* filepath);
-	static void ClearModels();
+		static Geometry* LoadGeometry(const char* filepath);
+		static void ClearModels();
 
-	static IResource* LoadResource(const char* filepath);
-	static void ClearResources();
+		static IResource* LoadResource(const char* filepath);
+		static void ClearResources();
 
-	static void End();
-};
+		static void End();
+	};
+}

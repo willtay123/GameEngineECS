@@ -7,13 +7,15 @@
 
 using std::string;
 
-class IComponent {
-protected:
-	int _componentType;
+namespace EngineECS {
+	class IComponent {
+	protected:
+		int _componentType;
 
-public:
-	virtual IComponent* Clone() = 0;
+	public:
+		virtual IComponent* Clone() = 0;
 
-	virtual int ComponentType() const = 0;
-	virtual void Message(IMessage* message) = 0;
-};
+		virtual int ComponentType() const = 0;
+		virtual void Message(IMessage* message) = 0;
+	};
+}
