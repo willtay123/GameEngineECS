@@ -74,3 +74,5 @@ UpgradeLog*.htm
 .vs/
 Debug/
 Engine/Debug/
+/src/External Resources/GLM/doc
+/src/External Resources/GLFW/docs/html
