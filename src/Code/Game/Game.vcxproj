@@ -79,7 +79,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\External Resources;..\Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\External Resources\pugixml;..\..\External Resources;..\Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\External Resources\pugixml\pugixml.cpp" />
     <ClCompile Include="Assets\Shaders\ShaderGLSL.cpp" />
     <ClCompile Include="Buffers\GLBufferID.cpp" />
     <ClCompile Include="Components\ComponentBoxCollider.cpp" />
@@ -143,6 +144,7 @@
     <ClCompile Include="Implementations\OpenGLModel.cpp" />
     <ClCompile Include="Implementations\RendererGL.cpp" />
     <ClCompile Include="Implementations\ResourceLoader.cpp" />
+    <ClCompile Include="IO\EntityFactory.cpp" />
     <ClCompile Include="IO\Keyboard.cpp" />
     <ClCompile Include="IO\Mouse.cpp" />
     <ClCompile Include="Scenes\EndScene.cpp" />
@@ -166,6 +168,7 @@
     <ClInclude Include="Implementations\OpenGLModel.h" />
     <ClInclude Include="Implementations\RendererGL.h" />
     <ClInclude Include="Implementations\ResourceLoader.h" />
+    <ClInclude Include="IO\EntityFactory.h" />
     <ClInclude Include="IO\Keyboard.h" />
     <ClInclude Include="IO\Mouse.h" />
     <ClInclude Include="Scenes\EndScene.h" />

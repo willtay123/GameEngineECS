@@ -9,6 +9,7 @@
 #include "Implementations/ResourceLoader.h"
 #include "Scenes/TestScene.h"
 #include "Assets/Shaders/ShaderGLSL.h"
+#include <IO\EntityFactory.h>
 
 using namespace std;
 using namespace EngineECS;
@@ -23,6 +24,9 @@ int main(int argc, char* argv[]) {
 	ICollisionResponder* collisionResponder = new CollisionResponder();
 	Engine engine;
 	bool engineInitialised = engine.Initialise(renderer, shader, resourceLoader, collisionDetector, collisionResponder);
+
+	string filepath = "D:/Projects/GameEngineECS/src/Code/Game/IO/entities.txt";
+	EntityFactory::LoadFromFile("test", filepath);
 
 	if (engineInitialised) {
 		IScene* scene = new TestScene();
