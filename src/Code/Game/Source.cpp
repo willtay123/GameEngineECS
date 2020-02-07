@@ -25,9 +25,6 @@ int main(int argc, char* argv[]) {
 	Engine engine;
 	bool engineInitialised = engine.Initialise(renderer, shader, resourceLoader, collisionDetector, collisionResponder);
 
-	string filepath = "D:/Projects/GameEngineECS/src/Code/Game/IO/entities.txt";
-	EntityFactory::LoadFromFile("test", filepath);
-
 	if (engineInitialised) {
 		IScene* scene = new TestScene();
 		engine.SetInitialScene("game", scene);

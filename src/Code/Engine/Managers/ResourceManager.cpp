@@ -3,9 +3,9 @@
 using namespace EngineECS;
 
 
-map<const char*, Texture*> ResourceManager::_textureMap;
-map<const char*, Geometry*> ResourceManager::_modelMap;
-map<const char*, IResource*> ResourceManager::_resourceMap;
+map<string, Texture*> ResourceManager::_textureMap;
+map<string, Geometry*> ResourceManager::_modelMap;
+map<string, IResource*> ResourceManager::_resourceMap;
 
 IResourceLoader* ResourceManager::_resourceLoader;
 
@@ -13,7 +13,7 @@ void ResourceManager::Initialise(IResourceLoader* resourceLoader) {
 	_resourceLoader = resourceLoader;
 }
 
-Texture* ResourceManager::LoadTexture(const char* filepath) {
+Texture* ResourceManager::LoadTexture(string filepath) {
 	std::cout << "Loading texture: " << filepath << std::endl;
 
 	Texture* texture;
@@ -39,7 +39,7 @@ void ResourceManager::ClearTextures() {
 	cout << "Clearing: _textureMap" << endl;
 
 	// Delete all contents
-	for (map<const char*, Texture*>::iterator itr = _textureMap.begin();
+	for (map<string, Texture*>::iterator itr = _textureMap.begin();
 		itr != _textureMap.end();
 		itr++)
 	{
@@ -51,7 +51,7 @@ void ResourceManager::ClearTextures() {
 	cout << "new _textureMap size: " << _textureMap.size() << endl;
 }
 
-Geometry* ResourceManager::LoadGeometry(const char* filepath) {
+Geometry* ResourceManager::LoadGeometry(string filepath) {
 	cout << "Loading Geometry" << endl;
 
 	Geometry* model;
@@ -79,7 +79,7 @@ void ResourceManager::ClearModels() {
 	cout << "Clearing: _modelMap" << endl;
 
 	// Delete all contents
-	for (map<const char*, Geometry*>::iterator itr = _modelMap.begin();
+	for (map<string, Geometry*>::iterator itr = _modelMap.begin();
 		itr != _modelMap.end();
 		itr++)
 	{
@@ -91,7 +91,7 @@ void ResourceManager::ClearModels() {
 	cout << "new _modelMap size: " << _modelMap.size() << endl;
 }
 
-IResource* ResourceManager::LoadResource(const char* filepath) {
+IResource* ResourceManager::LoadResource(string filepath) {
 	std::cout << "Loading resource: " << filepath << std::endl;
 
 	IResource* resource;
@@ -117,7 +117,7 @@ void ResourceManager::ClearResources() {
 	cout << "Clearing: _resourceMap" << endl;
 
 	// Delete all contents
-	for (map<const char*, IResource*>::iterator itr = _resourceMap.begin();
+	for (map<string, IResource*>::iterator itr = _resourceMap.begin();
 		itr != _resourceMap.end();
 		itr++)
 	{

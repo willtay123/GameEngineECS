@@ -29,7 +29,7 @@ void EndScene::Initialise() {
 	entity->AddComponent(comp);
 	comp = new ComponentTexture("Externals/Assets/Textures/End.png");
 	entity->AddComponent(comp);
-	EntityManager::AddEntity(_name.c_str(), entity);
+	EntityManager::AddEntity(_name, entity);
 }
 
 void EndScene::Update(double dt) {
@@ -39,7 +39,7 @@ void EndScene::Update(double dt) {
 }
 
 void EndScene::Render() {
-	const vector<Entity*>* entities = EntityManager::GetEntities(_name.c_str());
+	const vector<Entity*>* entities = EntityManager::GetEntities(_name);
 	RenderManager::Draw(_camera, entities);
 }
 

@@ -9,7 +9,7 @@ ComponentTexture::ComponentTexture() :
 	_componentType = ComponentManager::GenerateIDByString("Texture");
 }
 
-ComponentTexture::ComponentTexture(const char* filepath) {
+ComponentTexture::ComponentTexture(string filepath) {
 	_texture = ResourceManager::LoadTexture(filepath);
 	_componentType = ComponentManager::GenerateIDByString("Texture");
 }

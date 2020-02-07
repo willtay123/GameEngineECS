@@ -1,4 +1,5 @@
 #include "TestScene.h"
+#include <IO\EntityFactory.h>
 
 
 
@@ -28,23 +29,26 @@ void TestScene::Initialise() {
 	// Entities: Item
 	GenerateItems(10);
 
+	string filepath = "D:/Projects/GameEngineECS/src/Code/Game/IO/entities.xml";
+	EntityFactory::LoadFromFile("game", filepath);
+
 	// Entity: player
-	Entity* playerEntity = new Entity(&string("player"));
-	IComponent* comp = new ComponentTransform(0, 0, 0,
-		0, 0.0f, 0,
-		1, 0.5f, 1);
-	playerEntity->AddComponent(comp);
-	comp = new ComponentModelGL("Assets/Models/cube.obj");
-	playerEntity->AddComponent(comp);
-	comp = new ComponentTexture("Assets/Textures/testImage.png");
-	playerEntity->AddComponent(comp);
-	comp = new ComponentPhysics(3);
-	playerEntity->AddComponent(comp);
-	comp = new ComponentSphereCollider(0, 0, 0, 0.5);
-	playerEntity->AddComponent(comp);
-	comp = new ComponentScore();
-	playerEntity->AddComponent(comp);
-	EntityManager::AddEntity("game", playerEntity);
+	//Entity* playerEntity = new Entity(&string("player"));
+	//IComponent* comp = new ComponentTransform(0, 0, 0,
+	//	0, 0.0f, 0,
+	//	1, 0.5f, 1);
+	//playerEntity->AddComponent(comp);
+	//comp = new ComponentModelGL("Assets/Models/cube.obj");
+	//playerEntity->AddComponent(comp);
+	//comp = new ComponentTexture("Assets/Textures/testImage.png");
+	//playerEntity->AddComponent(comp);
+	//comp = new ComponentPhysics(3);
+	//playerEntity->AddComponent(comp);
+	//comp = new ComponentSphereCollider(0, 0, 0, 0.5);
+	//playerEntity->AddComponent(comp);
+	//comp = new ComponentScore();
+	//playerEntity->AddComponent(comp);
+	//EntityManager::AddEntity("game", playerEntity);
 
 	// Create Systems
 	ISystem* system;
@@ -123,17 +127,17 @@ void TestScene::Update(double dt) {
 	// Clean Collisions
 	CollisionManager::ClearCollisions();
 
-	if (_timeSinceStart > 10) {
-		_timeSinceStart = -1;
-		SceneManager* sm = SceneManager::GetInstance();
-		if (sm->HasScene("End Screen")) {
-			sm->SetScene("End Screen");
-		}
-		else {
-			IScene* scene = new EndScene();
-			sm->SetScene("End Screen", scene);
-		}
-	}
+	//if (_timeSinceStart > 10) {
+	//	_timeSinceStart = -1;
+	//	SceneManager* sm = SceneManager::GetInstance();
+	//	if (sm->HasScene("End Screen")) {
+	//		sm->SetScene("End Screen");
+	//	}
+	//	else {
+	//		IScene* scene = new EndScene();
+	//		sm->SetScene("End Screen", scene);
+	//	}
+	//}
 }
 
 void TestScene::Render() {

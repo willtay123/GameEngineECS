@@ -12,7 +12,7 @@ namespace EngineECS {
 
 	public:
 		ComponentTexture();
-		ComponentTexture(const char* filepath);
+		ComponentTexture(string filepath);
 		ComponentTexture(Texture* texture);
 		ComponentTexture(const ComponentTexture& rhs);
 		~ComponentTexture();

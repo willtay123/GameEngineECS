@@ -2,7 +2,7 @@
 
 
 
-Texture* ResourceLoader::LoadTexture(const char* filepath) {
+Texture* ResourceLoader::LoadTexture(string filepath) {
 	cout << "Loading a texture" << endl;
 
 	Texture* texture;
@@ -12,7 +12,7 @@ Texture* ResourceLoader::LoadTexture(const char* filepath) {
 
 	// Use SOIL to load an image file directly as a new OpenGL texture
 	textureID = SOIL_load_OGL_texture(
-		filepath,
+		filepath.c_str(),
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_INVERT_Y | SOIL_FLAG_MULTIPLY_ALPHA
@@ -44,15 +44,15 @@ Texture* ResourceLoader::LoadTexture(const char* filepath) {
 	std::cout << "Texture ID of loaded texure: " << textureID << std::endl;
 }
 
-Geometry* ResourceLoader::LoadGeometry(const char* filepath) {
+Geometry* ResourceLoader::LoadGeometry(string filepath) {
 	return LoadOBJ(filepath);
 }
 
-IResource* ResourceLoader::LoadResource(const char* filepath) {
+IResource* ResourceLoader::LoadResource(string filepath) {
 	return NULL;
 }
 
-Geometry* ResourceLoader::LoadOBJ(const char* filepath) {
+Geometry* ResourceLoader::LoadOBJ(string filepath) {
 	Geometry* model;
 
 	cout << "Loading Geometry from OBJ" << endl;

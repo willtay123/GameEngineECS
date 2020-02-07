@@ -3,6 +3,7 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <string>
 
 #include "Interfaces/IResourceLoader.h"
 #include "Interfaces/IResource.h"
@@ -13,26 +14,27 @@ using std::map;
 using std::make_pair;
 using std::cout;
 using std::endl;
+using std::string;
 
 namespace EngineECS {
 	class ResourceManager {
 	private:
-		static map<const char*, Texture*> _textureMap;
-		static map<const char*, Geometry*> _modelMap;
-		static map<const char*, IResource*> _resourceMap;
+		static map<string, Texture*> _textureMap;
+		static map<string, Geometry*> _modelMap;
+		static map<string, IResource*> _resourceMap;
 
 		static IResourceLoader* _resourceLoader;
 
 	public:
 		static void Initialise(IResourceLoader* resourceLoader);
 
-		static Texture* LoadTexture(const char* filepath);
+		static Texture* LoadTexture(string filepath);
 		static void ClearTextures();
 
-		static Geometry* LoadGeometry(const char* filepath);
+		static Geometry* LoadGeometry(string filepath);
 		static void ClearModels();
 
-		static IResource* LoadResource(const char* filepath);
+		static IResource* LoadResource(string filepath);
 		static void ClearResources();
 
 		static void End();

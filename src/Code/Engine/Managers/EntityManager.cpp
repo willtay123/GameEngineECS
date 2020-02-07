@@ -3,7 +3,7 @@
 using namespace EngineECS;
 
 
-map<const char*, vector<Entity*>*> EntityManager::_entityMap;
+map<string, vector<Entity*>*> EntityManager::_entityMap;
 vector<Entity*>* EntityManager::_currentEntityList;
 vector<ToRemove*>* EntityManager::_entitiesToRemove;
 
@@ -11,7 +11,7 @@ void EntityManager::Initialise() {
 	_entitiesToRemove = new vector<ToRemove*>();
 }
 
-void EntityManager::AddEntity(const char* id, Entity* entity) {
+void EntityManager::AddEntity(string id, Entity* entity) {
 	auto itr = _entityMap.find(id);
 	if (itr != _entityMap.end()) {
 		// Entity list match
@@ -30,7 +30,7 @@ void EntityManager::AddEntity(const char* id, Entity* entity) {
 	}
 }
 
-bool EntityManager::RemoveEntity(const char* mapID, string& entityID) {
+bool EntityManager::RemoveEntity(string mapID, string& entityID) {
 	ToRemove* remove = new ToRemove(mapID, entityID);
 	_entitiesToRemove->push_back(remove);
 	return true;
@@ -38,7 +38,7 @@ bool EntityManager::RemoveEntity(const char* mapID, string& entityID) {
 
 void EntityManager::EnactFinal() {
 	for (ToRemove* remove : *_entitiesToRemove) {
-		const char* mapID = remove->_mapID;
+		string mapID = remove->_mapID;
 		string entityID = remove->_entity;
 
 		auto itr = _entityMap.find(mapID);
@@ -69,7 +69,7 @@ void EntityManager::EnactFinal() {
 	_entitiesToRemove->clear();
 }
 
-void EntityManager::SetCurrentByID(const char* id) {
+void EntityManager::SetCurrentByID(string id) {
 	auto itr = _entityMap.find(id);
 	if (itr != _entityMap.end()) {
 		// Entity list match
@@ -81,7 +81,7 @@ const vector<Entity*>* EntityManager::GetEntities() {
 	return _currentEntityList;
 }
 
-const vector<Entity*>* EntityManager::GetEntities(const char* id) {
+const vector<Entity*>* EntityManager::GetEntities(string id) {
 	auto itr = _entityMap.find(id);
 	if (itr != _entityMap.end()) {
 		// Entity list match
@@ -91,7 +91,7 @@ const vector<Entity*>* EntityManager::GetEntities(const char* id) {
 	return NULL;
 }
 
-vector<Entity*>* EntityManager::GetEntitiesEditable(const char* id) {
+vector<Entity*>* EntityManager::GetEntitiesEditable(string id) {
 	auto itr = _entityMap.find(id);
 	if (itr != _entityMap.end()) {
 		// Entity list match
@@ -101,7 +101,7 @@ vector<Entity*>* EntityManager::GetEntitiesEditable(const char* id) {
 	return NULL;
 }
 
-vector<Entity*>& EntityManager::GetStartingWith(const char* mapID, string& startString) {
+vector<Entity*>& EntityManager::GetStartingWith(string mapID, string& startString) {
 	// List to return
 	vector<Entity*>* foundList = new vector<Entity*>();
 
@@ -122,7 +122,7 @@ vector<Entity*>& EntityManager::GetStartingWith(const char* mapID, string& start
 	return *foundList;
 }
 
-const Entity* EntityManager::GetEntity(const char* mapID, const char* entityID) {
+const Entity* EntityManager::GetEntity(string mapID, string entityID) {
 	const vector<Entity*>* entityList = GetEntities(mapID);
 	for (const Entity* entity : (*entityList)) {
 		const string* currentEntityID = entity->GetID();
@@ -133,7 +133,7 @@ const Entity* EntityManager::GetEntity(const char* mapID, const char* entityID) 
 	return NULL;
 }
 
-Entity* EntityManager::GetEntityEditable(const char* mapID, const char* entityID) {
+Entity* EntityManager::GetEntityEditable(string mapID, string entityID) {
 	vector<Entity*>* entityList = GetEntitiesEditable(mapID);
 	for (Entity* entity : (*entityList)) {
 		const string* currentEntityID = entity->GetID();

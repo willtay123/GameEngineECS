@@ -27,9 +27,9 @@ private:
 
 public:
 
-	Texture* LoadTexture(const char* filepath);
-	Geometry* LoadGeometry(const char* filepath);
-	IResource* LoadResource(const char* filepath);
+	Texture* LoadTexture(string filepath);
+	Geometry* LoadGeometry(string filepath);
+	IResource* LoadResource(string filepath);
 
-	Geometry* LoadOBJ(const char* filpath);
+	Geometry* LoadOBJ(string filpath);
 };

@@ -1,37 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entities>
 	<entity>
-		<name>Test1</name>
-		<components>
-			<transformComponent>
-				<position>
-					<x>1.0</x>
-					<y>2.0</y>
-					<z>3.0</z>
-					<w>4.0</w>
-				</position>
-				<rotation>
-					<x>1.0</x>
-					<y>2.0</y>
-					<z>3.0</z>
-				</rotation>
-				<scale>
-					<x>1.0</x>
-					<y>2.0</y>
-					<z>3.0</z>
-				</scale>
-			</transformComponent>
-		</components>
-	</entity>
-	<entity>
-		<name>Test2</name>
+		<name>player</name>
 		<components>
 			<transformComponent>
 				<position>
 					<x>0.0</x>
 					<y>0.0</y>
 					<z>0.0</z>
-					<w>0.0</w>
+					<w>1.0</w>
 				</position>
 				<rotation>
 					<x>0.0</x>
@@ -39,11 +16,31 @@
 					<z>0.0</z>
 				</rotation>
 				<scale>
+					<x>1.0</x>
+					<y>0.5</y>
+					<z>1.0</z>
+				</scale>
+			</transformComponent>
+			<modelGLComponent>
+				<filepath>Assets/Models/cube.obj</filepath>
+			</modelGLComponent>
+			<textureComponent>
+				<filepath>Assets/Textures/testImage.png</filepath>
+			</textureComponent>
+			<physicsComponent>
+				<gravity>3</gravity>
+			</physicsComponent>
+			<sphereColliderComponent>
+				<offset>
 					<x>0.0</x>
 					<y>0.0</y>
 					<z>0.0</z>
-				</scale>
-			</transformComponent>
+				</offset>
+				<radius>0.5</radius>
+			</sphereColliderComponent>
+			<scoreComponent>
+			</scoreComponent>
 		</components>
 	</entity>
+
 </entities>

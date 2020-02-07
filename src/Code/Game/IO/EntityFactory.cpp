@@ -1,4 +1,10 @@
 #include "EntityFactory.h"
+#include <Components\ComponentTransform.h>
+#include <Components\ComponentModelGL.h>
+#include <Components\ComponentTexture.h>
+#include <Components\ComponentPhysics.h>
+#include <Components\ComponentSphereCollider.h>
+#include <Components\ComponentScore.h>
 
 
 void EntityFactory::LoadFromFile(string sceneName, string filepath) {
@@ -28,9 +34,10 @@ Entity* EntityFactory::LoadEntity(xml_node& entityNode) {
 
 	Entity* entity = new Entity(&name);
 
-	for (int i = 0; i < components.size(); i++) {
+	for (size_t i = 0; i < components.size(); i++) {
 		entity->AddComponent(components[i]);
 	}
+	components.clear();
 	
 	return entity;
 }
@@ -42,6 +49,21 @@ IComponent* EntityFactory::LoadComponent(xml_node& componentNode) {
 	if (componentName == "transformComponent") {
 		component = LoadComponentTransform(componentNode);
 	}
+	else if (componentName == "modelGLComponent") {
+		component = LoadComponentModelGL(componentNode);
+	}
+	else if (componentName == "textureComponent") {
+		component = LoadComponentTexture(componentNode);
+	}
+	else if (componentName == "physicsComponent") {
+		component = LoadComponentPhysics(componentNode);
+	}
+	else if (componentName == "sphereColliderComponent") {
+		component = LoadComponentSphereCollider(componentNode);
+	}
+	else if (componentName == "scoreComponent") {
+		component = LoadComponentScore(componentNode);
+	}
 	else {
 		component = new ComponentTransform();
 	}
@@ -49,10 +71,32 @@ IComponent* EntityFactory::LoadComponent(xml_node& componentNode) {
 	return component;
 }
 
+string EntityFactory::LoadAttributeString(const xml_node& stringNode) {
+	string text = stringNode.text().as_string();
+	return text;
+}
+
+vec4 EntityFactory::LoadAttributeVec4(const xml_node& vecNode) {
+	float x = vecNode.child("x").text().as_float();
+	float y = vecNode.child("y").text().as_float();
+	float z = vecNode.child("z").text().as_float();
+	float w = vecNode.child("w").text().as_float();
+
+	return vec4(x, y, z, w);
+}
+
+vec3 EntityFactory::LoadAttributeVec3(const xml_node& vecNode) {
+	float x = vecNode.child("x").text().as_float();
+	float y = vecNode.child("y").text().as_float();
+	float z = vecNode.child("z").text().as_float();
+
+	return vec3(x, y, z);
+}
+
 IComponent* EntityFactory::LoadComponentTransform(xml_node& transformComponent) {
-	vec4 position = LoadVec4(transformComponent.child("position"));
-	vec3 rotation = LoadVec4(transformComponent.child("rotation"));
-	vec3 scale = LoadVec3(transformComponent.child("scale"));
+	vec4 position = LoadAttributeVec4(transformComponent.child("position"));
+	vec3 rotation = LoadAttributeVec4(transformComponent.child("rotation"));
+	vec3 scale = LoadAttributeVec3(transformComponent.child("scale"));
 
 	ComponentTransform* component;
 	component = new ComponentTransform();
@@ -63,19 +107,41 @@ IComponent* EntityFactory::LoadComponentTransform(xml_node& transformComponent) 
 	return component;
 }
 
-vec4 EntityFactory::LoadVec4(const xml_node& vecNode) {
-	float x = vecNode.child("x").text().as_float();
-	float y = vecNode.child("y").text().as_float();
-	float z = vecNode.child("z").text().as_float();
-	float w = vecNode.child("w").text().as_float();
+IComponent* EntityFactory::LoadComponentModelGL(xml_node& modelNode) {
+	string filepath = LoadAttributeString(modelNode.child("filepath"));
 
-	return vec4(x, y, z, w);
+	ComponentModelGL* component;
+	component = new ComponentModelGL(filepath.c_str());
+	return component;
 }
 
-vec3 EntityFactory::LoadVec3(const xml_node& vecNode) {
-	float x = vecNode.child("x").text().as_float();
-	float y = vecNode.child("y").text().as_float();
-	float z = vecNode.child("z").text().as_float();
+IComponent* EntityFactory::LoadComponentTexture(xml_node& textureNode) {
+	string filepath = LoadAttributeString(textureNode.child("filepath"));
 
-	return vec3(x, y, z);
+	ComponentTexture* component;
+	component = new ComponentTexture(filepath);
+	return component;
+}
+
+IComponent* EntityFactory::LoadComponentPhysics(xml_node& physicsNode) {
+	float gravity = physicsNode.child("gravity").text().as_float();
+
+	ComponentPhysics* component;
+	component = new ComponentPhysics(gravity);
+	return component;
+}
+
+IComponent* EntityFactory::LoadComponentSphereCollider(xml_node& colliderNode) {
+	vec3 offset = LoadAttributeVec3(colliderNode.child("offset"));
+	float radius = colliderNode.child("radius").text().as_float();
+
+	ComponentSphereCollider* component;
+	component = new ComponentSphereCollider(offset.x, offset.y, offset.z, radius);
+	return component;
+}
+
+IComponent* EntityFactory::LoadComponentScore(xml_node& scoreNode) {
+	ComponentScore* component;
+	component = new ComponentScore();
+	return component;
 }
