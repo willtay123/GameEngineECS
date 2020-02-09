@@ -2,6 +2,7 @@
 
 #include <string>
 #include <queue>
+#include <iostream>
 
 using std::string;
 using std::queue;
@@ -21,10 +22,12 @@ namespace EngineECS {
 
 	struct LogMessage {
 		LogLevel _logLevel;
+		unsigned int _index;
 		string _message;
 
-		LogMessage(LogLevel logLevel, string message) :
+		LogMessage(LogLevel logLevel, unsigned int index, string message) :
 			_logLevel(logLevel),
+			_index(index),
 			_message(message) {
 		}
 	};
@@ -36,8 +39,8 @@ namespace EngineECS {
 		~Logger();
 
 		LoggingDestination _loggingDestination;
-		int _logIndex; // Used to order the messages
-		int _maxLogCount;
+		unsigned int _logIndex; // Used to order the messages
+		unsigned int _maxLogCount;
 		queue<LogMessage> _logs;
 
 		void Log(LogMessage& logMessage);
@@ -45,6 +48,7 @@ namespace EngineECS {
 	public:
 		static Logger* GetInstance();
 
+		void WriteLog();
 		void LogInfo(string& message);
 		void LogWarning(string& message);
 		void LogError(string& message);
