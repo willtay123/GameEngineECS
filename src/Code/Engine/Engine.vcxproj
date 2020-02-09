@@ -172,6 +172,7 @@
     <ClInclude Include="Interfaces\IScene.h" />
     <ClInclude Include="Interfaces\IShader.h" />
     <ClInclude Include="Interfaces\ISystem.h" />
+    <ClInclude Include="Tools\Logger.h" />
     <ClInclude Include="Managers\CollisionManager.h" />
     <ClInclude Include="Managers\ComponentManager.h" />
     <ClInclude Include="Managers\EntityManager.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="Components\ComponentTexture.cpp" />
     <ClCompile Include="Components\ComponentTransform.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="Tools\Logger.cpp" />
     <ClCompile Include="Managers\CollisionManager.cpp" />
     <ClCompile Include="Managers\ComponentManager.cpp" />
     <ClCompile Include="Managers\EntityManager.cpp" />
