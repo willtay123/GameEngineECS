@@ -4,7 +4,8 @@ using namespace EngineECS;
 
 Logger* Logger::_instance = 0;
 
-Logger::Logger() {
+Logger::Logger() :
+	_loggingDestination(LogConsole) {
 
 }
 
