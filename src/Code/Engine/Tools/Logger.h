@@ -44,13 +44,18 @@ namespace EngineECS {
 		queue<LogMessage> _logs;
 
 		void Log(LogMessage& logMessage);
+		void WriteLog();
 
 	public:
 		static Logger* GetInstance();
 
-		void WriteLog();
+		void LogInfo(const char* message);
 		void LogInfo(string& message);
+
+		void LogWarning(const char* message);
 		void LogWarning(string& message);
+		
+		void LogError(const char* message);
 		void LogError(string& message);
 	};
 }

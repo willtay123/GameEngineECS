@@ -23,7 +23,7 @@ Logger* Logger::GetInstance() {
 }
 
 void Logger::WriteLog() {
-	LogMessage message = _logs.front();
+	LogMessage message = _logs.back();
 
 	switch (_loggingDestination) {
 	case LoggingDestination::Console:
@@ -45,14 +45,29 @@ void Logger::Log(LogMessage& logMessage) {
 	_logIndex++;
 }
 
+void Logger::LogInfo(const char* message) {
+	string messageAsString = string(message);
+	LogInfo(messageAsString);
+}
+
 void Logger::LogInfo(string& message) {
 	LogMessage* logMessage = new LogMessage(LogLevel::Info, _logIndex, message);
 	Log(*logMessage);
 }
 
+void Logger::LogWarning(const char* message) {
+	string messageAsString = string(message);
+	LogWarning(messageAsString);
+}
+
 void Logger::LogWarning(string& message) {
 	LogMessage* logMessage = new LogMessage(LogLevel::Warning, _logIndex, message);
 	Log(*logMessage);
+}
+
+void Logger::LogError(const char* message) {
+	string messageAsString = string(message);
+	LogError(messageAsString);
 }
 
 void Logger::LogError(string& message) {

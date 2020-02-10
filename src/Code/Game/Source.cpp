@@ -10,6 +10,7 @@
 #include "Scenes/TestScene.h"
 #include "Assets/Shaders/ShaderGLSL.h"
 #include <IO\EntityFactory.h>
+#include <Tools\Logger.h>
 
 using namespace std;
 using namespace EngineECS;
@@ -24,6 +25,11 @@ int main(int argc, char* argv[]) {
 	ICollisionResponder* collisionResponder = new CollisionResponder();
 	Engine engine;
 	bool engineInitialised = engine.Initialise(renderer, shader, resourceLoader, collisionDetector, collisionResponder);
+
+	Logger* logger = Logger::GetInstance();
+	string t1 = string("logger1");
+	logger->LogInfo(t1);
+	logger->LogError("text");
 
 	if (engineInitialised) {
 		IScene* scene = new TestScene();
