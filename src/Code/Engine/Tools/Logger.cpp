@@ -7,7 +7,7 @@ Logger* Logger::_instance = 0;
 Logger::Logger() :
 		_loggingDestination(LoggingDestination::Console),
 		_logIndex(0),
-		_maxLogCount(50),
+		_maxLogCount(MAX_LOG_COUNT),
 		_logs() {
 }
 

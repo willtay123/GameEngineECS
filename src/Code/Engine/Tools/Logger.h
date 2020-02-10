@@ -8,6 +8,9 @@ using std::string;
 using std::queue;
 
 namespace EngineECS {
+
+	const unsigned int MAX_LOG_COUNT = 50;
+
 	enum class LoggingDestination {
 		Console,
 		File,
