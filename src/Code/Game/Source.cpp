@@ -28,6 +28,7 @@ int main(int argc, char* argv[]) {
 
 	Logger* logger = Logger::GetInstance();
 	string t1 = string("logger1");
+	logger->SetLoggingDestination(LoggingDestination::External);
 	logger->LogInfo(t1);
 	logger->LogError("text");
 

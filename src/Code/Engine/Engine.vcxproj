@@ -157,6 +157,7 @@
     <ClInclude Include="Components\ComponentCollider.h" />
     <ClInclude Include="Components\ComponentTexture.h" />
     <ClInclude Include="Components\ComponentTransform.h" />
+    <ClInclude Include="DataStructs\LogMessage.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Interfaces\IBufferID.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="Interfaces\ICollisionManifold.h" />
     <ClInclude Include="Interfaces\ICollisionResponder.h" />
     <ClInclude Include="Interfaces\IComponent.h" />
+    <ClInclude Include="Interfaces\IExternalLogger.h" />
     <ClInclude Include="Interfaces\IMessage.h" />
     <ClInclude Include="Interfaces\IModel.h" />
     <ClInclude Include="Interfaces\IRenderer.h" />

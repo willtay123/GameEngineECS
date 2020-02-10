@@ -8,11 +8,12 @@ Logger::Logger() :
 		_loggingDestination(LoggingDestination::Console),
 		_logIndex(0),
 		_maxLogCount(MAX_LOG_COUNT),
-		_logs() {
+		_logs(),
+		_externalLogger(nullptr) {
 }
 
 Logger::~Logger() {
-
+	//delete _externalLogger; //Is this meant to be here in singleton
 }
 
 Logger* Logger::GetInstance() {
@@ -30,8 +31,17 @@ void Logger::WriteLog() {
 		std::cout << message._message << std::endl;
 		break;
 	case LoggingDestination::File:
+		// Logic needs planning to avoid file re-opening or lost logs
 		break;
 	case LoggingDestination::External:
+		if (_externalLogger) {
+			_externalLogger->WriteLog(message);
+		}
+		else {
+			_loggingDestination = LoggingDestination::Console;
+			WriteLog();
+			LogError("External logger is NULL, logging destination has been set to console");
+		}
 		break;
 	}
 }
@@ -73,4 +83,12 @@ void Logger::LogError(const char* message) {
 void Logger::LogError(string& message) {
 	LogMessage* logMessage = new LogMessage(LogLevel::Error, _logIndex, message);
 	Log(*logMessage);
+}
+
+void Logger::SetLoggingDestination(LoggingDestination loggingDestination) {
+	_loggingDestination = loggingDestination;
+}
+
+void Logger::SetExternalLogger(IExternalLogger* externalLogger) {
+	_externalLogger = externalLogger;
 }
