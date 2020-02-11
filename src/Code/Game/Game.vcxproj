@@ -175,6 +175,9 @@
     <ClInclude Include="Scenes\TestScene.h" />
     <ClInclude Include="Systems\SystemPhysics.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Assets\Data\entities.xml" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

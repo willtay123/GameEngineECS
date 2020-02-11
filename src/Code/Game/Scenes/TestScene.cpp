@@ -29,7 +29,7 @@ void TestScene::Initialise() {
 	// Entities: Item
 	GenerateItems(10);
 
-	string filepath = "D:/Projects/GameEngineECS/src/Code/Game/IO/entities.xml";
+	string filepath = "Assets/Data/entities.xml";
 	EntityFactory::LoadFromFile("game", filepath);
 
 	// Entity: player
