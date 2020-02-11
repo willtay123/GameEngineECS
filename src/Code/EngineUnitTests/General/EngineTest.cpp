@@ -5,12 +5,13 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace EngineUnitTests
 {
-	TEST_CLASS(EngineTest)
-	{
+	TEST_CLASS(EngineTest) {
 	public:
 		
-		TEST_METHOD(TestMethod1)
-		{
+		TEST_METHOD(Test2) {
+			std::string name = "Bill";
+			std::string name2 = "Bill";
+			Assert::AreEqual(name, name2);
 		}
 	};
 }
