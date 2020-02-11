@@ -1,11 +1,13 @@
 #include "TestScene.h"
 #include <IO\EntityFactory.h>
+#include <Tools\Logger.cpp>
 
 
 
 TestScene::TestScene() {
 	_name = "Test Scene";
-	std::cout << "Scene Created: " << _name << std::endl;
+	string text = string("Scene Created: " + _name);
+	Logger::LogInfo(text);
 }
 
 TestScene::~TestScene() {

@@ -12,8 +12,6 @@
 
 using std::map;
 using std::make_pair;
-using std::cout;
-using std::endl;
 using std::string;
 
 namespace EngineECS {

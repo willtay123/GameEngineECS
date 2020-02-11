@@ -2,25 +2,17 @@
 
 using namespace EngineECS;
 
-Logger* Logger::_instance = 0;
+LoggingDestination Logger::_loggingDestination = LoggingDestination::Console;
+unsigned int Logger::_logIndex = 0;
+unsigned int Logger::_maxLogCount = MAX_LOG_COUNT;
+queue<LogMessage> Logger::_logs = queue<LogMessage>();
+IExternalLogger* Logger::_externalLogger = nullptr;
 
-Logger::Logger() :
-		_loggingDestination(LoggingDestination::Console),
-		_logIndex(0),
-		_maxLogCount(MAX_LOG_COUNT),
-		_logs(),
-		_externalLogger(nullptr) {
+Logger::Logger() {
 }
 
 Logger::~Logger() {
 	//delete _externalLogger; //Is this meant to be here in singleton
-}
-
-Logger* Logger::GetInstance() {
-	if (!_instance) {
-		_instance = new Logger();
-	}
-	return _instance;
 }
 
 void Logger::WriteLog() {

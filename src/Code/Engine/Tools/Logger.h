@@ -21,33 +21,30 @@ namespace EngineECS {
 
 	class Logger {
 	private:
-		static Logger* _instance;
 		Logger();
 		~Logger();
 
-		IExternalLogger* _externalLogger;
-		LoggingDestination _loggingDestination;
-		unsigned int _logIndex; // Used to order the messages
-		unsigned int _maxLogCount;
-		queue<LogMessage> _logs;
+		static IExternalLogger* _externalLogger;
+		static LoggingDestination _loggingDestination;
+		static unsigned int _logIndex; // Used to order the messages
+		static unsigned int _maxLogCount;
+		static queue<LogMessage> _logs;
 
-		void Log(LogMessage& logMessage);
-		void WriteLog();
+		static void Log(LogMessage& logMessage);
+		static void WriteLog();
 
 	public:
-		static Logger* GetInstance();
+		static void LogInfo(const char* message);
+		static void LogInfo(string& message);
 
-		void LogInfo(const char* message);
-		void LogInfo(string& message);
-
-		void LogWarning(const char* message);
-		void LogWarning(string& message);
+		static void LogWarning(const char* message);
+		static void LogWarning(string& message);
 		
-		void LogError(const char* message);
-		void LogError(string& message);
+		static void LogError(const char* message);
+		static void LogError(string& message);
 
-		void SetLoggingDestination(LoggingDestination loggingDestination);
-		void SetExternalLogger(IExternalLogger* externalLogger);
+		static void SetLoggingDestination(LoggingDestination loggingDestination);
+		static void SetExternalLogger(IExternalLogger* externalLogger);
 	};
 }
 

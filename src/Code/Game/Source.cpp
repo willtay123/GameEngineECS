@@ -26,12 +26,6 @@ int main(int argc, char* argv[]) {
 	Engine engine;
 	bool engineInitialised = engine.Initialise(renderer, shader, resourceLoader, collisionDetector, collisionResponder);
 
-	Logger* logger = Logger::GetInstance();
-	string t1 = string("logger1");
-	logger->SetLoggingDestination(LoggingDestination::External);
-	logger->LogInfo(t1);
-	logger->LogError("text");
-
 	if (engineInitialised) {
 		IScene* scene = new TestScene();
 		engine.SetInitialScene("game", scene);
