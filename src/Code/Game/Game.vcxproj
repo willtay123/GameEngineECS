@@ -141,6 +141,7 @@
     <ClCompile Include="Implementations\CollisionDetector.cpp" />
     <ClCompile Include="Implementations\CollisionManifold.cpp" />
     <ClCompile Include="Implementations\CollisionResponder.cpp" />
+    <ClCompile Include="Implementations\ExternalLogger.cpp" />
     <ClCompile Include="Implementations\OpenGLModel.cpp" />
     <ClCompile Include="Implementations\RendererGL.cpp" />
     <ClCompile Include="Implementations\ResourceLoader.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Implementations\CollisionDetector.h" />
     <ClInclude Include="Implementations\CollisionManifold.h" />
     <ClInclude Include="Implementations\CollisionResponder.h" />
+    <ClInclude Include="Implementations\ExternalLogger.h" />
     <ClInclude Include="Implementations\OpenGLModel.h" />
     <ClInclude Include="Implementations\RendererGL.h" />
     <ClInclude Include="Implementations\ResourceLoader.h" />

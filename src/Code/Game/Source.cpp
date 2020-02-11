@@ -1,3 +1,4 @@
+#pragma once
 #include "Externals.h"
 #include <iostream>
 
@@ -7,6 +8,7 @@
 #include "Implementations/CollisionDetector.h"
 #include "Implementations/CollisionResponder.h"
 #include "Implementations/ResourceLoader.h"
+#include "Implementations/ExternalLogger.h"
 #include "Scenes/TestScene.h"
 #include "Assets/Shaders/ShaderGLSL.h"
 #include <IO\EntityFactory.h>
@@ -25,6 +27,9 @@ int main(int argc, char* argv[]) {
 	ICollisionResponder* collisionResponder = new CollisionResponder();
 	Engine engine;
 	bool engineInitialised = engine.Initialise(renderer, shader, resourceLoader, collisionDetector, collisionResponder);
+
+	ExternalLogger* logger = new ExternalLogger();
+	Logger::SetExternalLogger(logger);
 
 	if (engineInitialised) {
 		IScene* scene = new TestScene();
