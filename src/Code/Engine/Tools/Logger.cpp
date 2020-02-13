@@ -84,3 +84,7 @@ void Logger::SetLoggingDestination(LoggingDestination loggingDestination) {
 void Logger::SetExternalLogger(IExternalLogger* externalLogger) {
 	_externalLogger = externalLogger;
 }
+
+IExternalLogger* Logger::GetExternalLogger() {
+	return _externalLogger;
+}

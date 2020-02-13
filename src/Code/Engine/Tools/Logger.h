@@ -45,6 +45,7 @@ namespace EngineECS {
 
 		static void SetLoggingDestination(LoggingDestination loggingDestination);
 		static void SetExternalLogger(IExternalLogger* externalLogger);
+		static IExternalLogger* GetExternalLogger();
 	};
 }
 
