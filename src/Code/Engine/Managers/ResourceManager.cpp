@@ -1,5 +1,4 @@
 #include "ResourceManager.h"
-#include <Tools\Logger.h>
 
 using namespace EngineECS;
 

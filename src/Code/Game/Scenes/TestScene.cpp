@@ -1,6 +1,6 @@
 #include "TestScene.h"
 #include <IO\EntityFactory.h>
-#include <Tools\Logger.cpp>
+#include <Tools/Logger.h>
 
 
 

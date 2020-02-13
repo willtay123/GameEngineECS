@@ -10,6 +10,8 @@
 #include "Interfaces/IRenderer.h"
 #include "Interfaces/IShader.h"
 #include "Interfaces/IResourceLoader.h"
+#include "Tools\Logger.h"
+
 
 namespace EngineECS {
 	class Engine {

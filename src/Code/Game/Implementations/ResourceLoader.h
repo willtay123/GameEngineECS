@@ -17,8 +17,6 @@
 #include "Objects/Geometry.h"
 
 using namespace EngineECS;
-using std::cout;
-using std::endl;
 using std::ifstream;
 using std::string;
 

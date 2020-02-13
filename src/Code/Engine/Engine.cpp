@@ -2,7 +2,6 @@
 //
 
 #include "Engine.h"
-#include <Tools\Logger.h>
 
 using namespace EngineECS;
 

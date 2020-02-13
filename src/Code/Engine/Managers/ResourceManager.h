@@ -9,6 +9,7 @@
 #include "Interfaces/IResource.h"
 #include "Objects/Texture.h"
 #include "Objects/Geometry.h"
+#include "Tools/Logger.h"
 
 using std::map;
 using std::make_pair;

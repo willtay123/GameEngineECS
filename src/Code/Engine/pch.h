@@ -10,13 +10,4 @@
 // add headers that you want to pre-compile here
 #include "framework.h"
 
-#include "Managers/SceneManager.h"
-#include "Managers/RenderManager.h"
-#include "Managers/EntityManager.h"
-#include "Managers/ComponentManager.h"
-#include "Managers/SystemManager.h"
-#include "Managers/MessageManager.h"
-#include "Managers/ResourceManager.h"
-#include "Managers/CollisionManager.h"
-
 #endif //PCH_H

@@ -12,13 +12,13 @@
 #include "Scenes/TestScene.h"
 #include "Assets/Shaders/ShaderGLSL.h"
 #include <IO\EntityFactory.h>
-#include <Tools\Logger.h>
+#include "Tools\Logger.h"
 
 using namespace std;
 using namespace EngineECS;
 
 int main(int argc, char* argv[]) {
-	cout << "Starting Game" << endl;
+	Logger::LogInfo("Starting Game");
 
 	RendererGL* renderer = new RendererGL();
 	ShaderGLSL* shader = new ShaderGLSL();

@@ -1,4 +1,6 @@
+#pragma once
 #include "RendererGL.h"
+#include <Tools/Logger.h>
 
 
 
@@ -16,7 +18,7 @@ RendererGL::~RendererGL() {
 bool RendererGL::Initialise() {
 
 	if (!glfwInit()) {
-		std::cout << "Error initialising GLFW" << std::endl;
+		Logger::LogError("Error initialising GLFW");
 		return false;
 	}
 
@@ -29,7 +31,7 @@ bool RendererGL::Initialise() {
 	_window = glfwCreateWindow(_screenWidth, _screenHeight, _windowTitle, NULL, NULL);
 	if (!_window) {
 		glfwTerminate();
-		std::cout << "Error creating window" << std::endl;
+		Logger::LogError("Error creating window");
 		return false;
 	}
 

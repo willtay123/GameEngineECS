@@ -2,7 +2,6 @@
 
 
 
-
 ShaderGLSL::ShaderGLSL() {
 
 }
@@ -45,7 +44,10 @@ IBufferID* ShaderGLSL::LoadShader(const char* filepath, ShaderType shaderType) {
 		shaderStream.close();
 	}
 	else {
-		std::cout << "Impossible to open " << filepath << ". Are you in the right directory?" << std::endl;
+		string text = string("Impossible to open ");
+		text.append(filepath);
+		text.append(". Are you in the right directory?");
+		Logger::LogError(text);
 		getchar();
 		shaderID = 0;
 	}
@@ -54,7 +56,8 @@ IBufferID* ShaderGLSL::LoadShader(const char* filepath, ShaderType shaderType) {
 	int infoLogLength;
 
 	// Compile Vertex Shader
-	std::cout << "Compiling shader : " << filepath << std::endl;
+	string text = string("Compiling shader : ").append(filepath);
+	Logger::LogInfo(text);
 	char const * shaderSourcePointer = shaderCode.c_str();
 	glShaderSource(shaderID, 1, &shaderSourcePointer, NULL);
 	glCompileShader(shaderID);
@@ -65,7 +68,7 @@ IBufferID* ShaderGLSL::LoadShader(const char* filepath, ShaderType shaderType) {
 	if (infoLogLength > 0) {
 		std::vector<char> shaderErrorMessage(infoLogLength + 1);
 		glGetShaderInfoLog(shaderID, infoLogLength, NULL, &shaderErrorMessage[0]);
-		std::cout << "ERROR: " << &shaderErrorMessage[0] << std::endl;
+		Logger::LogError(&shaderErrorMessage[0]);
 		shaderID = 0;
 	}
 
@@ -78,7 +81,7 @@ void ShaderGLSL::LinkShaders(int pgmID, int vsID, int fsID) {
 	int infoLogLength;
 
 	// Link the program
-	std::cout << "linking shaders..." << std::endl;
+	Logger::LogInfo("linking shaders...");
 
 	glAttachShader(pgmID, vsID);
 	glAttachShader(pgmID, fsID);
@@ -90,7 +93,7 @@ void ShaderGLSL::LinkShaders(int pgmID, int vsID, int fsID) {
 	if (infoLogLength > 0) {
 		std::vector<char> ProgramErrorMessage(infoLogLength + 1);
 		glGetProgramInfoLog(pgmID, infoLogLength, NULL, &ProgramErrorMessage[0]);
-		std::cout << "ERROR: " << &ProgramErrorMessage[0] << std::endl;
+		Logger::LogError(&ProgramErrorMessage[0]);
 	}
 
 	_pgmID = pgmID;
@@ -99,7 +102,7 @@ void ShaderGLSL::LinkShaders(int pgmID, int vsID, int fsID) {
 
 	_uniform_MVP = glGetUniformLocation(_pgmID, "MVP");
 
-	std::cout << "shaders  linked" << std::endl << std::endl;
+	Logger::LogInfo("shaders  linked");
 }
 
 GLuint ShaderGLSL::GetPgmID() {
