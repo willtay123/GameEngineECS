@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <sstream>
 
 #include "Interfaces/IResourceLoader.h"
 #include "Interfaces/IResource.h"

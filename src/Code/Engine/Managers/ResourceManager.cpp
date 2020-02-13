@@ -49,7 +49,10 @@ void ResourceManager::ClearTextures() {
 		_textureMap.erase(itr);
 	}
 
-	string text = string("new _textureMap size: " + _textureMap.size());
+	std::stringstream ss = std::stringstream();
+	ss << "new _textureMap size: ";
+	ss << _textureMap.size();
+	string text = ss.str();
 	Logger::LogInfo(text);
 }
 
@@ -91,7 +94,10 @@ void ResourceManager::ClearModels() {
 		_modelMap.erase(itr);
 	}
 
-	string text = string("new _modelMap size: " + _modelMap.size());
+	std::stringstream ss = std::stringstream();
+	ss << "new _modelMap size: ";
+	ss << _modelMap.size();
+	string text = ss.str();
 	Logger::LogInfo(text);
 }
 
@@ -131,7 +137,10 @@ void ResourceManager::ClearResources() {
 		_resourceMap.erase(itr);
 	}
 
-	string text = string("new _resourceMap size: " + _resourceMap.size());
+	std::stringstream ss = std::stringstream();
+	ss << "new _resourceMap size: ";
+	ss << _resourceMap.size();
+	string text = ss.str();
 	Logger::LogInfo(text);
 }
 
