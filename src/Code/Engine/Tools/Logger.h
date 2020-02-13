@@ -1,13 +1,13 @@
 #pragma once
 
-#include <queue>
+#include <deque>
 #include <vector>
 #include <string>
 #include <iostream>
 #include "DataStructs/LogMessage.h"
 #include <Interfaces\IExternalLogger.h>
 
-using std::queue;
+using std::deque;
 using std::vector;
 using std::string;
 
@@ -30,7 +30,7 @@ namespace EngineECS {
 		static LoggingDestination _loggingDestination;
 		static unsigned int _logIndex; // Used to order the messages
 		static unsigned int _maxLogCount;
-		static queue<LogMessage> _logs;
+		static deque<LogMessage> _logs;
 
 		static void Log(LogMessage& logMessage);
 		static void WriteLog();

@@ -5,7 +5,7 @@ using namespace EngineECS;
 LoggingDestination Logger::_loggingDestination = LoggingDestination::Console;
 unsigned int Logger::_logIndex = 0;
 unsigned int Logger::_maxLogCount = MAX_LOG_COUNT;
-queue<LogMessage> Logger::_logs = queue<LogMessage>();
+deque<LogMessage> Logger::_logs = deque<LogMessage>();
 IExternalLogger* Logger::_externalLogger = nullptr;
 
 Logger::Logger() {
@@ -39,9 +39,9 @@ void Logger::WriteLog() {
 }
 
 void Logger::Log(LogMessage& logMessage) {
-	_logs.push(logMessage);
+	_logs.push_back(logMessage);
 	if (_logs.size() > _maxLogCount) {
-		_logs.pop();
+		_logs.pop_front();
 	}
 	WriteLog();
 	_logIndex++;
@@ -94,12 +94,16 @@ void Logger::LogError(string& tag, string& message) {
 
 void Logger::GetLogs(vector<LogMessage>& logs) {
 	for (size_t i = 0; i < _logs.size(); i++) {
-		//logs.push_back(_logs[i]);
+		logs.push_back(_logs[i]);
 	}
 }
 
 void Logger::GetLogsByTag(string& tag, vector<LogMessage>& logs) {
-
+	for (size_t i = 0; i < _logs.size(); i++) {
+		if (_logs[i]._tag == tag) {
+			logs.push_back(_logs[i]);
+		}
+	}
 }
 
 void Logger::SetLoggingDestination(LoggingDestination loggingDestination) {
