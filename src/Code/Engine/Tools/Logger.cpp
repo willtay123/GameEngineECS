@@ -57,6 +57,11 @@ void Logger::LogInfo(string& message) {
 	Log(*logMessage);
 }
 
+void Logger::LogInfo(string& tag, string& message) {
+	LogMessage* logMessage = new LogMessage(LogLevel::Info, _logIndex, tag, message);
+	Log(*logMessage);
+}
+
 void Logger::LogWarning(const char* message) {
 	string messageAsString = string(message);
 	LogWarning(messageAsString);
@@ -64,6 +69,11 @@ void Logger::LogWarning(const char* message) {
 
 void Logger::LogWarning(string& message) {
 	LogMessage* logMessage = new LogMessage(LogLevel::Warning, _logIndex, message);
+	Log(*logMessage);
+}
+
+void Logger::LogWarning(string& tag, string& message) {
+	LogMessage* logMessage = new LogMessage(LogLevel::Warning, _logIndex, tag, message);
 	Log(*logMessage);
 }
 
@@ -77,14 +87,25 @@ void Logger::LogError(string& message) {
 	Log(*logMessage);
 }
 
+void Logger::LogError(string& tag, string& message) {
+	LogMessage* logMessage = new LogMessage(LogLevel::Error, _logIndex, tag, message);
+	Log(*logMessage);
+}
+
+void Logger::GetLogs(vector<LogMessage>& logs) {
+	for (size_t i = 0; i < _logs.size(); i++) {
+		//logs.push_back(_logs[i]);
+	}
+}
+
+void Logger::GetLogsByTag(string& tag, vector<LogMessage>& logs) {
+
+}
+
 void Logger::SetLoggingDestination(LoggingDestination loggingDestination) {
 	_loggingDestination = loggingDestination;
 }
 
 void Logger::SetExternalLogger(IExternalLogger* externalLogger) {
 	_externalLogger = externalLogger;
-}
-
-IExternalLogger* Logger::GetExternalLogger() {
-	return _externalLogger;
 }

@@ -1,13 +1,15 @@
 #pragma once
 
-#include <string>
 #include <queue>
+#include <vector>
+#include <string>
 #include <iostream>
 #include "DataStructs/LogMessage.h"
 #include <Interfaces\IExternalLogger.h>
 
-using std::string;
 using std::queue;
+using std::vector;
+using std::string;
 
 namespace EngineECS {
 
@@ -36,16 +38,24 @@ namespace EngineECS {
 	public:
 		static void LogInfo(const char* message);
 		static void LogInfo(string& message);
+		static void LogInfo(string& tag, string& message);
 
 		static void LogWarning(const char* message);
 		static void LogWarning(string& message);
-		
+		static void LogWarning(string& tag, string& message);
+
 		static void LogError(const char* message);
 		static void LogError(string& message);
+		static void LogError(string& tag, string& message);
+
+		static void GetLogs(vector<LogMessage>& logs);
+		static void GetLogsByTag(string& tag, vector<LogMessage>& logs);
 
 		static void SetLoggingDestination(LoggingDestination loggingDestination);
+		static LoggingDestination GetLoggingDestination() { return _loggingDestination; }
+
 		static void SetExternalLogger(IExternalLogger* externalLogger);
-		static IExternalLogger* GetExternalLogger();
+		static IExternalLogger* GetExternalLogger() { return _externalLogger; }
 	};
 }
 
