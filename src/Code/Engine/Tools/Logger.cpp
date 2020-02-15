@@ -20,6 +20,9 @@ void Logger::WriteLog() {
 
 	switch (_loggingDestination) {
 	case LoggingDestination::Console:
+		if (message._logLevel == LogLevel::Error) {
+			std::cout << "ERROR: ";
+		}
 		std::cout << message._message << std::endl;
 		break;
 	case LoggingDestination::File:
