@@ -30,7 +30,11 @@ int main(int argc, char* argv[]) {
 
 	ExternalLogger* logger = new ExternalLogger();
 	Logger::SetExternalLogger(logger);
-	Logger::SetLoggingDestination(LoggingDestination::External);
+	Logger::SetLoggingDestination(LoggingDestination::File);
+
+	Logger::LogInfo("inf", "info");
+	Logger::LogWarning("war", "warning");
+	Logger::LogError("err", "error");
 
 	if (engineInitialised) {
 		IScene* scene = new TestScene();

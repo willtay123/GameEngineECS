@@ -16,7 +16,7 @@
 #include "Objects/Entity.h"
 #include "Objects/Geometry.h"
 
-#include "Tools\Logger.h"
+#include "Tools/Logger.h"
 
 
 using glm::vec4;
