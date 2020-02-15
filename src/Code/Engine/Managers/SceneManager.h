@@ -1,12 +1,10 @@
 #pragma once
-#include <iostream>
 #include <map>
 
 #include "Interfaces/IScene.h"
 #include "Scenes/DefaultScene.h"
+#include "Tools/Logger.h"
 
-using std::cout;
-using std::endl;
 using std::map;
 
 namespace EngineECS {

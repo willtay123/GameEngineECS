@@ -4,7 +4,7 @@ using namespace EngineECS;
 
 DefaultScene::DefaultScene() {
 	_name = "Default Scene";
-	std::cout << "ERROR: No scene has been set!" << endl;
+	Logger::LogError("ERROR: No scene has been set!");
 }
 
 DefaultScene::~DefaultScene() {

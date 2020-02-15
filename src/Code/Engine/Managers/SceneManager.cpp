@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 
+
 using namespace EngineECS;
 
 
@@ -38,11 +39,11 @@ void SceneManager::RemoveScene(const char* sceneID) {
 		// Delete map entry
 		_sceneMap.erase(sceneID);
 
-		cout << "Scene deleted with ID: " << *sceneID << endl;
+		Logger::LogInfo("Scene deleted with ID: " + *sceneID);
 	}
 	else {
 		// Scene not found
-		cout << "ERROR: Scene not found: " << *sceneID << endl;
+		Logger::LogError("Scene not found: " + *sceneID);
 	}
 }
 
@@ -65,11 +66,12 @@ void SceneManager::SetScene(const char* sceneID) {
 	if (itr != _sceneMap.end()) {
 		// Match found, set active scene
 		_scene = itr->second;
-		cout << "Scene Set: " << *(_scene->GetName()) << endl;
+		string text = string("Scene Set: " + *(_scene->GetName()));
+		Logger::LogInfo(text);
 	}
 	else {
 		// Scene not found
-		cout << "ERROR: Scene not found: " << *sceneID << endl;
+		Logger::LogError("Scene not found: " + *sceneID);
 	}
 }
 

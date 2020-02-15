@@ -1,11 +1,13 @@
 #include "TestScene.h"
 #include <IO\EntityFactory.h>
+#include <Tools/Logger.h>
 
 
 
 TestScene::TestScene() {
 	_name = "Test Scene";
-	std::cout << "Scene Created: " << _name << std::endl;
+	string text = string("Scene Created: " + _name);
+	Logger::LogInfo(text);
 }
 
 TestScene::~TestScene() {
@@ -29,7 +31,7 @@ void TestScene::Initialise() {
 	// Entities: Item
 	GenerateItems(10);
 
-	string filepath = "D:/Projects/GameEngineECS/src/Code/Game/IO/entities.xml";
+	string filepath = "Assets/Data/entities.xml";
 	EntityFactory::LoadFromFile("game", filepath);
 
 	// Entity: player

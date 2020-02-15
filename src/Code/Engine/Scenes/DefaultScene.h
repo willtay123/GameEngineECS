@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include "Tools/Logger.h"
 #include "Interfaces/IScene.h"
 
 namespace EngineECS {

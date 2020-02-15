@@ -8,8 +8,11 @@
 #include <strstream>
 #include <sstream>
 #include <vector>
+#include <Tools/Logger.h>
 
 #include "Buffers/GLBufferID.h"
+
+using namespace EngineECS;
 
 class ShaderGLSL : public IShader {
 private:

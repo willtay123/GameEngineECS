@@ -1,9 +1,11 @@
+#pragma once
 #include "ResourceLoader.h"
-
+#include <Tools/Logger.h>
+#include <sstream>
 
 
 Texture* ResourceLoader::LoadTexture(string filepath) {
-	cout << "Loading a texture" << endl;
+	Logger::LogInfo("Loading a texture");
 
 	Texture* texture;
 
@@ -21,8 +23,10 @@ Texture* ResourceLoader::LoadTexture(string filepath) {
 	// Check for errors loading in texture
 	if (textureID == 0) {
 		// Loading failed
-		std::cout << "ERROR: failed to load texture - " << filepath << std::endl;
-		std::cout << "SOIL loading error: " << SOIL_last_result() << std::endl << std::endl;
+		string text = string("Failed to load texture - " + filepath);
+		Logger::LogError(text);
+		text = string("SOIL loading error: ").append(SOIL_last_result());
+		Logger::LogError(text);
 		return NULL;
 	}
 	else {
@@ -41,7 +45,11 @@ Texture* ResourceLoader::LoadTexture(string filepath) {
 
 	return texture;
 
-	std::cout << "Texture ID of loaded texure: " << textureID << std::endl;
+	std::stringstream ss = std::stringstream();
+	ss << "Texture ID of loaded texure: ";
+	ss << textureID;
+	string text = ss.str();
+	Logger::LogInfo(text);
 }
 
 Geometry* ResourceLoader::LoadGeometry(string filepath) {
@@ -55,11 +63,12 @@ IResource* ResourceLoader::LoadResource(string filepath) {
 Geometry* ResourceLoader::LoadOBJ(string filepath) {
 	Geometry* model;
 
-	cout << "Loading Geometry from OBJ" << endl;
+	Logger::LogInfo("Loading Geometry from OBJ");
 
 	ifstream inFile(filepath);
 	if (!inFile) {
-		cout << "ERROR: unable to load model - " << filepath << endl;;
+		string text = string("unable to load model - " + filepath);
+		Logger::LogError(text);
 		throw std::exception("Unable to load model, file missing?");
 		return NULL;
 	}

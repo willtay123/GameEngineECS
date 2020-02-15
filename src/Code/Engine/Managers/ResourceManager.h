@@ -4,16 +4,16 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <sstream>
 
 #include "Interfaces/IResourceLoader.h"
 #include "Interfaces/IResource.h"
 #include "Objects/Texture.h"
 #include "Objects/Geometry.h"
+#include "Tools/Logger.h"
 
 using std::map;
 using std::make_pair;
-using std::cout;
-using std::endl;
 using std::string;
 
 namespace EngineECS {

@@ -16,6 +16,9 @@
 #include "Objects/Entity.h"
 #include "Objects/Geometry.h"
 
+#include "Tools/Logger.h"
+
+
 using glm::vec4;
 using glm::mat4;
 using std::vector;

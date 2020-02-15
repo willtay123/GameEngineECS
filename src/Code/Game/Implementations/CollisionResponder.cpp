@@ -1,4 +1,6 @@
+#pragma once
 #include "CollisionResponder.h"
+
 
 
 CollisionResponder::CollisionResponder() {
@@ -44,7 +46,7 @@ void CollisionResponder::HandleCollisions(const vector<ICollisionManifold*>* man
 }
 
 void CollisionResponder::HandlePlayerItem(Entity* player, Entity* item) {
-	cout << "Player-Item collision" << endl;
+	Logger::LogInfo("Player-Item collision");
 
 	// Delete Item
 	string itemName = *(item->GetID());

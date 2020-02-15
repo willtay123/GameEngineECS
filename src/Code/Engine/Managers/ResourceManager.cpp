@@ -14,13 +14,14 @@ void ResourceManager::Initialise(IResourceLoader* resourceLoader) {
 }
 
 Texture* ResourceManager::LoadTexture(string filepath) {
-	std::cout << "Loading texture: " << filepath << std::endl;
+	string text = string("Loading texture: " + filepath);
+	Logger::LogInfo(text);
 
 	Texture* texture;
 
 	auto it = _textureMap.find(filepath);
 	if (it != _textureMap.end()) {
-		cout << "- fetched from _textureMap" << endl;
+		Logger::LogInfo("- fetched from _textureMap");
 		texture = it->second;
 	}
 	else {
@@ -36,7 +37,7 @@ Texture* ResourceManager::LoadTexture(string filepath) {
 }
 
 void ResourceManager::ClearTextures() {
-	cout << "Clearing: _textureMap" << endl;
+	Logger::LogInfo("Clearing: _textureMap");
 
 	// Delete all contents
 	for (map<string, Texture*>::iterator itr = _textureMap.begin();
@@ -48,18 +49,23 @@ void ResourceManager::ClearTextures() {
 		_textureMap.erase(itr);
 	}
 
-	cout << "new _textureMap size: " << _textureMap.size() << endl;
+	std::stringstream ss = std::stringstream();
+	ss << "new _textureMap size: ";
+	ss << _textureMap.size();
+	string text = ss.str();
+	Logger::LogInfo(text);
 }
 
 Geometry* ResourceManager::LoadGeometry(string filepath) {
-	cout << "Loading Geometry" << endl;
+	string text = string("Loading Geometry: " + filepath);
+	Logger::LogInfo(text);
 
 	Geometry* model;
 
 	auto it = _modelMap.find(filepath);
 	if (it != _modelMap.end()) {
 		// Fetch from map
-		cout << "- fetched from _modelMap" << endl;
+		Logger::LogInfo("- fetched from _modelMap");
 		model = it->second;
 	}
 	else {
@@ -76,7 +82,7 @@ Geometry* ResourceManager::LoadGeometry(string filepath) {
 }
 
 void ResourceManager::ClearModels() {
-	cout << "Clearing: _modelMap" << endl;
+	Logger::LogInfo("Clearing: _modelMap");
 
 	// Delete all contents
 	for (map<string, Geometry*>::iterator itr = _modelMap.begin();
@@ -88,17 +94,22 @@ void ResourceManager::ClearModels() {
 		_modelMap.erase(itr);
 	}
 
-	cout << "new _modelMap size: " << _modelMap.size() << endl;
+	std::stringstream ss = std::stringstream();
+	ss << "new _modelMap size: ";
+	ss << _modelMap.size();
+	string text = ss.str();
+	Logger::LogInfo(text);
 }
 
 IResource* ResourceManager::LoadResource(string filepath) {
-	std::cout << "Loading resource: " << filepath << std::endl;
+	string text = string("Loading resource: " + filepath);
+	Logger::LogInfo(text);
 
 	IResource* resource;
 
 	auto it = _resourceMap.find(filepath);
 	if (it != _resourceMap.end()) {
-		cout << "- fetched from _resourceMap" << endl;
+		Logger::LogInfo("- fetched from _resourceMap");
 		resource = it->second;
 	}
 	else {
@@ -114,7 +125,7 @@ IResource* ResourceManager::LoadResource(string filepath) {
 }
 
 void ResourceManager::ClearResources() {
-	cout << "Clearing: _resourceMap" << endl;
+	Logger::LogInfo("Clearing: _resourceMap");
 
 	// Delete all contents
 	for (map<string, IResource*>::iterator itr = _resourceMap.begin();
@@ -126,7 +137,11 @@ void ResourceManager::ClearResources() {
 		_resourceMap.erase(itr);
 	}
 
-	cout << "new _resourceMap size: " << _resourceMap.size() << endl;
+	std::stringstream ss = std::stringstream();
+	ss << "new _resourceMap size: ";
+	ss << _resourceMap.size();
+	string text = ss.str();
+	Logger::LogInfo(text);
 }
 
 void ResourceManager::End() {

@@ -8,12 +8,12 @@ using namespace EngineECS;
 double Engine::dt = 0;
 
 Engine::Engine() {
-	std::cout << "Engine creation started" << endl;
+	Logger::LogInfo("Engine creation started");
 
 	initialised = false;
 	sceneManager = SceneManager::GetInstance();
 
-	std::cout << "Engine creation ended" << endl << endl;
+	Logger::LogInfo("Engine creation ended");
 }
 
 Engine::~Engine() {
@@ -34,11 +34,11 @@ bool Engine::Initialise(
 	ICollisionDetector* collisionDetector,
 	ICollisionResponder* collisionResponder
 ) {
-	std::cout << "Engine initialisation started" << endl;
+	Logger::LogInfo("Engine initialisation started");
 
 
 	// Initialise and create managers
-	std::cout << "Initialising Managers" << std::endl << std::endl;
+	Logger::LogInfo("Initialising Managers");
 
 	RenderManager::Initialise(renderer, shader);
 	EntityManager::Initialise();
@@ -48,12 +48,12 @@ bool Engine::Initialise(
 	ResourceManager::Initialise(resourceLoader);
 	CollisionManager::Initialise(collisionDetector, collisionResponder);
 
-	std::cout << "Managers Initialised" << std::endl << std::endl;
+	Logger::LogInfo("Managers Initialised");
 
 	// Delta Time
 	lastTime = clock();
 
-	std::cout << "Engine initialisation ended" << endl << endl;
+	Logger::LogInfo("Engine initialisation ended");
 
 	initialised = true;
 	return true;

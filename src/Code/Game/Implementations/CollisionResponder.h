@@ -1,17 +1,12 @@
 #pragma once
 #include "Interfaces/ICollisionResponder.h"
-
-#include <iostream>
 #include <stdlib.h>
 #include <string>
+#include <Tools/Logger.h>
 
 #include "Implementations/CollisionManifold.h"
 #include "Components/ComponentScore.h"
 #include "Managers/EntityManager.h"
-
-using std::cout;
-using std::endl;
-
 
 class CollisionResponder : public ICollisionResponder {
 private:

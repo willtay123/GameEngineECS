@@ -1,7 +1,6 @@
 #pragma once
 #include "Interfaces/ICollisionDetector.h"
 
-#include <iostream>
 #include <stdlib.h>
 
 #include "Components/ComponentTransform.h"
@@ -9,9 +8,6 @@
 #include "Components/ComponentBoxCollider.h"
 #include "Components/ComponentSphereCollider.h"
 #include "Implementations/CollisionManifold.h"
-
-using std::cout;
-using std::endl;
 
 class CollisionDetector : public ICollisionDetector {
 private:
