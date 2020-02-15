@@ -61,8 +61,8 @@ void Logger::LogInfo(string& message) {
 }
 
 void Logger::LogInfo(string& tag, string& message) {
-	LogMessage* logMessage = new LogMessage(LogLevel::Info, _logIndex, tag, message);
-	Log(*logMessage);
+	LogMessage logMessage = LogMessage(LogLevel::Info, _logIndex, tag, message);
+	Log(logMessage);
 }
 
 void Logger::LogWarning(const char* message) {
@@ -76,8 +76,8 @@ void Logger::LogWarning(string& message) {
 }
 
 void Logger::LogWarning(string& tag, string& message) {
-	LogMessage* logMessage = new LogMessage(LogLevel::Warning, _logIndex, tag, message);
-	Log(*logMessage);
+	LogMessage logMessage = LogMessage(LogLevel::Warning, _logIndex, tag, message);
+	Log(logMessage);
 }
 
 void Logger::LogError(const char* message) {
@@ -91,8 +91,8 @@ void Logger::LogError(string& message) {
 }
 
 void Logger::LogError(string& tag, string& message) {
-	LogMessage* logMessage = new LogMessage(LogLevel::Error, _logIndex, tag, message);
-	Log(*logMessage);
+	LogMessage logMessage = LogMessage(LogLevel::Error, _logIndex, tag, message);
+	Log(logMessage);
 }
 
 void Logger::GetLogs(vector<LogMessage>& logs) {
