@@ -51,6 +51,8 @@ namespace EngineECS {
 		static void GetLogs(vector<LogMessage>& logs);
 		static void GetLogsByTag(string& tag, vector<LogMessage>& logs);
 
+		static void SetLogCountLimit(unsigned int limit);
+
 		static void SetLoggingDestination(LoggingDestination loggingDestination);
 		static LoggingDestination GetLoggingDestination() { return _loggingDestination; }
 

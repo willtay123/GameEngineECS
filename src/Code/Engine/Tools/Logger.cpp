@@ -106,6 +106,16 @@ void Logger::GetLogsByTag(string& tag, vector<LogMessage>& logs) {
 	}
 }
 
+void Logger::SetLogCountLimit(unsigned int limit) {
+	if (limit < _maxLogCount) {
+		unsigned int difference = _maxLogCount - limit;
+		for (unsigned int i = 0; i < difference; i++) {
+			_logs.pop_front();
+		}
+	}
+	_maxLogCount = limit;
+}
+
 void Logger::SetLoggingDestination(LoggingDestination loggingDestination) {
 	_loggingDestination = loggingDestination;
 }
