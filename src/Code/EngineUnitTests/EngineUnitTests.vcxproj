@@ -77,7 +77,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>../Engine;$(ProjectDir);$(IncludePath)</IncludePath>
+    <IncludePath>../../External Resources;../Engine;$(ProjectDir);$(IncludePath)</IncludePath>
     <LibraryPath>../EngineBuild;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -159,7 +159,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="General\EngineTest.cpp" />
+    <ClCompile Include="Managers\CollisionManagerTest.cpp" />
+    <ClCompile Include="Managers\ComponentManagerTest.cpp" />
     <ClCompile Include="Managers\EntityManagerTest.cpp" />
+    <ClCompile Include="Managers\MessageManagerTest.cpp" />
+    <ClCompile Include="Managers\RenderManagerTest.cpp" />
+    <ClCompile Include="Managers\ResourceManagerTest.cpp" />
+    <ClCompile Include="Managers\SceneManagerTest.cpp" />
+    <ClCompile Include="Managers\SystemManagerTest.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
