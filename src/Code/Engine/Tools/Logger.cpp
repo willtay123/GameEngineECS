@@ -56,8 +56,8 @@ void Logger::LogInfo(const char* message) {
 }
 
 void Logger::LogInfo(string& message) {
-	LogMessage* logMessage = new LogMessage(LogLevel::Info, _logIndex, message);
-	Log(*logMessage);
+	string tag = string("");
+	Logger::LogInfo(tag, message);
 }
 
 void Logger::LogInfo(string& tag, string& message) {
@@ -71,8 +71,8 @@ void Logger::LogWarning(const char* message) {
 }
 
 void Logger::LogWarning(string& message) {
-	LogMessage* logMessage = new LogMessage(LogLevel::Warning, _logIndex, message);
-	Log(*logMessage);
+	string tag = string("");
+	Logger::LogWarning(tag, message);
 }
 
 void Logger::LogWarning(string& tag, string& message) {
@@ -86,8 +86,8 @@ void Logger::LogError(const char* message) {
 }
 
 void Logger::LogError(string& message) {
-	LogMessage* logMessage = new LogMessage(LogLevel::Error, _logIndex, message);
-	Log(*logMessage);
+	string tag = string("");
+	Logger::LogError(tag, message);
 }
 
 void Logger::LogError(string& tag, string& message) {
