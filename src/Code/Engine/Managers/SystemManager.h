@@ -24,6 +24,9 @@ namespace EngineECS {
 		static void ActionUpdateSystems(double deltaTime, const char* entityGroup);
 		static void ActionRenderSystems(double deltaTime, const char* entityGroup);
 
+		static const vector<ISystem*>* GetUpdateSystems() { return &_updateSystems; }
+		static const vector<ISystem*>* GetRenderSystems() { return &_renderSystems; }
+
 		static void End();
 	};
 }

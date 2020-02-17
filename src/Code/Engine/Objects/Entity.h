@@ -17,6 +17,7 @@ namespace EngineECS {
 
 	public:
 		Entity();
+		Entity(const char* id);
 		Entity(string* id);
 		Entity(const Entity& rhs);
 		~Entity();
