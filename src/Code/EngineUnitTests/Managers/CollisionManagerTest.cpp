@@ -12,8 +12,14 @@ namespace EngineUnitTests
 		TEST_CLASS(CollisionManagerTest) {
 		public:
 
-			TEST_METHOD(TestMethod1) {
+			TEST_METHOD(DetectCollision) {
 			}
+
+			//TEST_METHOD(DetectCollisions)
+
+			//TEST_METHOD(HandleCollisions)
+
+			//TEST_METHOD(ClearCollisions)
 		};
 	}
 }

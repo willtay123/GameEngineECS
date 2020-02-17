@@ -12,8 +12,20 @@ namespace EngineUnitTests
 		TEST_CLASS(ResourceManagerTest) {
 		public:
 
-			TEST_METHOD(AddingAResource) {
+			//TEST_METHOD(Initialise)
+
+			TEST_METHOD(LoadTexture) {
 			}
+
+			//TEST_METHOD(ClearTextures)
+
+			//TEST_METHOD(LoadGeometry)
+
+			//TEST_METHOD(ClearGeometries)
+
+			//TEST_METHOD(LoadResource)
+
+			//TEST_METHOD(ClearResources)
 		};
 	}
 }

@@ -12,8 +12,16 @@ namespace EngineUnitTests
 		TEST_CLASS(EntityManagerTest) {
 		public:
 
-			TEST_METHOD(AddingAScene) {
+			TEST_METHOD(AddAScene) {
 			}
+
+			//TEST_METHOD(RemoveAScene)
+
+			//TEST_METHOD(CheckForAScene)
+
+			//TEST_METHOD(SetActiveScene)
+
+			//TEST_METHOD(AddSceneAndSetActive)
 		};
 	}
 }

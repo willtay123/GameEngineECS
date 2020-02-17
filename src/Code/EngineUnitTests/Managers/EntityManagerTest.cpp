@@ -12,6 +12,8 @@ namespace EngineUnitTests
 		TEST_CLASS(EntityManagerTest) {
 		public:
 
+			//TEST_METHOD(Initialise)
+
 			TEST_METHOD(AddingAnEntity) {
 				string t = string("test");
 				Entity* entity = new Entity(&t);
@@ -21,6 +23,18 @@ namespace EngineUnitTests
 
 				//Assert::AreSame(entityBack, entity); //Doesnt work because it's a custom class
 			}
+
+			//TEST_METHOD(RemoveAnEntity)
+
+			//TEST_METHOD(GetNonEditableEntities)
+
+			//TEST_METHOD(GetEditableEntities)
+
+			//TEST_METHOD(GetNonEditableEntity)
+
+			//TEST_METHOD(GetEditableEntity)
+
+			//TEST_METHOD(SwapEntityGroup)
 		};
 	}
 }

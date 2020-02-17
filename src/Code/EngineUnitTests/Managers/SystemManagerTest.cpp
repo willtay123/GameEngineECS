@@ -53,6 +53,10 @@ namespace EngineUnitTests
 				Assert::IsTrue(systems->size() == 5, L"System Manager failed to add multiple render systems");
 				SystemManager::ClearRenderSystems();
 			}
+
+			//TEST_METHOD(ActionUpdateSystem)
+
+			//TEST_METHOD(ActionRenderSystem)
 		};
 	}
 }

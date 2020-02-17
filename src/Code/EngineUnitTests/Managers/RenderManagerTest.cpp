@@ -11,8 +11,14 @@ namespace EngineUnitTests
 		TEST_CLASS(RenderManagerTest) {
 		public:
 
-			TEST_METHOD(TestMethod1) {
+			TEST_METHOD(Initialise) {
 			}
+
+			//TEST_METHOD(LoadShader)
+
+			//TEST_METHOD(DrawSingleEntity)
+
+			//TEST_METHOD(DrawEntityList)
 		};
 	}
 }
