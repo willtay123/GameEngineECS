@@ -35,7 +35,7 @@ void MessageManager::AddBroadcast(IMessage* message) {
 }
 
 void MessageManager::Broadcast() {
-	const vector<Entity*>* entities = EntityManager::GetEntities();
+	const vector<Entity*>* entities = EntityManager::GetInstance().GetEntities();
 
 	for (Entity* entity : (*entities)) {
 		for (IMessage* message : _toBroadcast) {

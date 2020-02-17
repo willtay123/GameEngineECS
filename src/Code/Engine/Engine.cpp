@@ -57,7 +57,7 @@ void Engine::Update() {
 	SceneManager::GetInstance().Update(dt);
 
 	RenderManager::GetInstance().EndUpdate();
-	EntityManager::EnactRemovals();
+	EntityManager::GetInstance().EnactRemovals();
 }
 
 void Engine::Render() {

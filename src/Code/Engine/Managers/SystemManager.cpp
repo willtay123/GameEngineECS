@@ -51,7 +51,7 @@ void SystemManager::ClearRenderSystems() {
 }
 
 void SystemManager::ActionUpdateSystems(double deltaTime, const string& entityGroup) {
-	vector<Entity*>* entityList = EntityManager::GetEntitiesEditable(entityGroup);
+	vector<Entity*>* entityList = EntityManager::GetInstance().GetEntitiesEditable(entityGroup);
 	for (ISystem* system : _updateSystems) {
 		system->GiveEntities(entityList);
 		system->OnAction(deltaTime);
@@ -59,7 +59,7 @@ void SystemManager::ActionUpdateSystems(double deltaTime, const string& entityGr
 }
 
 void SystemManager::ActionRenderSystems(double deltaTime, const string& entityGroup) {
-	vector<Entity*>* entityList = EntityManager::GetEntitiesEditable(entityGroup);
+	vector<Entity*>* entityList = EntityManager::GetInstance().GetEntitiesEditable(entityGroup);
 	for (ISystem* system : _renderSystems) {
 		system->GiveEntities(entityList);
 		system->OnAction(deltaTime);
