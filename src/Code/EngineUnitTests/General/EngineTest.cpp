@@ -9,9 +9,9 @@ namespace EngineUnitTests
 	public:
 		
 		TEST_METHOD(Test2) {
-			std::string name = "Bill";
-			std::string name2 = "Bill";
-			Assert::AreEqual(name, name2);
+			//std::string name = "Bill";
+			//std::string name2 = "Bill";
+			//Assert::AreEqual(name, name2);
 		}
 	};
 }
