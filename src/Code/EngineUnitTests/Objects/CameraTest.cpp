@@ -10,12 +10,12 @@ using namespace EngineECS;
 namespace EngineUnitTests
 {
 	namespace Objects {
-		TEST_CLASS(EntityTest) {
+		TEST_CLASS(CameraTest) {
 		public:
 
 			TEST_METHOD(CreateTheCamera) {
 				// Create camera
-				Camera* camera = new Camera();
+				Camera camera = Camera();
 
 				
 			}
