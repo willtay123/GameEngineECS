@@ -7,10 +7,12 @@ using namespace EngineECS;
 
 namespace EngineUnitTests
 {
-	TEST_CLASS(RenderManagerTest) {
-	public:
+	namespace Managers {
+		TEST_CLASS(RenderManagerTest) {
+		public:
 
-		TEST_METHOD(TestMethod1) {
-		}
-	};
+			TEST_METHOD(TestMethod1) {
+			}
+		};
+	}
 }

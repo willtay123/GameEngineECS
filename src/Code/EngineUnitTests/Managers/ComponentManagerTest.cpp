@@ -8,10 +8,12 @@ using namespace EngineECS;
 
 namespace EngineUnitTests
 {
-	TEST_CLASS(ComponentManagerTest) {
-	public:
+	namespace Managers {
+		TEST_CLASS(ComponentManagerTest) {
+		public:
 
-		TEST_METHOD(AddingAComponent) {
-		}
-	};
+			TEST_METHOD(AddingAComponent) {
+			}
+		};
+	}
 }

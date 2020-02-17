@@ -8,10 +8,12 @@ using namespace EngineECS;
 
 namespace EngineUnitTests
 {
-	TEST_CLASS(MessageManagerTest) {
-	public:
+	namespace Managers {
+		TEST_CLASS(MessageManagerTest) {
+		public:
 
-		TEST_METHOD(TestMethod1) {
-		}
-	};
+			TEST_METHOD(TestMethod1) {
+			}
+		};
+	}
 }

@@ -8,17 +8,19 @@ using namespace EngineECS;
 
 namespace EngineUnitTests
 {
-	TEST_CLASS(EntityManagerTest) {
-	public:
+	namespace Managers {
+		TEST_CLASS(EntityManagerTest) {
+		public:
 
-		TEST_METHOD(AddingAnEntity) {
-			string t = string("test");
-			Entity* entity = new Entity(&t);
-			EntityManager::AddEntity("testList", entity);
-			vector<Entity*> entities = *(EntityManager::GetEntities());
-			Entity* entityBack = entities[0];
+			TEST_METHOD(AddingAnEntity) {
+				string t = string("test");
+				Entity* entity = new Entity(&t);
+				EntityManager::AddEntity("testList", entity);
+				vector<Entity*> entities = *(EntityManager::GetEntities());
+				Entity* entityBack = entities[0];
 
-			//Assert::AreSame(entityBack, entity); //Doesnt work because it's a custom class
-		}
-	};
+				//Assert::AreSame(entityBack, entity); //Doesnt work because it's a custom class
+			}
+		};
+	}
 }

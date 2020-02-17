@@ -8,10 +8,12 @@ using namespace EngineECS;
 
 namespace EngineUnitTests
 {
-	TEST_CLASS(CollisionManagerTest) {
-	public:
+	namespace Managers {
+		TEST_CLASS(CollisionManagerTest) {
+		public:
 
-		TEST_METHOD(TestMethod1) {
-		}
-	};
+			TEST_METHOD(TestMethod1) {
+			}
+		};
+	}
 }

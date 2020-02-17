@@ -8,10 +8,12 @@ using namespace EngineECS;
 
 namespace EngineUnitTests
 {
-	TEST_CLASS(ResourceManagerTest) {
-	public:
+	namespace Managers {
+		TEST_CLASS(ResourceManagerTest) {
+		public:
 
-		TEST_METHOD(AddingAResource) {
-		}
-	};
+			TEST_METHOD(AddingAResource) {
+			}
+		};
+	}
 }
