@@ -21,13 +21,13 @@ SceneManager::~SceneManager() {
 	delete _scene;
 }
 
-void SceneManager::AddScene(string& sceneID, IScene* scene) {
+void SceneManager::AddScene(const string& sceneID, IScene* scene) {
 	// NOTE: may want to check for existing scene and throw exception
 	scene->Initialise();
 	_sceneMap[sceneID] = scene;
 }
 
-void SceneManager::RemoveScene(string& sceneID) {
+void SceneManager::RemoveScene(const string& sceneID) {
 	// Look in map
 	auto itr = _sceneMap.find(sceneID);
 	if (itr != _sceneMap.end()) {
@@ -50,7 +50,7 @@ void SceneManager::RemoveScene(string& sceneID) {
 	}
 }
 
-bool SceneManager::HasScene(string& sceneID) {
+bool SceneManager::HasScene(const string& sceneID) {
 	// Look in map
 	auto itr = _sceneMap.find(sceneID);
 	if (itr != _sceneMap.end()) {
@@ -63,7 +63,7 @@ bool SceneManager::HasScene(string& sceneID) {
 	}
 }
 
-void SceneManager::SetScene(string& sceneID) {
+void SceneManager::SetScene(const string& sceneID) {
 	// Look in map
 	auto itr = _sceneMap.find(sceneID);
 	if (itr != _sceneMap.end()) {
@@ -79,7 +79,7 @@ void SceneManager::SetScene(string& sceneID) {
 	}
 }
 
-void SceneManager::SetScene(string& sceneID, IScene* scene) {
+void SceneManager::SetScene(const string& sceneID, IScene* scene) {
 	// Add scene to the map
 	AddScene(sceneID, scene);
 	// Set that scene

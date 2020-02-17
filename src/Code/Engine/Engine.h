@@ -29,7 +29,7 @@ namespace EngineECS {
 		~Engine();
 
 		bool Initialise(IRenderer* renderer, IShader* shader, IResourceLoader* resourceLoader, ICollisionDetector* collisionDetector, ICollisionResponder* collisionResponder);
-		void SetInitialScene(string& sceneID, IScene* scene);
+		void SetInitialScene(const string& sceneID, IScene* scene);
 
 		void Update();
 		void Render();

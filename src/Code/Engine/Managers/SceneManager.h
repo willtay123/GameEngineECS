@@ -23,12 +23,12 @@ namespace EngineECS {
 		void Update(double dt);
 		void Render();
 
-		void AddScene(string& sceneID, IScene* scene);
-		void RemoveScene(string& sceneID);
-		bool HasScene(string& sceneID);
+		void AddScene(const string& sceneID, IScene* scene);
+		void RemoveScene(const string& sceneID);
+		bool HasScene(const string& sceneID);
 
-		void SetScene(string& sceneID);
-		void SetScene(string& sceneID, IScene* scene);
+		void SetScene(const string& sceneID);
+		void SetScene(const string& sceneID, IScene* scene);
 
 		static void End();
 	};

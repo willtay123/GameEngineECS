@@ -13,7 +13,7 @@ namespace EngineECS {
 	struct ToRemove {
 		string _groupID;
 		string _entityID;
-		ToRemove(string& groupID, string& entityID) {
+		ToRemove(const string& groupID, const string& entityID) {
 			_groupID = groupID;
 			_entityID = entityID;
 		}
@@ -32,20 +32,20 @@ namespace EngineECS {
 		~EntityManager();
 		static EntityManager& GetInstance();
 
-		static void AddEntity(string& groupID, Entity* entity);
-		static bool RemoveEntity(string& groupID, string& entityID);
-		static void ClearEntityGroup(string& groupID);
+		static void AddEntity(const string& groupID, Entity* entity);
+		static bool RemoveEntity(const string& groupID, const string& entityID);
+		static void ClearEntityGroup(const string& groupID);
 		static void ClearEntities();
 		static void EnactRemovals();
 
-		static void SetActiveEntityGroup(string& groupID);
+		static void SetActiveEntityGroup(const string& groupID);
 
 		static const vector<Entity*>* GetEntities();
-		static const vector<Entity*>* GetEntities(string& groupID);
-		static vector<Entity*>* GetEntitiesEditable(string& groupID);
-		static vector<Entity*>& GetStartingWith(string& groupID, string& startString);
+		static const vector<Entity*>* GetEntities(const string& groupID);
+		static vector<Entity*>* GetEntitiesEditable(const string& groupID);
+		static vector<Entity*>& GetStartingWith(const string& groupID, const string& startString);
 
-		static const Entity* GetEntity(string& groupID, string& entityID);
-		static Entity* GetEntityEditable(string& mapID, string& entityID);
+		static const Entity* GetEntity(const string& groupID, const string& entityID);
+		static Entity* GetEntityEditable(const string& mapID, const string& entityID);
 	};
 }

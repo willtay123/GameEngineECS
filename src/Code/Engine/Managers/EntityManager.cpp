@@ -23,7 +23,7 @@ EntityManager& EntityManager::GetInstance() {
 	return *Instance;
 }
 
-void EntityManager::AddEntity(string& groupID, Entity* entity) {
+void EntityManager::AddEntity(const string& groupID, Entity* entity) {
 	EntityManager em = GetInstance();
 
 	auto itr = em._entityMap.find(groupID);
@@ -44,7 +44,7 @@ void EntityManager::AddEntity(string& groupID, Entity* entity) {
 	}
 }
 
-bool EntityManager::RemoveEntity(string& groupID, string& entityID) {
+bool EntityManager::RemoveEntity(const string& groupID, const string& entityID) {
 	EntityManager em = GetInstance();
 
 	ToRemove remove = ToRemove(groupID, entityID);
@@ -52,7 +52,7 @@ bool EntityManager::RemoveEntity(string& groupID, string& entityID) {
 	return true;
 }
 
-void EntityManager::ClearEntityGroup(string& groupID) {
+void EntityManager::ClearEntityGroup(const string& groupID) {
 	EntityManager em = EntityManager::GetInstance();
 
 	auto itr = em._entityMap.find(groupID);
@@ -124,7 +124,7 @@ void EntityManager::EnactRemovals() {
 	em._entitiesToRemove.clear();
 }
 
-void EntityManager::SetActiveEntityGroup(string& groupID) {
+void EntityManager::SetActiveEntityGroup(const string& groupID) {
 	EntityManager em = GetInstance();
 
 	auto itr = em._entityMap.find(groupID);
@@ -139,7 +139,7 @@ const vector<Entity*>* EntityManager::GetEntities() {
 	return em._currentEntityList;
 }
 
-const vector<Entity*>* EntityManager::GetEntities(string& groupID) {
+const vector<Entity*>* EntityManager::GetEntities(const string& groupID) {
 	EntityManager em = GetInstance();
 
 	auto itr = em._entityMap.find(groupID);
@@ -151,7 +151,7 @@ const vector<Entity*>* EntityManager::GetEntities(string& groupID) {
 	return NULL;
 }
 
-vector<Entity*>* EntityManager::GetEntitiesEditable(string& groupID) {
+vector<Entity*>* EntityManager::GetEntitiesEditable(const string& groupID) {
 	EntityManager em = GetInstance();
 
 	auto itr = em._entityMap.find(groupID);
@@ -163,7 +163,7 @@ vector<Entity*>* EntityManager::GetEntitiesEditable(string& groupID) {
 	return NULL;
 }
 
-vector<Entity*>& EntityManager::GetStartingWith(string& groupID, string& startString) {
+vector<Entity*>& EntityManager::GetStartingWith(const string& groupID, const string& startString) {
 	EntityManager em = GetInstance();
 
 	// List to return
@@ -186,7 +186,7 @@ vector<Entity*>& EntityManager::GetStartingWith(string& groupID, string& startSt
 	return *foundList;
 }
 
-const Entity* EntityManager::GetEntity(string& groupID, string& entityID) {
+const Entity* EntityManager::GetEntity(const string& groupID, const string& entityID) {
 	const vector<Entity*>* entityList = GetEntities(groupID);
 	for (const Entity* entity : (*entityList)) {
 		const string* currentEntityID = entity->GetID();
@@ -197,7 +197,7 @@ const Entity* EntityManager::GetEntity(string& groupID, string& entityID) {
 	return NULL;
 }
 
-Entity* EntityManager::GetEntityEditable(string& groupID, string& entityID) {
+Entity* EntityManager::GetEntityEditable(const string& groupID, const string& entityID) {
 	vector<Entity*>* entityList = GetEntitiesEditable(groupID);
 	for (Entity* entity : (*entityList)) {
 		const string* currentEntityID = entity->GetID();

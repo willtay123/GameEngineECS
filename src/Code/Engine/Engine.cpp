@@ -55,7 +55,7 @@ bool Engine::Initialise(
 	return true;
 }
 
-void Engine::SetInitialScene(string& sceneID, IScene* scene) {
+void Engine::SetInitialScene(const string& sceneID, IScene* scene) {
 	SceneManager::GetInstance().SetScene(sceneID, scene);
 }
 
