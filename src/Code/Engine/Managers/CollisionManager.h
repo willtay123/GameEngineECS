@@ -16,19 +16,25 @@ using glm::vec4;
 namespace EngineECS {
 	class CollisionManager {
 	private:
-		static ICollisionDetector* _collisionDetector;
-		static ICollisionResponder* _collisionResponder;
-		static vector<ICollisionManifold*>* _collisions;
+		static CollisionManager* Instance;
+
+		ICollisionDetector* _collisionDetector;
+		ICollisionResponder* _collisionResponder;
+		vector<ICollisionManifold*> _collisions;
+
+		CollisionManager();
 
 	public:
-		static void Initialise(ICollisionDetector* detector, ICollisionResponder* responder);
+		~CollisionManager();
+		static CollisionManager& GetInstance();
 
-		static void DetectCollision(Entity* entity1, Entity* entity2);
-		static void DetectCollisions(vector<Entity*>* entityList);
+		void SetCollisionDetector(ICollisionDetector* detector);
+		void SetCollisionResponder(ICollisionResponder* responder);
 
-		static void HandleCollisions();
-		static void ClearCollisions();
+		void DetectCollision(const Entity& entity1, const Entity& entity2);
+		void DetectCollisions(const vector<Entity*>& entityList);
 
-		static void End();
+		void HandleCollisions();
+		void ClearCollisions();
 	};
 }

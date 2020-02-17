@@ -16,7 +16,7 @@ namespace EngineECS {
 	private:
 
 	public:
-		virtual ICollisionManifold* CollisionCheck(Entity* entity1, Entity* entity2) = 0;
-		virtual vector<ICollisionManifold*>* CollisionCheck(vector<Entity*>* entityList) = 0;
+		virtual ICollisionManifold* CollisionCheck(const Entity& entity1, const Entity& entity2) = 0;
+		virtual vector<ICollisionManifold*>* CollisionCheck(const vector<Entity*>& entityList) = 0; // TODO: change to use out parameter
 	};
 }

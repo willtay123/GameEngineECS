@@ -16,7 +16,6 @@ Engine::Engine() :
 }
 
 Engine::~Engine() {
-	CollisionManager::End();
 }
 
 bool Engine::Initialise(
@@ -31,8 +30,6 @@ bool Engine::Initialise(
 
 	// Initialise and create managers
 	Logger::LogInfo("Initialising Managers");
-
-	CollisionManager::Initialise(collisionDetector, collisionResponder);
 
 	Logger::LogInfo("Managers Initialised");
 

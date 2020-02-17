@@ -11,8 +11,8 @@ CollisionResponder::~CollisionResponder() {
 
 }
 
-void CollisionResponder::HandleCollisions(const vector<ICollisionManifold*>* manifoldList) {
-	for (ICollisionManifold* iManifold : *manifoldList) {
+void CollisionResponder::HandleCollisions(const vector<ICollisionManifold*>& manifoldList) {
+	for (ICollisionManifold* iManifold : manifoldList) {
 		//handle collisions
 		//cout << "Collision Detected" << endl;
 
@@ -53,7 +53,7 @@ void CollisionResponder::HandlePlayerItem(Entity* player, Entity* item) {
 	EntityManager::RemoveEntity("game", itemName);
 
 	// Add score to player
-	int scoreID = ComponentManager::GetIDForString("score");
+	int scoreID = ComponentManager::GetInstance().GetIDForString("score");
 	ComponentScore* scoreComp = (ComponentScore*)player->GetComponentEditable(scoreID);
 	scoreComp->IncreaseScore(1);
 }

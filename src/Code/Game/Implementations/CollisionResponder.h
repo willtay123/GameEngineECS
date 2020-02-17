@@ -17,7 +17,7 @@ public:
 	~CollisionResponder();
 	CollisionResponder& operator=(const CollisionResponder& rhs) = delete;
 
-	void HandleCollisions(const vector<ICollisionManifold*>* manifoldList);
+	void HandleCollisions(const vector<ICollisionManifold*>& manifoldList);
 
 	void HandlePlayerItem(Entity* player, Entity* item);
 };
