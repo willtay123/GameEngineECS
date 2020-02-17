@@ -3,17 +3,31 @@
 using namespace EngineECS;
 
 
-map<string, vector<Entity*>*> EntityManager::_entityMap;
-vector<Entity*>* EntityManager::_currentEntityList;
-vector<ToRemove*>* EntityManager::_entitiesToRemove;
+EntityManager* EntityManager::Instance;
 
-void EntityManager::Initialise() {
-	_entitiesToRemove = new vector<ToRemove*>();
+EntityManager::EntityManager() :
+	_entityMap(),
+	_currentEntityList(nullptr),
+	_entitiesToRemove() {
+
 }
 
-void EntityManager::AddEntity(string id, Entity* entity) {
-	auto itr = _entityMap.find(id);
-	if (itr != _entityMap.end()) {
+EntityManager::~EntityManager() {
+
+}
+
+EntityManager& EntityManager::GetInstance() {
+	if (!Instance) {
+		Instance = new EntityManager();
+	}
+	return *Instance;
+}
+
+void EntityManager::AddEntity(string& groupID, Entity* entity) {
+	EntityManager em = GetInstance();
+
+	auto itr = em._entityMap.find(groupID);
+	if (itr != em._entityMap.end()) {
 		// Entity list match
 		vector<Entity*>* entityList = itr->second;
 		entityList->push_back(entity);
@@ -26,26 +40,70 @@ void EntityManager::AddEntity(string id, Entity* entity) {
 		entityList->push_back(entity);
 
 		// Add entity list to map using the given ID
-		_entityMap[id] = entityList;
+		em._entityMap[groupID] = entityList;
 	}
 }
 
-bool EntityManager::RemoveEntity(string mapID, string& entityID) {
-	ToRemove* remove = new ToRemove(mapID, entityID);
-	_entitiesToRemove->push_back(remove);
+bool EntityManager::RemoveEntity(string& groupID, string& entityID) {
+	EntityManager em = GetInstance();
+
+	ToRemove remove = ToRemove(groupID, entityID);
+	em._entitiesToRemove.push_back(remove);
 	return true;
 }
 
-void EntityManager::EnactFinal() {
-	for (ToRemove* remove : *_entitiesToRemove) {
-		string mapID = remove->_mapID;
-		string entityID = remove->_entity;
+void EntityManager::ClearEntityGroup(string& groupID) {
+	EntityManager em = EntityManager::GetInstance();
 
-		auto itr = _entityMap.find(mapID);
-		if (itr != _entityMap.end()) {
+	auto itr = em._entityMap.find(groupID);
+	if (itr != em._entityMap.end()) {
+		// Entity list match
+		vector<Entity*>* entityList = (itr->second);
+
+		// Delete each entity
+		for (int i = 0; i < (int)entityList->size(); i += 1) {
+			Entity* entity = (*entityList)[i];
+			delete entity;
+		}
+		delete entityList;
+		em._entityMap.erase(groupID);
+	}
+	else {
+		// No Entity list match
+	}
+}
+
+void EntityManager::ClearEntities() {
+	EntityManager em = EntityManager::GetInstance();
+
+	for (auto itr = em._entityMap.begin(); itr != em._entityMap.end(); itr++) {
+		vector<Entity*>* entityList = (itr->second);
+
+		// Delete each entity
+		for (int i = 0; i < (int)entityList->size(); i += 1) {
+			Entity* entity = (*entityList)[i];
+			delete entity;
+		}
+		// Delete vector
+		delete entityList;
+
+		// Remove map entry
+		em._entityMap.erase(itr);
+	}
+}
+
+void EntityManager::EnactRemovals() {
+	EntityManager em = GetInstance();
+
+	for (ToRemove remove : em._entitiesToRemove) {
+		string mapID = remove._groupID;
+		string entityID = remove._entityID;
+
+		auto itr = em._entityMap.find(mapID);
+		if (itr != em._entityMap.end()) {
 			// Entity list match
 
-			// Search entity list for desired entity to delet
+			// Search entity list for desired entity to delete
 			vector<Entity*>* entityList = (itr->second);
 			for (int i = 0; i < (int)entityList->size(); i += 1) {
 				Entity* entity = (*entityList)[i];
@@ -63,27 +121,29 @@ void EntityManager::EnactFinal() {
 		}
 	}
 
-	for (ToRemove* remove : *_entitiesToRemove) {
-		delete remove;
-	}
-	_entitiesToRemove->clear();
+	em._entitiesToRemove.clear();
 }
 
-void EntityManager::SetCurrentByID(string id) {
-	auto itr = _entityMap.find(id);
-	if (itr != _entityMap.end()) {
+void EntityManager::SetActiveEntityGroup(string& groupID) {
+	EntityManager em = GetInstance();
+
+	auto itr = em._entityMap.find(groupID);
+	if (itr != em._entityMap.end()) {
 		// Entity list match
-		_currentEntityList = itr->second;
+		em._currentEntityList = itr->second;
 	}
 }
 
 const vector<Entity*>* EntityManager::GetEntities() {
-	return _currentEntityList;
+	EntityManager em = GetInstance();
+	return em._currentEntityList;
 }
 
-const vector<Entity*>* EntityManager::GetEntities(string id) {
-	auto itr = _entityMap.find(id);
-	if (itr != _entityMap.end()) {
+const vector<Entity*>* EntityManager::GetEntities(string& groupID) {
+	EntityManager em = GetInstance();
+
+	auto itr = em._entityMap.find(groupID);
+	if (itr != em._entityMap.end()) {
 		// Entity list match
 		return itr->second;
 	}
@@ -91,9 +151,11 @@ const vector<Entity*>* EntityManager::GetEntities(string id) {
 	return NULL;
 }
 
-vector<Entity*>* EntityManager::GetEntitiesEditable(string id) {
-	auto itr = _entityMap.find(id);
-	if (itr != _entityMap.end()) {
+vector<Entity*>* EntityManager::GetEntitiesEditable(string& groupID) {
+	EntityManager em = GetInstance();
+
+	auto itr = em._entityMap.find(groupID);
+	if (itr != em._entityMap.end()) {
 		// Entity list match
 		return itr->second;
 	}
@@ -101,13 +163,15 @@ vector<Entity*>* EntityManager::GetEntitiesEditable(string id) {
 	return NULL;
 }
 
-vector<Entity*>& EntityManager::GetStartingWith(string mapID, string& startString) {
+vector<Entity*>& EntityManager::GetStartingWith(string& groupID, string& startString) {
+	EntityManager em = GetInstance();
+
 	// List to return
 	vector<Entity*>* foundList = new vector<Entity*>();
 
 	// Check for desired entity list in map
-	auto itr = _entityMap.find(mapID);
-	if (itr != _entityMap.end()) {
+	auto itr = em._entityMap.find(groupID);
+	if (itr != em._entityMap.end()) {
 		// Entity list match
 		vector<Entity*>* entityList = itr->second;
 
@@ -122,8 +186,8 @@ vector<Entity*>& EntityManager::GetStartingWith(string mapID, string& startStrin
 	return *foundList;
 }
 
-const Entity* EntityManager::GetEntity(string mapID, string entityID) {
-	const vector<Entity*>* entityList = GetEntities(mapID);
+const Entity* EntityManager::GetEntity(string& groupID, string& entityID) {
+	const vector<Entity*>* entityList = GetEntities(groupID);
 	for (const Entity* entity : (*entityList)) {
 		const string* currentEntityID = entity->GetID();
 		if (*currentEntityID == entityID) {
@@ -133,8 +197,8 @@ const Entity* EntityManager::GetEntity(string mapID, string entityID) {
 	return NULL;
 }
 
-Entity* EntityManager::GetEntityEditable(string mapID, string entityID) {
-	vector<Entity*>* entityList = GetEntitiesEditable(mapID);
+Entity* EntityManager::GetEntityEditable(string& groupID, string& entityID) {
+	vector<Entity*>* entityList = GetEntitiesEditable(groupID);
 	for (Entity* entity : (*entityList)) {
 		const string* currentEntityID = entity->GetID();
 		if (*currentEntityID == entityID) {
@@ -142,10 +206,4 @@ Entity* EntityManager::GetEntityEditable(string mapID, string entityID) {
 		}
 	}
 	return NULL;
-}
-
-void EntityManager::End() {
-	// Delete all entities of all vectors
-	// Delete all vectors
-	// Delete map
 }

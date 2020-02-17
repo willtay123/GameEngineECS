@@ -19,7 +19,6 @@ Engine::Engine() {
 Engine::~Engine() {
 	delete sceneManager;
 	RenderManager::End();
-	EntityManager::End();
 	ComponentManager::End();
 	SystemManager::End();
 	MessageManager::End();
@@ -41,7 +40,6 @@ bool Engine::Initialise(
 	Logger::LogInfo("Initialising Managers");
 
 	RenderManager::Initialise(renderer, shader);
-	EntityManager::Initialise();
 	ComponentManager::Initialise();
 	SystemManager::Initialise();
 	MessageManager::Initialise();
@@ -71,13 +69,13 @@ void Engine::Update() {
 
 	// DT
 	now = clock();
-	dt = (double)(now - lastTime) / 1000;
+	dt = (static_cast<double>(now) - static_cast<double>(lastTime)) / 1000;
 	lastTime = clock();
 
 	sceneManager->Update(dt);
 
 	RenderManager::EndUpdate();
-	EntityManager::EnactFinal();
+	EntityManager::EnactRemovals();
 }
 
 void Engine::Render() {
@@ -95,7 +93,6 @@ double Engine::GetDT() {
 void Engine::End() {
 	SceneManager::End();
 	ResourceManager::End();
-	EntityManager::End();
 	ComponentManager::End();
 	RenderManager::End();
 }

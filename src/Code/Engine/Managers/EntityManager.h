@@ -11,37 +11,41 @@ using std::string;
 
 namespace EngineECS {
 	struct ToRemove {
-		string _mapID;
-		string _entity;
-		ToRemove(string mapID, string entity) {
-			_mapID = mapID;
-			_entity = entity;
+		string _groupID;
+		string _entityID;
+		ToRemove(string& groupID, string& entityID) {
+			_groupID = groupID;
+			_entityID = entityID;
 		}
 	};
 
 	class EntityManager {
 	private:
-		static map<string, vector<Entity*>*> _entityMap;
-		static vector<Entity*>* _currentEntityList;
-		static vector<ToRemove*>* _entitiesToRemove;
+		static EntityManager* Instance;
+		map<string, vector<Entity*>*> _entityMap;
+		vector<Entity*>* _currentEntityList;
+		vector<ToRemove> _entitiesToRemove;
+
+		EntityManager();
+		~EntityManager();
 
 	public:
-		static void Initialise();
+		static EntityManager& GetInstance();
 
-		static void AddEntity(string id, Entity* entity);
-		static bool RemoveEntity(string mapID, string& entityID);
-		static void EnactFinal();
+		static void AddEntity(string& groupID, Entity* entity);
+		static bool RemoveEntity(string& groupID, string& entityID);
+		static void ClearEntityGroup(string& groupID);
+		static void ClearEntities();
+		static void EnactRemovals();
 
-		static void SetCurrentByID(string id);
+		static void SetActiveEntityGroup(string& groupID);
 
 		static const vector<Entity*>* GetEntities();
-		static const vector<Entity*>* GetEntities(string id);
-		static vector<Entity*>* GetEntitiesEditable(string id);
-		static vector<Entity*>& GetStartingWith(string mapID, string& startString);
+		static const vector<Entity*>* GetEntities(string& groupID);
+		static vector<Entity*>* GetEntitiesEditable(string& groupID);
+		static vector<Entity*>& GetStartingWith(string& groupID, string& startString);
 
-		static const Entity* GetEntity(string mapID, string entityID);
-		static Entity* GetEntityEditable(string mapID, string entityID);
-
-		static void End();
+		static const Entity* GetEntity(string& groupID, string& entityID);
+		static Entity* GetEntityEditable(string& mapID, string& entityID);
 	};
 }
