@@ -3,19 +3,51 @@
 using namespace EngineECS;
 
 
-map<string, Texture*> ResourceManager::_textureMap;
-map<string, Geometry*> ResourceManager::_modelMap;
-map<string, IResource*> ResourceManager::_resourceMap;
+ResourceManager::ResourceManager() :
+	_textureMap(),
+	_modelMap(),
+	_resourceMap(),
+	_resourceLoader() {
 
-IResourceLoader* ResourceManager::_resourceLoader;
+}
 
-void ResourceManager::Initialise(IResourceLoader* resourceLoader) {
+ResourceManager::~ResourceManager() {
+	delete _resourceLoader;
+
+	for (auto itr = _textureMap.begin(); itr != _textureMap.end(); itr++) {
+		delete itr->second;
+	}
+	_textureMap.clear();
+
+	for (auto itr = _modelMap.begin(); itr != _modelMap.end(); itr++) {
+		delete itr->second;
+	}
+	_modelMap.clear();
+
+	for (auto itr = _resourceMap.begin(); itr != _resourceMap.end(); itr++) {
+		delete itr->second;
+	}
+	_resourceMap.clear();
+}
+
+ResourceManager& ResourceManager::GetInstance() {
+	if (!Instance) {
+		Instance = new ResourceManager();
+	}
+	return *Instance;
+}
+
+void ResourceManager::SetResourceLoader(IResourceLoader* resourceLoader) {
 	_resourceLoader = resourceLoader;
 }
 
 Texture* ResourceManager::LoadTexture(string filepath) {
-	string text = string("Loading texture: " + filepath);
-	Logger::LogInfo(text);
+	Logger::LogInfo("Loading texture: " + filepath);
+
+	if (!_resourceLoader) {
+		Logger::LogError("No resource loader has been set");
+		return NULL;
+	}
 
 	Texture* texture;
 
@@ -57,8 +89,12 @@ void ResourceManager::ClearTextures() {
 }
 
 Geometry* ResourceManager::LoadGeometry(string filepath) {
-	string text = string("Loading Geometry: " + filepath);
-	Logger::LogInfo(text);
+	Logger::LogInfo("Loading Geometry: " + filepath);
+
+	if (!_resourceLoader) {
+		Logger::LogError("No resource loader has been set");
+		return NULL;
+	}
 
 	Geometry* model;
 
@@ -102,8 +138,12 @@ void ResourceManager::ClearModels() {
 }
 
 IResource* ResourceManager::LoadResource(string filepath) {
-	string text = string("Loading resource: " + filepath);
-	Logger::LogInfo(text);
+	Logger::LogInfo("Loading resource: " + filepath);
+
+	if (!_resourceLoader) {
+		Logger::LogError("No resource loader has been set");
+		return NULL;
+	}
 
 	IResource* resource;
 
@@ -142,9 +182,4 @@ void ResourceManager::ClearResources() {
 	ss << _resourceMap.size();
 	string text = ss.str();
 	Logger::LogInfo(text);
-}
-
-void ResourceManager::End() {
-	//delete objects
-	delete _resourceLoader;
 }

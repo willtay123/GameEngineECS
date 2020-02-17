@@ -19,7 +19,6 @@ Engine::~Engine() {
 	RenderManager::End();
 	ComponentManager::End();
 	MessageManager::End();
-	ResourceManager::End();
 	CollisionManager::End();
 }
 
@@ -39,7 +38,6 @@ bool Engine::Initialise(
 	RenderManager::Initialise(renderer, shader);
 	ComponentManager::Initialise();
 	MessageManager::Initialise();
-	ResourceManager::Initialise(resourceLoader);
 	CollisionManager::Initialise(collisionDetector, collisionResponder);
 
 	Logger::LogInfo("Managers Initialised");
@@ -85,7 +83,6 @@ double Engine::GetDT() {
 
 void Engine::End() {
 	SceneManager::End();
-	ResourceManager::End();
 	ComponentManager::End();
 	RenderManager::End();
 }

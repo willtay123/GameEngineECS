@@ -19,24 +19,28 @@ using std::string;
 namespace EngineECS {
 	class ResourceManager {
 	private:
-		static map<string, Texture*> _textureMap;
-		static map<string, Geometry*> _modelMap;
-		static map<string, IResource*> _resourceMap;
+		static ResourceManager* Instance;
+		map<string, Texture*> _textureMap;
+		map<string, Geometry*> _modelMap;
+		map<string, IResource*> _resourceMap;
 
-		static IResourceLoader* _resourceLoader;
+		IResourceLoader* _resourceLoader;
+
+		ResourceManager();
 
 	public:
-		static void Initialise(IResourceLoader* resourceLoader);
+		~ResourceManager();
+		static ResourceManager& GetInstance();
 
-		static Texture* LoadTexture(string filepath);
-		static void ClearTextures();
+		void SetResourceLoader(IResourceLoader* _resourceLoader);
 
-		static Geometry* LoadGeometry(string filepath);
-		static void ClearModels();
+		Texture* LoadTexture(string filepath);
+		void ClearTextures();
 
-		static IResource* LoadResource(string filepath);
-		static void ClearResources();
+		Geometry* LoadGeometry(string filepath);
+		void ClearModels();
 
-		static void End();
+		IResource* LoadResource(string filepath);
+		void ClearResources();
 	};
 }
