@@ -10,23 +10,25 @@ using std::vector;
 namespace EngineECS {
 	class SystemManager {
 	private:
-		static vector<ISystem*> _updateSystems;
-		static vector<ISystem*> _renderSystems;
+		static SystemManager* Instance;
+		vector<ISystem*> _updateSystems;
+		vector<ISystem*> _renderSystems;
+
+		SystemManager();
 	public:
-		static void Initialise();
+		~SystemManager();
+		static SystemManager& GetInstance();
 
-		static void AddUpdateSystem(ISystem* system);
-		static void AddRenderSystem(ISystem* system);
+		void AddUpdateSystem(ISystem* system);
+		void AddRenderSystem(ISystem* system);
 
-		static void ClearUpdateSystems();
-		static void ClearRenderSystems();
+		void ClearUpdateSystems();
+		void ClearRenderSystems();
 
-		static void ActionUpdateSystems(double deltaTime, const string& entityGroup);
-		static void ActionRenderSystems(double deltaTime, const string& entityGroup);
+		void ActionUpdateSystems(double deltaTime, const string& entityGroup);
+		void ActionRenderSystems(double deltaTime, const string& entityGroup);
 
-		static const vector<ISystem*>* GetUpdateSystems() { return &_updateSystems; }
-		static const vector<ISystem*>* GetRenderSystems() { return &_renderSystems; }
-
-		static void End();
+		const vector<ISystem*>* GetUpdateSystems() { return &_updateSystems; }
+		const vector<ISystem*>* GetRenderSystems() { return &_renderSystems; }
 	};
 }

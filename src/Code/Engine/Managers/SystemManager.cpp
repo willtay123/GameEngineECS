@@ -2,12 +2,30 @@
 
 using namespace EngineECS;
 
-vector<ISystem*> SystemManager::_updateSystems;
-vector<ISystem*> SystemManager::_renderSystems;
 
 
-void SystemManager::Initialise() {
+SystemManager::SystemManager() :
+	_updateSystems(),
+	_renderSystems() {
 
+}
+
+SystemManager::~SystemManager() {
+	for (ISystem* system : _updateSystems) {
+		delete system;
+	}
+	_updateSystems.clear();
+	for (ISystem* system : _renderSystems) {
+		delete system;
+	}
+	_renderSystems.clear();
+}
+
+SystemManager& SystemManager::GetInstance() {
+	if (!Instance) {
+		Instance = new SystemManager();
+	}
+	return *Instance;
 }
 
 void SystemManager::AddUpdateSystem(ISystem* system) {
@@ -46,8 +64,4 @@ void SystemManager::ActionRenderSystems(double deltaTime, const string& entityGr
 		system->GiveEntities(entityList);
 		system->OnAction(deltaTime);
 	}
-}
-
-void SystemManager::End() {
-
 }

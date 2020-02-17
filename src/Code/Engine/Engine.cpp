@@ -18,7 +18,6 @@ Engine::Engine() :
 Engine::~Engine() {
 	RenderManager::End();
 	ComponentManager::End();
-	SystemManager::End();
 	MessageManager::End();
 	ResourceManager::End();
 	CollisionManager::End();
@@ -39,7 +38,6 @@ bool Engine::Initialise(
 
 	RenderManager::Initialise(renderer, shader);
 	ComponentManager::Initialise();
-	SystemManager::Initialise();
 	MessageManager::Initialise();
 	ResourceManager::Initialise(resourceLoader);
 	CollisionManager::Initialise(collisionDetector, collisionResponder);
