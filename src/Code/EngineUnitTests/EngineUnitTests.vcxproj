@@ -170,6 +170,7 @@
     <ClCompile Include="Objects\CameraTest.cpp" />
     <ClCompile Include="Objects\EntityTest.cpp" />
     <ClCompile Include="Objects\GeometryTest.cpp" />
+    <ClCompile Include="Objects\TextureTest.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

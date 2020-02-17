@@ -13,8 +13,8 @@ namespace EngineUnitTests
 		TEST_CLASS(GeometryTest) {
 		public:
 
-			TEST_METHOD(CreateTheCamera) {
-				// Create camera
+			TEST_METHOD(CreateGeometry) {
+				// Create geometry
 				Geometry geom = Geometry();
 
 			}
