@@ -10,16 +10,18 @@ using std::vector;
 namespace EngineECS {
 	class MessageManager {
 	private:
-		static vector<IMessage*>* _toBroadcast;
+		static MessageManager* Instance;
+		vector<IMessage*> _toBroadcast;
 
-		static void ClearBroadcasts();
+		MessageManager();
+
+		void ClearBroadcasts();
 
 	public:
-		static void Initialise();
+		~MessageManager();
+		static MessageManager& GetInstance();
 
-		static void AddBroadcast(IMessage* message);
-		static void Broadcast();
-
-		static void End();
+		void AddBroadcast(IMessage* message);
+		void Broadcast();
 	};
 }
