@@ -9,6 +9,12 @@ Entity::Entity() :
 	_components(new vector<IComponent*>()) {
 }
 
+Entity::Entity(const char* id) :
+	_enabled(true),
+	_components(new vector<IComponent*>()) {
+	_id = string(id);
+}
+
 Entity::Entity(string* id) :
 	_id(*id),
 	_enabled(true),
