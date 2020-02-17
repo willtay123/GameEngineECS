@@ -167,6 +167,7 @@
     <ClCompile Include="Managers\ResourceManagerTest.cpp" />
     <ClCompile Include="Managers\SceneManagerTest.cpp" />
     <ClCompile Include="Managers\SystemManagerTest.cpp" />
+    <ClCompile Include="Objects\CameraTest.cpp" />
     <ClCompile Include="Objects\EntityTest.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
