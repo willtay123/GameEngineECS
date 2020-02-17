@@ -22,8 +22,6 @@ namespace EngineECS {
 		clock_t now;
 		clock_t lastTime;
 
-		SceneManager* sceneManager;
-
 	public:
 		static double GetDT();
 
@@ -31,7 +29,7 @@ namespace EngineECS {
 		~Engine();
 
 		bool Initialise(IRenderer* renderer, IShader* shader, IResourceLoader* resourceLoader, ICollisionDetector* collisionDetector, ICollisionResponder* collisionResponder);
-		void SetInitialScene(const char* sceneID, IScene* scene);
+		void SetInitialScene(string& sceneID, IScene* scene);
 
 		void Update();
 		void Render();

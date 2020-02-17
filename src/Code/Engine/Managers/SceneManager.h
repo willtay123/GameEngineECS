@@ -11,26 +11,24 @@ namespace EngineECS {
 	class SceneManager {
 	private:
 		static SceneManager* Instance;
-		SceneManager();
-
 		IScene* _scene;
-		map<const char*, IScene*> _sceneMap;
+		map<string, IScene*> _sceneMap;
+
+		SceneManager();
+		~SceneManager();
 
 	public:
 		static SceneManager* GetInstance();
-		SceneManager(const SceneManager& rhs) = delete;
-		~SceneManager();
-		SceneManager& operator=(const SceneManager& rhs) = delete;
 
 		void Update(double dt);
 		void Render();
 
-		void AddScene(const char* sceneID, IScene* scene);
-		void RemoveScene(const char* sceneID);
-		bool HasScene(const char* sceneID);
+		void AddScene(string& sceneID, IScene* scene);
+		void RemoveScene(string& sceneID);
+		bool HasScene(string& sceneID);
 
-		void SetScene(const char* sceneID);
-		void SetScene(const char* sceneID, IScene* scene);
+		void SetScene(string& sceneID);
+		void SetScene(string& sceneID, IScene* scene);
 
 		static void End();
 	};

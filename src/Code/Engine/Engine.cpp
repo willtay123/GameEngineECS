@@ -11,13 +11,11 @@ Engine::Engine() {
 	Logger::LogInfo("Engine creation started");
 
 	initialised = false;
-	sceneManager = SceneManager::GetInstance();
 
 	Logger::LogInfo("Engine creation ended");
 }
 
 Engine::~Engine() {
-	delete sceneManager;
 	RenderManager::End();
 	ComponentManager::End();
 	SystemManager::End();
@@ -57,14 +55,13 @@ bool Engine::Initialise(
 	return true;
 }
 
-void Engine::SetInitialScene(const char* sceneID, IScene* scene) {
-	if (!initialised) {
-		throw "ERROR: Engine must be initialised before a scene can be set";
-	}
-	sceneManager->SetScene(sceneID, scene);
+void Engine::SetInitialScene(string& sceneID, IScene* scene) {
+	SceneManager* sm = SceneManager::GetInstance();
+	sm->SetScene(sceneID, scene);
 }
 
 void Engine::Update() {
+	SceneManager* sm = SceneManager::GetInstance();
 	RenderManager::StartUpdate();
 
 	// DT
@@ -72,16 +69,17 @@ void Engine::Update() {
 	dt = (static_cast<double>(now) - static_cast<double>(lastTime)) / 1000;
 	lastTime = clock();
 
-	sceneManager->Update(dt);
+	sm->Update(dt);
 
 	RenderManager::EndUpdate();
 	EntityManager::EnactRemovals();
 }
 
 void Engine::Render() {
+	SceneManager* sm = SceneManager::GetInstance();
 	RenderManager::StartRender();
 
-	sceneManager->Render();
+	sm->Render();
 
 	RenderManager::EndRender();
 }
