@@ -15,10 +15,10 @@ namespace EngineECS {
 		map<string, IScene*> _sceneMap;
 
 		SceneManager();
-		~SceneManager();
 
 	public:
-		static SceneManager* GetInstance();
+		~SceneManager();
+		static SceneManager& GetInstance();
 
 		void Update(double dt);
 		void Render();

@@ -16,11 +16,11 @@
 namespace EngineECS {
 	class Engine {
 	private:
-		bool initialised;
+		bool _initialised;
 
 		static double dt;
-		clock_t now;
-		clock_t lastTime;
+		clock_t _now;
+		clock_t _lastTime;
 
 	public:
 		static double GetDT();

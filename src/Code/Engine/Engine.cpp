@@ -7,11 +7,11 @@ using namespace EngineECS;
 
 double Engine::dt = 0;
 
-Engine::Engine() {
+Engine::Engine() :
+	_initialised(false),
+	_now(),
+	_lastTime() {
 	Logger::LogInfo("Engine creation started");
-
-	initialised = false;
-
 	Logger::LogInfo("Engine creation ended");
 }
 
@@ -47,39 +47,36 @@ bool Engine::Initialise(
 	Logger::LogInfo("Managers Initialised");
 
 	// Delta Time
-	lastTime = clock();
+	_lastTime = clock();
 
 	Logger::LogInfo("Engine initialisation ended");
 
-	initialised = true;
+	_initialised = true;
 	return true;
 }
 
 void Engine::SetInitialScene(string& sceneID, IScene* scene) {
-	SceneManager* sm = SceneManager::GetInstance();
-	sm->SetScene(sceneID, scene);
+	SceneManager::GetInstance().SetScene(sceneID, scene);
 }
 
 void Engine::Update() {
-	SceneManager* sm = SceneManager::GetInstance();
 	RenderManager::StartUpdate();
 
 	// DT
-	now = clock();
-	dt = (static_cast<double>(now) - static_cast<double>(lastTime)) / 1000;
-	lastTime = clock();
+	_now = clock();
+	dt = (static_cast<double>(_now) - static_cast<double>(_lastTime)) / 1000;
+	_lastTime = clock();
 
-	sm->Update(dt);
+	SceneManager::GetInstance().Update(dt);
 
 	RenderManager::EndUpdate();
 	EntityManager::EnactRemovals();
 }
 
 void Engine::Render() {
-	SceneManager* sm = SceneManager::GetInstance();
 	RenderManager::StartRender();
 
-	sm->Render();
+	SceneManager::GetInstance().Render();
 
 	RenderManager::EndRender();
 }

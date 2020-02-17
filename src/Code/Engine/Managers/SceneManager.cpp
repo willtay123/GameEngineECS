@@ -6,11 +6,11 @@ using namespace EngineECS;
 
 SceneManager* SceneManager::Instance;
 
-SceneManager* SceneManager::GetInstance() {
+SceneManager& SceneManager::GetInstance() {
 	if (Instance == NULL) {
 		Instance = new SceneManager();
 	}
-	return Instance;
+	return *Instance;
 }
 
 SceneManager::SceneManager() :

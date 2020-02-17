@@ -27,9 +27,9 @@ namespace EngineECS {
 		vector<ToRemove> _entitiesToRemove;
 
 		EntityManager();
-		~EntityManager();
 
 	public:
+		~EntityManager();
 		static EntityManager& GetInstance();
 
 		static void AddEntity(string& groupID, Entity* entity);
