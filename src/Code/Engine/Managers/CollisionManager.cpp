@@ -12,7 +12,7 @@ void CollisionManager::Initialise(ICollisionDetector* detector, ICollisionRespon
 	_collisionDetector = detector;
 	_collisionResponder = responder;
 	_collisions = new vector<ICollisionManifold*>();
-	ComponentManager::GenerateIDByString("collider");
+	ComponentManager::GetInstance().GenerateIDByString("collider");
 }
 
 void CollisionManager::DetectCollision(Entity* entity1, Entity* entity2) {

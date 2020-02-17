@@ -3,12 +3,22 @@
 using namespace EngineECS;
 
 
-int ComponentManager::idCount = 0;
-map<type_index, int> ComponentManager::componentTypeMap;
-map<string, int> ComponentManager::componentStringMap;
+ComponentManager::ComponentManager() :
+	idCount(0),
+	componentTypeMap(),
+	componentStringMap() {
 
-void ComponentManager::Initialise() {
+}
 
+ComponentManager::~ComponentManager() {
+
+}
+
+ComponentManager& ComponentManager::GetInstance() {
+	if (!Instance) {
+		Instance = new ComponentManager();
+	}
+	return *Instance;
 }
 
 int ComponentManager::GenerateIDByType(IComponent* component) {
@@ -26,7 +36,7 @@ int ComponentManager::GenerateIDByType(IComponent* component) {
 	return -1;
 }
 
-int ComponentManager::GenerateIDByString(string label) {
+int ComponentManager::GenerateIDByString(const string& label) {
 	//try finding the key in the map
 	if (componentStringMap.find(label) != componentStringMap.end()) {
 		//found
@@ -41,7 +51,7 @@ int ComponentManager::GenerateIDByString(string label) {
 	return -1;
 }
 
-int ComponentManager::GetIDForType(type_index type) {
+int ComponentManager::GetIDForType(const type_index type) {
 	if (componentTypeMap.find(type) != componentTypeMap.end()) {
 		//found
 		return componentTypeMap[type];
@@ -49,14 +59,10 @@ int ComponentManager::GetIDForType(type_index type) {
 	return -1;
 }
 
-int ComponentManager::GetIDForString(string label) {
+int ComponentManager::GetIDForString(const string& label) {
 	if (componentStringMap.find(label) != componentStringMap.end()) {
 		//found
 		return componentStringMap[label];
 	}
 	return -1;
-}
-
-void ComponentManager::End() {
-	//delete objects
 }

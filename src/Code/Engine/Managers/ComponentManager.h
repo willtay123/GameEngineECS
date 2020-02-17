@@ -14,18 +14,21 @@ namespace EngineECS {
 
 	class ComponentManager {
 	private:
-		static int idCount;
-		static map<type_index, int> componentTypeMap;
-		static map<string, int> componentStringMap;
+		static ComponentManager* Instance;
+
+		int idCount;
+		map<type_index, int> componentTypeMap;
+		map<string, int> componentStringMap;
+
+		ComponentManager();
 
 	public:
-		static void Initialise();
+		~ComponentManager();
+		static ComponentManager& GetInstance();
 
-		static int GenerateIDByType(IComponent* component);
-		static int GenerateIDByString(string key);
-		static int GetIDForType(type_index type);
-		static int GetIDForString(string label);
-
-		static void End();
+		int GenerateIDByType(IComponent* component);
+		int GenerateIDByString(const string& key);
+		int GetIDForType(const type_index type);
+		int GetIDForString(const string& label);
 	};
 }

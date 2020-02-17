@@ -98,7 +98,7 @@ const IComponent* Entity::GetComponent(int id) const {
 }
 
 const IComponent* Entity::GetComponent(string id) const {
-	int searchID = ComponentManager::GetIDForString(id);
+	int searchID = ComponentManager::GetInstance().GetIDForString(id);
 	return GetComponent(searchID);
 }
 

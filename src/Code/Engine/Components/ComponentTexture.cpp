@@ -6,18 +6,18 @@ using namespace EngineECS;
 ComponentTexture::ComponentTexture() :
 	_texture(NULL)
 {
-	_componentType = ComponentManager::GenerateIDByString("Texture");
+	_componentType = ComponentManager::GetInstance().GenerateIDByString("Texture");
 }
 
 ComponentTexture::ComponentTexture(string filepath) {
 	_texture = ResourceManager::GetInstance().LoadTexture(filepath);
-	_componentType = ComponentManager::GenerateIDByString("Texture");
+	_componentType = ComponentManager::GetInstance().GenerateIDByString("Texture");
 }
 
 ComponentTexture::ComponentTexture(Texture* texture) :
 	_texture(texture)
 {
-	_componentType = ComponentManager::GenerateIDByString("Texture");
+	_componentType = ComponentManager::GetInstance().GenerateIDByString("Texture");
 }
 
 ComponentTexture::ComponentTexture(const ComponentTexture& rhs) :

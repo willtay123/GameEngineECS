@@ -16,7 +16,6 @@ Engine::Engine() :
 }
 
 Engine::~Engine() {
-	ComponentManager::End();
 	CollisionManager::End();
 }
 
@@ -33,7 +32,6 @@ bool Engine::Initialise(
 	// Initialise and create managers
 	Logger::LogInfo("Initialising Managers");
 
-	ComponentManager::Initialise();
 	CollisionManager::Initialise(collisionDetector, collisionResponder);
 
 	Logger::LogInfo("Managers Initialised");
@@ -79,5 +77,4 @@ double Engine::GetDT() {
 
 void Engine::End() {
 	SceneManager::End();
-	ComponentManager::End();
 }
