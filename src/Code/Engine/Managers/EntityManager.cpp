@@ -13,7 +13,7 @@ EntityManager::EntityManager() :
 }
 
 EntityManager::~EntityManager() {
-
+	ClearEntities();
 }
 
 EntityManager& EntityManager::GetInstance() {
