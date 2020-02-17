@@ -26,7 +26,7 @@ public:
 	~ShaderGLSL();
 
 	bool Initialise();
-	IBufferID* LoadShader(const char* filepath, ShaderType shaderType);
+	IBufferID* LoadShader(const string& filepath, const ShaderType shaderType);
 	void LinkShaders(int pgmID, int vsID, int fsID);
 
 	GLuint GetPgmID();

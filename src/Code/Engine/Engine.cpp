@@ -16,7 +16,6 @@ Engine::Engine() :
 }
 
 Engine::~Engine() {
-	RenderManager::End();
 	ComponentManager::End();
 	MessageManager::End();
 	CollisionManager::End();
@@ -35,7 +34,6 @@ bool Engine::Initialise(
 	// Initialise and create managers
 	Logger::LogInfo("Initialising Managers");
 
-	RenderManager::Initialise(renderer, shader);
 	ComponentManager::Initialise();
 	MessageManager::Initialise();
 	CollisionManager::Initialise(collisionDetector, collisionResponder);
@@ -56,7 +54,7 @@ void Engine::SetInitialScene(const string& sceneID, IScene* scene) {
 }
 
 void Engine::Update() {
-	RenderManager::StartUpdate();
+	RenderManager::GetInstance().StartUpdate();
 
 	// DT
 	_now = clock();
@@ -65,16 +63,16 @@ void Engine::Update() {
 
 	SceneManager::GetInstance().Update(dt);
 
-	RenderManager::EndUpdate();
+	RenderManager::GetInstance().EndUpdate();
 	EntityManager::EnactRemovals();
 }
 
 void Engine::Render() {
-	RenderManager::StartRender();
+	RenderManager::GetInstance().StartRender();
 
 	SceneManager::GetInstance().Render();
 
-	RenderManager::EndRender();
+	RenderManager::GetInstance().EndRender();
 }
 
 double Engine::GetDT() {
@@ -84,5 +82,4 @@ double Engine::GetDT() {
 void Engine::End() {
 	SceneManager::End();
 	ComponentManager::End();
-	RenderManager::End();
 }

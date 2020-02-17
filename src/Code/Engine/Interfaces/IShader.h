@@ -3,7 +3,7 @@
 #include "IBufferID.h"
 
 namespace EngineECS {
-	enum ShaderType {
+	enum class ShaderType {
 		VertexShader,
 		FragmentShader,
 		PixelShader,
@@ -20,7 +20,7 @@ namespace EngineECS {
 	public:
 
 		virtual bool Initialise() = 0;
-		virtual IBufferID* LoadShader(const char* filename, ShaderType shaderType) = 0;
+		virtual IBufferID* LoadShader(const string& filename, const ShaderType shaderType) = 0;
 		virtual void Unload() = 0;
 	};
 }

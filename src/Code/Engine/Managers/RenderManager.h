@@ -26,24 +26,28 @@ using std::vector;
 namespace EngineECS {
 	class RenderManager {
 	private:
+		static RenderManager* Instance;
+		IRenderer* _renderer;
+		IShader* _shader;
+
+		RenderManager();
 
 	public:
-		static IRenderer* _renderer;
-		static IShader* _shader;
+		~RenderManager();
+		static RenderManager& GetInstance();
 
-		static void Initialise(IRenderer* renderer, IShader* shader);
+		bool SetRenderer(IRenderer* renderer);
+		bool SetShader(IShader* shader);
 
-		static IBufferID* LoadShader(const char* filename, ShaderType shaderType);
+		IBufferID* LoadShader(const string& filename, const ShaderType shaderType);
 
-		static void Draw(const Camera* camera, const Entity* entity);
-		static void Draw(const Camera* camera, const vector<Entity*>* entities);
+		void Draw(const Camera* camera, const Entity* entity);
+		void Draw(const Camera* camera, const vector<Entity*>* entities);
 
-		static void StartUpdate();
-		static void EndUpdate();
+		void StartUpdate();
+		void EndUpdate();
 
-		static void StartRender();
-		static void EndRender();
-
-		static void End();
+		void StartRender();
+		void EndRender();
 	};
 }
