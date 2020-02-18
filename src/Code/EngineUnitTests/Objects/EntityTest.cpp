@@ -19,8 +19,8 @@ namespace EngineUnitTests
 				Entity* entity = new Entity("Test");
 
 				// Check entity has its data set
-				const string* id = entity->GetID();
-				Assert::IsTrue(*id == "Test");
+				const string id = entity->GetID();
+				Assert::IsTrue(id == "Test");
 
 				// Cleanup
 				delete entity;

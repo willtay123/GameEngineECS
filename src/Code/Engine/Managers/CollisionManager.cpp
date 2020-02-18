@@ -42,7 +42,7 @@ void CollisionManager::DetectCollision(const Entity& entity1, const Entity& enti
 	}
 }
 
-void CollisionManager::DetectCollisions(const vector<Entity*>& entityList) {
+void CollisionManager::DetectCollisions(const std::shared_ptr<EntityList> entityList) {
 	if (_collisionDetector) {
 		vector<ICollisionManifold*>* manifoldList = _collisionDetector->CollisionCheck(entityList);
 		if (manifoldList != NULL) {

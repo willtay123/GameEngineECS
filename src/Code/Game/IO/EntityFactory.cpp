@@ -15,9 +15,9 @@ void EntityFactory::LoadFromFile(string sceneName, string filepath) {
 	}
 
 	for (xml_node entityNode : doc.root().first_child().children()) {
-		Entity* entity = LoadEntity(entityNode);
+		std::unique_ptr<Entity> entity(LoadEntity(entityNode));
 
-		EntityManager::AddEntity(sceneName.c_str(), entity);
+		EntityManager::GetInstance().AddEntity(sceneName, std::move(entity));
 	}
 }
 
@@ -32,7 +32,7 @@ Entity* EntityFactory::LoadEntity(xml_node& entityNode) {
 		components.push_back(component);
 	}
 
-	Entity* entity = new Entity(&name);
+	Entity* entity = new Entity(name);
 
 	for (size_t i = 0; i < components.size(); i++) {
 		entity->AddComponent(components[i]);

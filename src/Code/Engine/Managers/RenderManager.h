@@ -2,12 +2,15 @@
 
 #define GLM_ENABLE_EXPERIMENTAL
 
+#include <memory>
 #include <iostream>
 #include <vector>
 
 #include <GLM/glm/vec4.hpp>
 #include <GLM/glm/mat4x4.hpp>
 #include <GLM/glm/gtx/transform.hpp>
+
+#include "DataStructs/EntityList.h"
 
 #include "Interfaces/IRenderer.h"
 #include "Interfaces/IShader.h"
@@ -39,10 +42,13 @@ namespace EngineECS {
 		bool SetRenderer(IRenderer* renderer);
 		bool SetShader(IShader* shader);
 
+		IRenderer* GetRenderer() const { return _renderer; }
+		IShader* GetShader() const { return _shader; }
+
 		IBufferID* LoadShader(const string& filename, const ShaderType shaderType);
 
-		void Draw(const Camera* camera, const Entity* entity);
-		void Draw(const Camera* camera, const vector<Entity*>* entities);
+		void Draw(const Camera* camera, const Entity& entity);
+		void Draw(const Camera* camera, const std::shared_ptr<EntityList> entities);
 
 		void StartUpdate();
 		void EndUpdate();

@@ -1,6 +1,9 @@
 #pragma once
 
+#include <string>
 #include "IBufferID.h"
+
+using std::string;
 
 namespace EngineECS {
 	enum class ShaderType {

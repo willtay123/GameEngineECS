@@ -17,19 +17,19 @@ void EndScene::Initialise() {
 	_camera->SetUp(&vec3(0, 0, 1));
 
 	// IO
-	RendererGL* rend = (RendererGL*)RenderManager::_renderer;
+	RendererGL* rend = (RendererGL*)RenderManager::GetInstance().GetRenderer();
 	GLFWwindow* window = rend->GetWindow();
 	glfwSetKeyCallback(window, Keyboard::KeyCallback);
 
 	string entName("entity1");
-	Entity* entity = new Entity(&entName);
+	std::unique_ptr<Entity> entity(new Entity(entName));
 	IComponent* comp = new ComponentTransform(0, 0, 0, 0, 3.14159f, 0, 10, 10, 10);
 	entity->AddComponent(comp);
 	comp = new ComponentModelGL("Assets/Models/cube.obj");
 	entity->AddComponent(comp);
 	comp = new ComponentTexture("Externals/Assets/Textures/End.png");
 	entity->AddComponent(comp);
-	EntityManager::AddEntity(_name, entity);
+	EntityManager::GetInstance().AddEntity(_name, std::move(entity));
 }
 
 void EndScene::Update(double dt) {
@@ -39,8 +39,8 @@ void EndScene::Update(double dt) {
 }
 
 void EndScene::Render() {
-	const vector<Entity*>* entities = EntityManager::GetEntities(_name);
-	RenderManager::Draw(_camera, entities);
+	std::weak_ptr<EntityList> entities = EntityManager::GetInstance().GetEntities(_name);
+	RenderManager::GetInstance().Draw(_camera, entities.lock());
 }
 
 void EndScene::Close() {
@@ -50,7 +50,7 @@ void EndScene::Close() {
 void EndScene::ProcessInput() {
 	if (Keyboard::KeyPressed(GLFW_KEY_SPACE)) {
 		// Change back to game
-		SceneManager* sm = SceneManager::GetInstance();
-		sm->SetScene("game");
+		SceneManager sm = SceneManager::GetInstance();
+		sm.SetScene("game");
 	}
 }

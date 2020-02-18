@@ -4,6 +4,7 @@
 #include <GLM/glm/vec3.hpp>
 #include <GLM/glm/vec4.hpp>
 
+#include "DataStructs/EntityList.h"
 #include "Objects/Entity.h"
 #include "Interfaces/ICollisionManifold.h"
 
@@ -17,6 +18,6 @@ namespace EngineECS {
 
 	public:
 		virtual ICollisionManifold* CollisionCheck(const Entity& entity1, const Entity& entity2) = 0;
-		virtual vector<ICollisionManifold*>* CollisionCheck(const vector<Entity*>& entityList) = 0; // TODO: change to use out parameter
+		virtual vector<ICollisionManifold*>* CollisionCheck(const std::shared_ptr<EntityList> entityList) = 0; // TODO: change to use out parameter
 	};
 }

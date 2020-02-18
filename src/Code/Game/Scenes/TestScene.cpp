@@ -22,7 +22,7 @@ void TestScene::Initialise() {
 	_camera->SetUp(&vec3(0, 0, 1));
 
 	// IO
-	RendererGL* rend = (RendererGL*)RenderManager::_renderer;
+	RendererGL* rend = (RendererGL*)RenderManager::GetInstance().GetRenderer();
 	GLFWwindow* window = rend->GetWindow();
 	glfwSetKeyCallback(window, Keyboard::KeyCallback);
 ;
@@ -55,7 +55,7 @@ void TestScene::Initialise() {
 	// Create Systems
 	ISystem* system;
 	system = new SystemPhysics();
-	SystemManager::AddUpdateSystem(system);
+	SystemManager::GetInstance().AddUpdateSystem(system);
 
 	// Create timer
 	_timeSinceStart = 0;
@@ -76,7 +76,7 @@ void TestScene::GenerateItems(int numberOfItems) {
 		float z = spawnMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (spawnMax - spawnMin)));
 
 		// Create Item
-		Entity* entity = new Entity(&name);
+		std::unique_ptr<Entity> entity(new Entity(name));
 		IComponent* comp = new ComponentTransform(x, 0, z,
 			0, 3.14f, 0,
 			0.5f, 0.5f, 0.5f);
@@ -87,7 +87,7 @@ void TestScene::GenerateItems(int numberOfItems) {
 		entity->AddComponent(comp);
 		comp = new ComponentSphereCollider(0, 0, 0, 0.5);
 		entity->AddComponent(comp);
-		EntityManager::AddEntity("game", entity);
+		EntityManager::GetInstance().AddEntity("game", std::move(entity));
 	}
 }
 
@@ -99,35 +99,35 @@ void TestScene::Update(double dt) {
 	_timeSinceStart += dt;
 
 	// Collisions
-	vector<Entity*>* entities = EntityManager::GetEntitiesEditable("game");
-	CollisionManager::DetectCollisions(entities);
-	CollisionManager::HandleCollisions();
+	std::weak_ptr<EntityList> entities = EntityManager::GetInstance().GetEntities("game");
+	CollisionManager::GetInstance().DetectCollisions(entities.lock());
+	CollisionManager::GetInstance().HandleCollisions();
 
-	int transformID = ComponentManager::GetIDForString("Transform");
+	int transformID = ComponentManager::GetInstance().GetIDForString("Transform");
 
 	ProcessInput();
 
 	// Rotate the items
-	string itemStart("item_");
-	vector<Entity*> itemList = EntityManager::GetStartingWith("game", itemStart);
-	if (itemList.size() == 0) {
-		GenerateItems(10);
-	}
-	else {
-		for (int i = 0; i < itemList.size(); i++) {
-			Entity* entity = itemList[i];
-			ComponentTransform* trans = static_cast<ComponentTransform*>(entity->GetComponentEditable(transformID));
-			const vec3* rot = trans->GetRotation();
-			vec3 newRot = vec3(rot->x, rot->y + (1 * dt), rot->z);
-			trans->SetRotation(&newRot);
-		}
-	}
+	//string itemStart("item_");
+	//vector<Entity*> itemList = EntityManager::GetStartingWith("game", itemStart);
+	//if (itemList.size() == 0) {
+	//	GenerateItems(10);
+	//}
+	//else {
+	//	for (int i = 0; i < itemList.size(); i++) {
+	//		Entity* entity = itemList[i];
+	//		ComponentTransform* trans = static_cast<ComponentTransform*>(entity->GetComponentEditable(transformID));
+	//		const vec3* rot = trans->GetRotation();
+	//		vec3 newRot = vec3(rot->x, rot->y + (1 * dt), rot->z);
+	//		trans->SetRotation(&newRot);
+	//	}
+	//}
 
 	// Update systems
-	SystemManager::ActionUpdateSystems(dt, "game");
+	SystemManager::GetInstance().ActionUpdateSystems(dt);
 
 	// Clean Collisions
-	CollisionManager::ClearCollisions();
+	CollisionManager::GetInstance().ClearCollisions();
 
 	//if (_timeSinceStart > 10) {
 	//	_timeSinceStart = -1;
@@ -143,13 +143,13 @@ void TestScene::Update(double dt) {
 }
 
 void TestScene::Render() {
-	const vector<Entity*>* entities = EntityManager::GetEntities("game");
-	RenderManager::Draw(_camera, entities);
+	std::weak_ptr<EntityList> entities = EntityManager::GetInstance().GetEntities("game");
+	RenderManager::GetInstance().Draw(_camera, entities.lock());
 }
 
 void TestScene::ProcessInput() {
-	Entity* player = EntityManager::GetEntityEditable("game", "player");
-	int physID = ComponentManager::GetIDForString("Physics");
+	std::shared_ptr<Entity> player = EntityManager::GetInstance().GetEntityEditable("game", "player").lock();
+	int physID = ComponentManager::GetInstance().GetIDForString("Physics");
 	ComponentPhysics* physComp = (ComponentPhysics*)player->GetComponentEditable(physID);
 
 	if (physComp) {

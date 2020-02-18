@@ -88,11 +88,11 @@ bool RendererGL::Initialise() {
 	return true;
 }
 
-void RendererGL::Draw(const Camera* camera, const Entity* entity) {
+void RendererGL::Draw(const Camera* camera, const Entity& entity) {
 
-	const ComponentTransform* transfComponent = static_cast<const ComponentTransform*>(entity->GetComponent("Transform"));
-	const ComponentModelGL* modelComponent = static_cast<const ComponentModelGL*>(entity->GetComponent("ModelGL"));
-	const ComponentTexture* textureComponent = static_cast<const ComponentTexture*>(entity->GetComponent("Texture"));
+	const ComponentTransform* transfComponent = static_cast<const ComponentTransform*>(entity.GetComponent("Transform"));
+	const ComponentModelGL* modelComponent = static_cast<const ComponentModelGL*>(entity.GetComponent("ModelGL"));
+	const ComponentTexture* textureComponent = static_cast<const ComponentTexture*>(entity.GetComponent("Texture"));
 
 	if (transfComponent &&
 		modelComponent &&
@@ -178,12 +178,13 @@ void RendererGL::Draw(const Camera* camera, const Entity* entity) {
 	}
 }
 
-void RendererGL::Draw(const Camera* camera, const vector<Entity*>* entityList) {
+void RendererGL::Draw(const Camera* camera, const std::shared_ptr<EntityList> entityList) {
 	// Draw all entities one after another, slow and inefficient due to memory swaps
 	// For a more efficient draw, try to re-organise for similar textures
-	for (Entity* entity : (*entityList)) {
-		Draw(camera, entity);
-	}
+	//vector<Entity*> entities = entityList->GetEntities();
+	//for (Entity* entity : entities) {
+	//	Draw(camera, *entity);
+	//}
 }
 
 GLFWwindow* RendererGL::GetWindow() {

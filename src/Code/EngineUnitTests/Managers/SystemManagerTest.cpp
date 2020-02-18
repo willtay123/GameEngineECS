@@ -16,42 +16,42 @@ namespace EngineUnitTests
 
 			TEST_METHOD(AddingAnUpdateSystem) {
 				System* system = new System();
-				SystemManager::AddUpdateSystem(system);
+				SystemManager::GetInstance().AddUpdateSystem(system);
 
-				const vector<ISystem*>* systems = SystemManager::GetUpdateSystems();
+				const vector<ISystem*>* systems = SystemManager::GetInstance().GetUpdateSystems();
 				Assert::IsNotNull((*systems)[0], L"System Manager failed to add an update system");
-				SystemManager::ClearUpdateSystems();
+				SystemManager::GetInstance().ClearUpdateSystems();
 			}
 
 			TEST_METHOD(AddingARenderSystem) {
 				System* system = new System();
-				SystemManager::AddRenderSystem(system);
+				SystemManager::GetInstance().AddRenderSystem(system);
 
-				const vector<ISystem*>* systems = SystemManager::GetRenderSystems();
+				const vector<ISystem*>* systems = SystemManager::GetInstance().GetRenderSystems();
 				Assert::IsNotNull((*systems)[0], L"System Manager failed to add a render system");
-				SystemManager::ClearRenderSystems();
+				SystemManager::GetInstance().ClearRenderSystems();
 			}
 
 			TEST_METHOD(AddingMultipleUpdateSystems) {
 				for (int i = 0; i < 5; i++) {
 					System* system = new System();
-					SystemManager::AddUpdateSystem(system);
+					SystemManager::GetInstance().AddUpdateSystem(system);
 				}
 
-				const vector<ISystem*>* systems = SystemManager::GetUpdateSystems();
+				const vector<ISystem*>* systems = SystemManager::GetInstance().GetUpdateSystems();
 				Assert::IsTrue(systems->size() == 5, L"System Manager failed to add multiple update systems");
-				SystemManager::ClearUpdateSystems();
+				SystemManager::GetInstance().ClearUpdateSystems();
 			}
 
 			TEST_METHOD(AddingMultipleRenderSystems) {
 				for (int i = 0; i < 5; i++) {
 					System* system = new System();
-					SystemManager::AddRenderSystem(system);
+					SystemManager::GetInstance().AddRenderSystem(system);
 				}
 
-				const vector<ISystem*>* systems = SystemManager::GetRenderSystems();
+				const vector<ISystem*>* systems = SystemManager::GetInstance().GetRenderSystems();
 				Assert::IsTrue(systems->size() == 5, L"System Manager failed to add multiple render systems");
-				SystemManager::ClearRenderSystems();
+				SystemManager::GetInstance().ClearRenderSystems();
 			}
 
 			//TEST_METHOD(ActionUpdateSystem)
