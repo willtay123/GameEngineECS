@@ -34,6 +34,9 @@ void EntityList::RemoveEntity(const string& name) {
 
 std::weak_ptr<Entity> EntityList::GetEntityByName(const string& name) {
 	for (std::shared_ptr<Entity> entity : _entities) {
-		return entity;
+		if (entity->GetID() == name) {
+			return entity;
+		}
 	}
+	return std::weak_ptr<Entity>();
 }

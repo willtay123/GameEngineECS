@@ -23,11 +23,11 @@ namespace EngineECS {
 
 	class EntityManager {
 	private:
-		typedef map<string, EntityList*> EntityMap;
+		typedef map<string, std::shared_ptr<EntityList>> EntityMap;
 
 		static EntityManager* Instance;
 		EntityMap _entityMap;
-		EntityList* _currentEntityList;
+		string _currentGroupID;
 		vector<ToRemove> _entitiesToRemove;
 
 		EntityManager();
@@ -45,8 +45,8 @@ namespace EngineECS {
 
 		void SetActiveEntityGroup(const string& groupID);
 
-		const EntityList& GetEntities();
-		const EntityList& GetEntities(const string& groupID);
+		std::weak_ptr<EntityList> GetEntities();
+		std::weak_ptr<EntityList> GetEntities(const string& groupID);
 
 		const std::weak_ptr<Entity> GetEntity(const string& groupID, const string& entityID);
 		std::weak_ptr<Entity> GetEntityEditable(const string& groupID, const string& entityID);

@@ -7,7 +7,7 @@ EntityManager* EntityManager::Instance;
 
 EntityManager::EntityManager() :
 	_entityMap(),
-	_currentEntityList(nullptr),
+	_currentGroupID(),
 	_entitiesToRemove() {
 
 }
@@ -30,14 +30,14 @@ int EntityManager::AddEntity(const string& groupID, std::unique_ptr<Entity> enti
 	auto itr = _entityMap.find(groupID);
 	if (itr != _entityMap.end()) {
 		// Entity List match
-		EntityList* entityList = itr->second;
-		index = entityList->AddEntity(std::move(entity));
+		std::weak_ptr<EntityList> entityList = itr->second;
+		index = entityList.lock()->AddEntity(std::move(entity));
 	}
 	else {
 		// No Entity List match
 
 		// Create new entity list
-		EntityList* entityList = new EntityList(groupID);
+		std::shared_ptr<EntityList> entityList(new EntityList(groupID));
 		index = entityList->AddEntity(std::move(entity));
 
 		// Add entity list to map using the given ID
@@ -55,20 +55,12 @@ bool EntityManager::RemoveEntity(const string& groupID, const string& entityID) 
 void EntityManager::ClearEntityGroup(const string& groupID) {
 	auto itr = _entityMap.find(groupID);
 	if (itr != _entityMap.end()) {
-		// Entity list match
-		EntityList* entityList = itr->second;
-		delete entityList;
 		_entityMap.erase(groupID);
-	}
-	else {
-		// No Entity list match
 	}
 }
 
 void EntityManager::ClearEntities() {
 	for (auto itr = _entityMap.begin(); itr != _entityMap.end(); itr++) {
-		EntityList* entityList = itr->second;
-		delete entityList;
 		_entityMap.erase(itr);
 	}
 }
@@ -83,8 +75,8 @@ void EntityManager::EnactRemovals() {
 			// Entity list match
 
 			// Search entity list for desired entity to delete
-			EntityList* entityList = itr->second;
-			entityList->RemoveEntity(entityID);
+			std::weak_ptr<EntityList> entityList = itr->second;
+			entityList.lock()->RemoveEntity(entityID);
 		}
 		else {
 			// No Entity list match
@@ -94,31 +86,28 @@ void EntityManager::EnactRemovals() {
 }
 
 void EntityManager::SetActiveEntityGroup(const string& groupID) {
+	_currentGroupID = groupID;
+}
+
+std::weak_ptr<EntityList> EntityManager::GetEntities() { //problem if null
+	return GetEntities(_currentGroupID);
+}
+
+std::weak_ptr<EntityList> EntityManager::GetEntities(const string& groupID) { //Problem, doesnt return all
 	auto itr = _entityMap.find(groupID);
 	if (itr != _entityMap.end()) {
 		// Entity list match
-		_currentEntityList = itr->second;
+		return itr->second;
 	}
-}
-
-const EntityList& EntityManager::GetEntities() { //problem if null
-	return *_currentEntityList;
-}
-
-const EntityList& EntityManager::GetEntities(const string& groupID) { //Problem, doesnt return all
-	auto itr = _entityMap.find(groupID);
-	if (itr != _entityMap.end()) {
-		// Entity list match
-		return *(itr->second);
-	}
+	return std::weak_ptr<EntityList>();
 }
 
 const std::weak_ptr<Entity> EntityManager::GetEntity(const string& groupID, const string& entityID) {
-	EntityList entityList = GetEntities(groupID);
-	return entityList.GetEntityByName(entityID);
+	std::weak_ptr<EntityList> entityList = GetEntities(groupID);
+	return entityList.lock()->GetEntityByName(entityID);
 }
 
 std::weak_ptr<Entity> EntityManager::GetEntityEditable(const string& groupID, const string& entityID) {
-	EntityList entityList = GetEntities(groupID);
-	return entityList.GetEntityByName(entityID);
+	std::weak_ptr<EntityList> entityList = GetEntities(groupID);
+	return entityList.lock()->GetEntityByName(entityID);
 }
