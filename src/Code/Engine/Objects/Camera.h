@@ -14,11 +14,12 @@ namespace EngineECS {
 	class Camera {
 	private:
 		bool _isDirty;
-		vec3* _position;
-		vec3* _lookPosition;
-		vec3* _up;
-		mat4* _view;
-		mat4* _projection;
+		vec4 _position;
+		vec4 _direction;
+		vec4 _up;
+
+		mat4 _view;
+		mat4 _projection;
 
 	public:
 		Camera();
@@ -26,23 +27,22 @@ namespace EngineECS {
 		~Camera();
 		Camera& operator=(const Camera& rhs) = delete;
 
-		void SetProjection(mat4* proj);
+		void SetProjection(const mat4& proj);
 
-		const vec3* GetPosition() const;
-		const vec3* GetLookPosition() const;
-		const vec3* GetUp() const;
-		const mat4* GetView() const;
-		const mat4* GetProjection() const;
+		void SetPosition(const vec3& position);
+		void SetDirection(const vec3& direction);
+		void SetUp(const vec3& up);
 
-		void MoveTo(vec3* position);
-		void MoveBy(vec3* translation);
+		void LookAt(const vec3&lookPosition, const vec3& up);
+		void MoveBy(const vec3& translation);
+		void TurnOnAxis(const float angleInDeg, const vec3& axis);
 
-		void LookPosition(vec3* lookPosition);
-		void TransformLookPosition(mat4* transform);
+		const vec3& GetPosition() const;
+		const vec3& GetDirection() const;
+		const vec3& GetUp() const;
+		const mat4& GetView() const;
+		const mat4& GetProjection() const;
 
-		void SetUp(vec3* up);
-		void TransformUp(mat4* transform);
-
-		void Update(double deltaTime);
+		void Update(const double deltaTime);
 	};
 }
