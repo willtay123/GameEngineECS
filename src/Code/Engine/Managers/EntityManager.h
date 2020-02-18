@@ -38,6 +38,7 @@ namespace EngineECS {
 
 		int AddEntity(const string& groupID, std::unique_ptr<Entity> entity);
 		bool RemoveEntity(const string& groupID, const string& entityID);
+
 		void ClearEntityGroup(const string& groupID);
 		void ClearEntities();
 		void EnactRemovals();
@@ -48,6 +49,6 @@ namespace EngineECS {
 		const EntityList& GetEntities(const string& groupID);
 
 		const std::weak_ptr<Entity> GetEntity(const string& groupID, const string& entityID);
-		std::weak_ptr<Entity> GetEntityEditable(const string& mapID, const string& entityID);
+		std::weak_ptr<Entity> GetEntityEditable(const string& groupID, const string& entityID);
 	};
 }
