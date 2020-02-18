@@ -37,9 +37,9 @@ namespace EngineECS {
 		void MoveBy(const vec3& translation);
 		void TurnOnAxis(const float angleInDeg, const vec3& axis);
 
-		const vec3& GetPosition() const;
-		const vec3& GetDirection() const;
-		const vec3& GetUp() const;
+		const vec4& GetPosition() const;
+		const vec4& GetDirection() const;
+		const vec4& GetUp() const;
 		const mat4& GetView() const;
 		const mat4& GetProjection() const;
 

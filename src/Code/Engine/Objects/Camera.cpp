@@ -60,7 +60,7 @@ void Camera::LookAt(const vec3& lookPosition, const vec3& up) {
 
 void Camera::MoveBy(const vec3& position) {
 	_isDirty = true;
-	_position += position;
+	_position += vec4(position, 0);
 }
 
 void Camera::TurnOnAxis(const float angleInDeg, const vec3& axis) {
@@ -73,15 +73,15 @@ void Camera::TurnOnAxis(const float angleInDeg, const vec3& axis) {
 	_up = rotateMat * _up;
 }
 
-const vec3& Camera::GetPosition() const {
+const vec4& Camera::GetPosition() const {
 	return _position;
 }
 
-const vec3& Camera::GetDirection() const {
+const vec4& Camera::GetDirection() const {
 	return _direction;
 }
 
-const vec3& Camera::GetUp() const {
+const vec4& Camera::GetUp() const {
 	return _up;
 }
 
