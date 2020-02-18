@@ -73,6 +73,10 @@ namespace EngineUnitTests
 				);
 			}
 
+			//TEST_METHOD(GetView)
+
+			//TEST_METHOD(GetProjection)
+
 			//TEST_METHOD(Rotate90DegreesLeft)
 
 			//TEST_METHOD(Rotate90DegreesRight)
