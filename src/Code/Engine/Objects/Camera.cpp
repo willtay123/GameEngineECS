@@ -45,7 +45,7 @@ void Camera::SetDirection(const vec3& direction) {
 
 void Camera::SetUp(const vec3& up) {
 	_isDirty = true;
-	_up = vec4(up, 1);
+	_up = vec4(glm::normalize(up), 1);
 }
 
 void Camera::LookAt(const vec3& lookPosition, const vec3& up) {
