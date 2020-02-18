@@ -2,7 +2,7 @@
 
 using namespace EngineECS;
 
-
+SystemManager* SystemManager::Instance = nullptr;
 
 SystemManager::SystemManager() :
 	_updateSystems(),

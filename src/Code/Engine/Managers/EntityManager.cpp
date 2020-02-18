@@ -3,7 +3,7 @@
 using namespace EngineECS;
 
 
-EntityManager* EntityManager::Instance;
+EntityManager* EntityManager::Instance = nullptr;
 
 EntityManager::EntityManager() :
 	_entityMap(),

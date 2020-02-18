@@ -3,6 +3,8 @@
 using namespace EngineECS;
 
 
+MessageManager* MessageManager::Instance = nullptr;
+
 MessageManager::MessageManager() :
 	_toBroadcast() {
 

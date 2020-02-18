@@ -3,6 +3,8 @@
 using namespace EngineECS;
 
 
+ComponentManager* ComponentManager::Instance = nullptr;
+
 ComponentManager::ComponentManager() :
 	idCount(0),
 	componentTypeMap(),

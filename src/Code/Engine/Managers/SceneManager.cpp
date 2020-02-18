@@ -4,7 +4,7 @@
 using namespace EngineECS;
 
 
-SceneManager* SceneManager::Instance;
+SceneManager* SceneManager::Instance = nullptr;
 
 SceneManager& SceneManager::GetInstance() {
 	if (Instance == NULL) {

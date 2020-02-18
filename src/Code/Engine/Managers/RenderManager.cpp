@@ -3,6 +3,7 @@
 using namespace EngineECS;
 
 
+RenderManager* RenderManager::Instance = nullptr;
 
 RenderManager::RenderManager() :
 	_renderer(nullptr),

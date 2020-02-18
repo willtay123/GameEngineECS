@@ -3,6 +3,7 @@
 using namespace EngineECS;
 
 
+CollisionManager* CollisionManager::Instance = nullptr;
 
 CollisionManager::CollisionManager() :
 	_collisionDetector(nullptr),

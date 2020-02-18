@@ -3,6 +3,8 @@
 using namespace EngineECS;
 
 
+ResourceManager* ResourceManager::Instance = nullptr;
+
 ResourceManager::ResourceManager() :
 	_textureMap(),
 	_modelMap(),
