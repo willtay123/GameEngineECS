@@ -22,6 +22,16 @@ int EntityList::AddEntity(std::unique_ptr<Entity> entity) {
 	return _entities.size() - 1;
 }
 
+void EntityList::RemoveEntity(const string& name) {
+	for (int i = 0; i < (int)_entities.size(); i++) {
+		std::shared_ptr<Entity> entity = _entities[i];
+		if (entity->GetID() == name) {
+			// Remove array index
+			_entities.erase(_entities.begin() + i);
+		}
+	}
+}
+
 std::weak_ptr<Entity> EntityList::GetEntityByName(const string& name) {
 	for (std::shared_ptr<Entity> entity : _entities) {
 		return entity;

@@ -50,18 +50,14 @@ void SystemManager::ClearRenderSystems() {
 	_renderSystems.clear();
 }
 
-void SystemManager::ActionUpdateSystems(double deltaTime, const string& entityGroup) {
-	vector<Entity*>* entityList = EntityManager::GetInstance().GetEntitiesEditable(entityGroup);
+void SystemManager::ActionUpdateSystems(double deltaTime) {
 	for (ISystem* system : _updateSystems) {
-		system->GiveEntities(entityList);
 		system->OnAction(deltaTime);
 	}
 }
 
-void SystemManager::ActionRenderSystems(double deltaTime, const string& entityGroup) {
-	vector<Entity*>* entityList = EntityManager::GetInstance().GetEntitiesEditable(entityGroup);
+void SystemManager::ActionRenderSystems(double deltaTime) {
 	for (ISystem* system : _renderSystems) {
-		system->GiveEntities(entityList);
 		system->OnAction(deltaTime);
 	}
 }

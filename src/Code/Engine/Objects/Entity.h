@@ -17,13 +17,12 @@ namespace EngineECS {
 
 	public:
 		Entity();
-		Entity(const char* id);
-		Entity(string* id);
+		Entity(const string& id);
 		Entity(const Entity& rhs);
 		~Entity();
 		Entity& operator= (const Entity& rhs);
 
-		const string* GetID() const;
+		const string& GetID() const;
 		void SetID(string value);
 
 

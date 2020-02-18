@@ -35,9 +35,10 @@ void MessageManager::AddBroadcast(IMessage* message) {
 }
 
 void MessageManager::Broadcast() {
-	const vector<Entity*>* entities = EntityManager::GetInstance().GetEntities();
+	const EntityList entities = EntityManager::GetInstance().GetEntities();
 
-	for (Entity* entity : (*entities)) {
+	for (int i = 0; i < entities.size(); i++) {
+		std::shared_ptr<Entity> entity = entities[i].lock();
 		for (IMessage* message : _toBroadcast) {
 			entity->Message(message);
 		}

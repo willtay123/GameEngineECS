@@ -19,6 +19,7 @@ namespace EngineECS {
 		~EntityList();
 
 		const string& GetName() const;
+		int size() const { return (int)_entities.size(); }
 
 		template<class Comp>
 		const vector<Entity const *> GetEntitiesWithComponent(Comp comp);
@@ -27,7 +28,11 @@ namespace EngineECS {
 		void RemoveEntity(const string& entityName);
 
 		std::weak_ptr<Entity> GetEntityByName(const string& name);
-		std::weak_ptr<Entity> GetEntityByIndex(int index) {
+		std::weak_ptr<Entity> GetEntityByIndex(const int index) {
+			return (*this)[index];
+		}
+
+		std::weak_ptr<Entity> operator[](const int index) const {
 			return _entities[index];
 		}
 	};

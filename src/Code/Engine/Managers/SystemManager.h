@@ -25,8 +25,8 @@ namespace EngineECS {
 		void ClearUpdateSystems();
 		void ClearRenderSystems();
 
-		void ActionUpdateSystems(double deltaTime, const string& entityGroup);
-		void ActionRenderSystems(double deltaTime, const string& entityGroup);
+		void ActionUpdateSystems(double deltaTime);
+		void ActionRenderSystems(double deltaTime);
 
 		const vector<ISystem*>* GetUpdateSystems() { return &_updateSystems; }
 		const vector<ISystem*>* GetRenderSystems() { return &_renderSystems; }
