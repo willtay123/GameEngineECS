@@ -12,9 +12,9 @@ EndScene::~EndScene() {
 
 void EndScene::Initialise() {
 	_camera = new Camera();
-	_camera->MoveTo(&vec3(0, 10, 0));
-	_camera->LookPosition(&vec3(0, 0, 0));
-	_camera->SetUp(&vec3(0, 0, 1));
+	_camera->SetPosition(vec3(0, 10, 0));
+	_camera->LookAt(vec3(0, 0, 0), vec3(0,1,0));
+	_camera->SetUp(vec3(0, 0, 1));
 
 	// IO
 	RendererGL* rend = (RendererGL*)RenderManager::_renderer;
