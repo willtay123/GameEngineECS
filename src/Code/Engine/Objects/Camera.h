@@ -36,6 +36,7 @@ namespace EngineECS {
 		void LookAt(const vec3&lookPosition, const vec3& up);
 		void MoveBy(const vec3& translation);
 		void TurnOnAxis(const float angleInDeg, const vec3& axis);
+		void RotateByMatrix(const mat4& matrix);
 
 		const vec4& GetPosition() const;
 		const vec4& GetDirection() const;

@@ -68,9 +68,12 @@ void Camera::TurnOnAxis(const float angleInDeg, const vec3& axis) {
 	float angleInRad = glm::radians(angleInDeg);
 	mat4 rotateMat = glm::rotate(angleInRad, axis);
 
-	_position = rotateMat * _position;
-	_direction = rotateMat * _direction;
-	_up = rotateMat * _up;
+	RotateByMatrix(rotateMat);
+}
+
+void Camera::RotateByMatrix(const mat4& matrix) {
+	_direction = matrix * _direction;
+	_up = matrix * _up;
 }
 
 const vec4& Camera::GetPosition() const {
