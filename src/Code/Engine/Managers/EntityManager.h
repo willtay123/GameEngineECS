@@ -40,7 +40,8 @@ namespace EngineECS {
 		bool RemoveEntity(const string& groupID, const string& entityID);
 
 		void ClearEntityGroup(const string& groupID);
-		void ClearEntities();
+		void ClearCurrentEntities();
+		void ClearAllEntities();
 		void EnactRemovals();
 
 		void SetActiveEntityGroup(const string& groupID);

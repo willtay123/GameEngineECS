@@ -13,7 +13,7 @@ EntityManager::EntityManager() :
 }
 
 EntityManager::~EntityManager() {
-	ClearEntities();
+	ClearAllEntities();
 }
 
 EntityManager& EntityManager::GetInstance() {
@@ -59,7 +59,11 @@ void EntityManager::ClearEntityGroup(const string& groupID) {
 	}
 }
 
-void EntityManager::ClearEntities() {
+void EntityManager::ClearCurrentEntities() {
+	EntityManager::ClearEntityGroup(_currentGroupID);
+}
+
+void EntityManager::ClearAllEntities() {
 	for (auto itr = _entityMap.begin(); itr != _entityMap.end(); itr++) {
 		_entityMap.erase(itr);
 	}
