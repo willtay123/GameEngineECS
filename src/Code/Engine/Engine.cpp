@@ -57,8 +57,8 @@ bool Engine::Initialise() {
 	return true;
 }
 
-void Engine::SetInitialScene(const string& sceneID, IScene* scene) {
-	SceneManager::GetInstance().SetScene(sceneID, scene);
+void Engine::SetInitialScene(const string& sceneID, std::unique_ptr<IScene> scene) {
+	SceneManager::GetInstance().SetScene(sceneID, std::move(scene));
 }
 
 void Engine::Update() {
@@ -93,5 +93,4 @@ double Engine::GetDT() {
 }
 
 void Engine::End() {
-	SceneManager::End();
 }

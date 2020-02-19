@@ -29,7 +29,7 @@ namespace EngineECS {
 		~Engine();
 
 		bool Initialise();
-		void SetInitialScene(const string& sceneID, IScene* scene);
+		void SetInitialScene(const string& sceneID, std::unique_ptr<IScene> scene);
 
 		void Update();
 		void Render();
