@@ -176,9 +176,6 @@
     <ClCompile Include="Scenes\DefaultScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\IScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Components\ComponentCollider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
