@@ -82,5 +82,8 @@ Engine/Debug/
 !glfw3dll.lib
 !SOIL.lib
 
-#Logging files
+# Logging files
 /src/Code/Game/Info/output.log
+
+# Analysis files
+*.lastcodeanalysissucceeded
