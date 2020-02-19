@@ -17,7 +17,8 @@ namespace EngineECS {
 	private:
 
 	public:
-		virtual ICollisionManifold* CollisionCheck(const Entity& entity1, const Entity& entity2) = 0;
-		virtual vector<ICollisionManifold*>* CollisionCheck(const std::shared_ptr<EntityList> entityList) = 0; // TODO: change to use out parameter
+		virtual ~ICollisionDetector() = 0;
+
+		virtual void DetectCollisions(const std::weak_ptr<EntityList> entityList, vector<ICollisionManifold*>& collisions) = 0;
 	};
 }

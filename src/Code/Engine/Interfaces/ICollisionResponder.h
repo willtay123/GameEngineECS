@@ -16,6 +16,8 @@ namespace EngineECS {
 	private:
 
 	public:
+		virtual ~ICollisionResponder() = 0;
+
 		virtual void HandleCollisions(const vector<ICollisionManifold*>& manifoldList) = 0;
 	};
 }

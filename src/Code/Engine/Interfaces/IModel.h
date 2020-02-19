@@ -10,6 +10,7 @@ namespace EngineECS {
 
 
 	public:
+		virtual ~IModel() = 0;
 
 		virtual void GenerateBuffers(Geometry* geometry) = 0;
 	};

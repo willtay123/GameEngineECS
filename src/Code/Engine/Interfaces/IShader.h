@@ -21,6 +21,7 @@ namespace EngineECS {
 	private:
 
 	public:
+		virtual ~IShader() = 0;
 
 		virtual bool Initialise() = 0;
 		virtual IBufferID* LoadShader(const string& filename, const ShaderType shaderType) = 0;

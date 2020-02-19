@@ -10,6 +10,8 @@ using std::vector;
 namespace EngineECS {
 	class ISystem {
 	public:
+		virtual ~ISystem() = 0;
+
 		virtual const string* GetName() = 0;
 
 		virtual void GiveEntities(vector<Entity*>* entityList) = 0;

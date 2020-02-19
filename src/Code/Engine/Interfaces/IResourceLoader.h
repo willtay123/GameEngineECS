@@ -12,6 +12,8 @@ namespace EngineECS {
 	private:
 
 	public:
+		virtual ~IResourceLoader() = 0;
+
 		virtual Texture* LoadTexture(string filepath) = 0;
 		virtual Geometry* LoadGeometry(string filepath) = 0;
 		virtual IResource* LoadResource(string filepath) = 0;

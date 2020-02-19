@@ -70,8 +70,10 @@ void Engine::Update() {
 	// Remove entities marked for removal
 	EntityManager::GetInstance().EnactRemovals();
 
+	// Get the current entity list
+	auto entityList = EntityManager::GetInstance().GetEntities();
 	// Handle Collisions
-	CollisionManager::GetInstance().DetectCollisions();
+	CollisionManager::GetInstance().DetectCollisions(entityList);
 	CollisionManager::GetInstance().HandleCollisions();
 }
 

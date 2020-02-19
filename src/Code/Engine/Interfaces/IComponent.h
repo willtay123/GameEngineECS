@@ -13,6 +13,7 @@ namespace EngineECS {
 		int _componentType;
 
 	public:
+		virtual ~IComponent() = 0;
 		virtual IComponent* Clone() = 0;
 
 		virtual int ComponentType() const = 0;

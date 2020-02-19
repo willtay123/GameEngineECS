@@ -12,6 +12,7 @@ namespace EngineECS {
 
 	public:
 		IScene();
+		virtual ~IScene() = 0;
 
 		const string* GetName() const;
 
