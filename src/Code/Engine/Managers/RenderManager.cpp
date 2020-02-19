@@ -68,25 +68,25 @@ void RenderManager::Draw(const Camera* camera, const std::shared_ptr<EntityList>
 	}
 }
 
-void RenderManager::StartUpdate() {
+void RenderManager::BeforeUpdate() {
 	if (_renderer) {
 		_renderer->StartUpdate();
 	}
 }
 
-void RenderManager::EndUpdate() {
+void RenderManager::AfterUpdate() {
 	if (_renderer) {
 		_renderer->EndUpdate();
 	}
 }
 
-void RenderManager::StartRender() {
+void RenderManager::BeforeRender() {
 	if (_renderer) {
 		_renderer->StartRender();
 	}
 }
 
-void RenderManager::EndRender() {
+void RenderManager::AfterRender() {
 	if (_renderer) {
 		_renderer->EndRender();
 	}

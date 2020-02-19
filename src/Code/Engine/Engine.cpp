@@ -18,20 +18,30 @@ Engine::Engine() :
 Engine::~Engine() {
 }
 
-bool Engine::Initialise(
-	IRenderer* renderer,
-	IShader* shader,
-	IResourceLoader* resourceLoader,
-	ICollisionDetector* collisionDetector,
-	ICollisionResponder* collisionResponder
-) {
+bool Engine::Initialise() {
 	Logger::LogInfo("Engine initialisation started");
 
+	Logger::LogInfo("Validating managers");
 
-	// Initialise and create managers
-	Logger::LogInfo("Initialising Managers");
+	// Check for IRenderer
+	if (RenderManager::GetInstance().GetRenderer() != nullptr) {
+		Logger::LogError("RenderManager has no renderer set");
+		return false;
+	}
 
-	Logger::LogInfo("Managers Initialised");
+	// Check for IShader
+	if (RenderManager::GetInstance().GetShader() != nullptr) {
+		Logger::LogError("RenderManager has no shader set");
+		return false;
+	}
+
+	// Check for IResourceLoader
+	if (ResourceManager::GetInstance().GetResourceLoader() != nullptr) {
+		Logger::LogError("ResourceManager has no resource loader set");
+		return false;
+	}
+
+	Logger::LogInfo("Finished validating manager");
 
 	// Delta Time
 	_lastTime = clock();
@@ -47,25 +57,28 @@ void Engine::SetInitialScene(const string& sceneID, IScene* scene) {
 }
 
 void Engine::Update() {
-	RenderManager::GetInstance().StartUpdate();
-
 	// DT
 	_now = clock();
 	dt = (static_cast<double>(_now) - static_cast<double>(_lastTime)) / 1000;
 	_lastTime = clock();
 
+	// Perform update logic
+	RenderManager::GetInstance().BeforeUpdate();
 	SceneManager::GetInstance().Update(dt);
+	RenderManager::GetInstance().AfterUpdate();
 
-	RenderManager::GetInstance().EndUpdate();
+	// Remove entities marked for removal
 	EntityManager::GetInstance().EnactRemovals();
+
+	// Handle Collisions
+	CollisionManager::GetInstance().DetectCollisions();
+	CollisionManager::GetInstance().HandleCollisions();
 }
 
 void Engine::Render() {
-	RenderManager::GetInstance().StartRender();
-
+	RenderManager::GetInstance().BeforeRender();
 	SceneManager::GetInstance().Render();
-
-	RenderManager::GetInstance().EndRender();
+	RenderManager::GetInstance().AfterRender();
 }
 
 double Engine::GetDT() {

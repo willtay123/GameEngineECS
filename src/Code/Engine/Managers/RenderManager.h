@@ -50,10 +50,10 @@ namespace EngineECS {
 		void Draw(const Camera* camera, const Entity& entity);
 		void Draw(const Camera* camera, const std::shared_ptr<EntityList> entities);
 
-		void StartUpdate();
-		void EndUpdate();
+		void BeforeUpdate();
+		void AfterUpdate();
 
-		void StartRender();
-		void EndRender();
+		void BeforeRender();
+		void AfterRender();
 	};
 }

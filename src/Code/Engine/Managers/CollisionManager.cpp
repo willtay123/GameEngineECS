@@ -43,24 +43,31 @@ void CollisionManager::DetectCollision(const Entity& entity1, const Entity& enti
 	}
 }
 
-void CollisionManager::DetectCollisions(const std::shared_ptr<EntityList> entityList) {
+void CollisionManager::DetectCollisions() {
+	// Ensure a detector is set
 	if (_collisionDetector) {
-		vector<ICollisionManifold*>* manifoldList = _collisionDetector->CollisionCheck(entityList);
-		if (manifoldList != NULL) {
-			if (manifoldList->size() > 0) {
-				// Merge the collision lists
-				_collisions.insert(
-					_collisions.end(),
-					manifoldList->begin(),
-					manifoldList->end()
-				);
+		// Get the current entity list
+		const std::weak_ptr<EntityList> entityList = EntityManager::GetInstance().GetEntities();
 
-				// Empty old list
-				manifoldList->clear();
-			}
+		// Get manifolds for all collisions
+		vector<ICollisionManifold*>* manifoldList = _collisionDetector->CollisionCheck(entityList.lock());
 
-			delete manifoldList;
-		}
+		// NOTE: dont want to merge lists anymore, there should only be one
+		//if (manifoldList != NULL) {
+		//	if (manifoldList->size() > 0) {
+		//		// Merge the collision lists
+		//		_collisions.insert(
+		//			_collisions.end(),
+		//			manifoldList->begin(),
+		//			manifoldList->end()
+		//		);
+		//
+		//		// Empty old list
+		//		manifoldList->clear();
+		//	}
+		//
+		//	delete manifoldList;
+		//}
 	}
 }
 

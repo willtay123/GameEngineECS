@@ -4,6 +4,7 @@
 #include "GLM/glm/vec3.hpp"
 #include "GLM/glm/vec4.hpp"
 
+#include "Managers/EntityManager.h"
 #include "DataStructs/EntityList.h"
 #include "Objects/Entity.h"
 #include "Interfaces/ICollisionManifold.h"
@@ -33,7 +34,7 @@ namespace EngineECS {
 		void SetCollisionResponder(ICollisionResponder* responder);
 
 		void DetectCollision(const Entity& entity1, const Entity& entity2);
-		void DetectCollisions(const std::shared_ptr<EntityList> entityList);
+		void DetectCollisions();
 
 		void HandleCollisions();
 		void ClearCollisions();

@@ -33,6 +33,7 @@ namespace EngineECS {
 		static ResourceManager& GetInstance();
 
 		void SetResourceLoader(IResourceLoader* _resourceLoader);
+		IResourceLoader* GetResourceLoader() const { return _resourceLoader; }
 
 		Texture* LoadTexture(string filepath);
 		void ClearTextures();
