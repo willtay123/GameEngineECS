@@ -69,7 +69,7 @@ void SceneManager::SetScene(const string& sceneID) {
 	if (itr != _sceneMap.end()) {
 		// Match found, set active scene
 		_scene = itr->second;
-		string text = "Scene Set: " + *(_scene->GetName());
+		string text = "Scene Set: " + _scene->GetName();
 		Logger::LogInfo(text);
 	}
 	else {
