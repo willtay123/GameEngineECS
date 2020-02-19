@@ -41,7 +41,12 @@ bool Engine::Initialise() {
 		return false;
 	}
 
-	Logger::LogInfo("Finished validating manager");
+	if (SceneManager::GetInstance().GetSceneCount() == 0) {
+		Logger::LogError("SceneManager has no scene added");
+		return false;
+	}
+
+	Logger::LogInfo("Finished validating managers");
 
 	// Delta Time
 	_lastTime = clock();
