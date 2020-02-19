@@ -4,17 +4,16 @@ using namespace EngineECS;
 
 
 ComponentTexture::ComponentTexture() :
-	_texture(NULL)
-{
+		_texture(std::weak_ptr<Texture>()) {
 	_componentType = ComponentManager::GetInstance().GenerateIDByString("Texture");
 }
 
-ComponentTexture::ComponentTexture(string filepath) {
+ComponentTexture::ComponentTexture(const string& filepath) {
 	_texture = ResourceManager::GetInstance().LoadTexture(filepath);
 	_componentType = ComponentManager::GetInstance().GenerateIDByString("Texture");
 }
 
-ComponentTexture::ComponentTexture(Texture* texture) :
+ComponentTexture::ComponentTexture(std::weak_ptr<Texture> texture) :
 	_texture(texture)
 {
 	_componentType = ComponentManager::GetInstance().GenerateIDByString("Texture");
@@ -50,18 +49,18 @@ void ComponentTexture::Message(IMessage* message) {
 
 }
 
-const Texture* ComponentTexture::GetTexture() const {
+const std::weak_ptr<Texture> ComponentTexture::GetTexture() const {
 	return _texture;
 }
 
 int ComponentTexture::GetID() const {
-	return _texture->GetID();
+	return (!_texture.expired()) ? _texture.lock()->GetID() : 0;
 }
 
 int ComponentTexture::GetWidth() const {
-	return _texture->GetWidth();
+	return (!_texture.expired()) ? _texture.lock()->GetWidth() : 0;
 }
 
 int ComponentTexture::GetHeight() const {
-	return _texture->GetHeight();
+	return (!_texture.expired()) ? _texture.lock()->GetHeight() : 0;
 }

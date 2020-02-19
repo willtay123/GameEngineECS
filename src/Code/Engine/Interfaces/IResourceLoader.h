@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <string>
 #include "Objects/Texture.h"
 #include "Objects/Geometry.h"
@@ -14,8 +15,8 @@ namespace EngineECS {
 	public:
 		virtual ~IResourceLoader() = 0;
 
-		virtual Texture* LoadTexture(string filepath) = 0;
-		virtual Geometry* LoadGeometry(string filepath) = 0;
-		virtual IResource* LoadResource(string filepath) = 0;
+		virtual std::shared_ptr<Texture> LoadTexture(const string& filepath) = 0;
+		virtual std::shared_ptr<Geometry> LoadGeometry(const string& filepath) = 0;
+		virtual std::shared_ptr<IResource> LoadResource(const string& filepath) = 0;
 	};
 }

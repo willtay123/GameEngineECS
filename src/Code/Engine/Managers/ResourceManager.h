@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <iostream>
 #include <map>
 #include <vector>
@@ -20,9 +21,9 @@ namespace EngineECS {
 	class ResourceManager {
 	private:
 		static ResourceManager* Instance;
-		map<string, Texture*> _textureMap;
-		map<string, Geometry*> _modelMap;
-		map<string, IResource*> _resourceMap;
+		map<string, std::shared_ptr<Texture>> _textureMap;
+		map<string, std::shared_ptr<Geometry>> _modelMap;
+		map<string, std::shared_ptr<IResource>> _resourceMap;
 
 		IResourceLoader* _resourceLoader;
 
@@ -35,13 +36,13 @@ namespace EngineECS {
 		void SetResourceLoader(IResourceLoader* _resourceLoader);
 		IResourceLoader* GetResourceLoader() const { return _resourceLoader; }
 
-		Texture* LoadTexture(string filepath);
+		std::weak_ptr<Texture> LoadTexture(const string& filepath);
 		void ClearTextures();
 
-		Geometry* LoadGeometry(string filepath);
+		std::weak_ptr<Geometry> LoadGeometry(const string& filepath);
 		void ClearModels();
 
-		IResource* LoadResource(string filepath);
+		std::weak_ptr<IResource> LoadResource(const string& filepath);
 		void ClearResources();
 	};
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "Interfaces/IComponent.h"
 #include "Objects/Texture.h"
 
@@ -8,12 +9,12 @@
 namespace EngineECS {
 	class ComponentTexture : public IComponent {
 	private:
-		Texture* _texture;
+		std::weak_ptr<Texture> _texture;
 
 	public:
 		ComponentTexture();
-		ComponentTexture(string filepath);
-		ComponentTexture(Texture* texture);
+		ComponentTexture(const string& filepath);
+		ComponentTexture(std::weak_ptr<Texture> texture);
 		ComponentTexture(const ComponentTexture& rhs);
 		~ComponentTexture();
 		ComponentTexture operator=(const ComponentTexture& rhs);
@@ -22,7 +23,7 @@ namespace EngineECS {
 		int ComponentType() const;
 		void Message(IMessage* message);
 
-		const Texture* GetTexture() const;
+		const std::weak_ptr<Texture> GetTexture() const;
 		int GetID() const;
 		int GetWidth() const;
 		int GetHeight() const;

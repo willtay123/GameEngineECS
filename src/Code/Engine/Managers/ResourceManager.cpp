@@ -15,20 +15,8 @@ ResourceManager::ResourceManager() :
 
 ResourceManager::~ResourceManager() {
 	delete _resourceLoader;
-
-	for (auto itr = _textureMap.begin(); itr != _textureMap.end(); itr++) {
-		delete itr->second;
-	}
 	_textureMap.clear();
-
-	for (auto itr = _modelMap.begin(); itr != _modelMap.end(); itr++) {
-		delete itr->second;
-	}
 	_modelMap.clear();
-
-	for (auto itr = _resourceMap.begin(); itr != _resourceMap.end(); itr++) {
-		delete itr->second;
-	}
 	_resourceMap.clear();
 }
 
@@ -43,15 +31,15 @@ void ResourceManager::SetResourceLoader(IResourceLoader* resourceLoader) {
 	_resourceLoader = resourceLoader;
 }
 
-Texture* ResourceManager::LoadTexture(string filepath) {
+std::weak_ptr<Texture> ResourceManager::LoadTexture(const string& filepath) {
 	Logger::LogInfo("Loading texture: " + filepath);
 
 	if (!_resourceLoader) {
 		Logger::LogError("No resource loader has been set");
-		return NULL;
+		return std::weak_ptr<Texture>();
 	}
 
-	Texture* texture;
+	std::shared_ptr<Texture> texture;
 
 	auto it = _textureMap.find(filepath);
 	if (it != _textureMap.end()) {
@@ -61,7 +49,7 @@ Texture* ResourceManager::LoadTexture(string filepath) {
 	else {
 		texture = _resourceLoader->LoadTexture(filepath);
 
-		if (texture != NULL) {
+		if (texture != nullptr) {
 			// Add to map
 			_textureMap[filepath] = texture;
 		}
@@ -74,12 +62,10 @@ void ResourceManager::ClearTextures() {
 	Logger::LogInfo("Clearing: _textureMap");
 
 	// Delete all contents
-	for (map<string, Texture*>::iterator itr = _textureMap.begin();
+	for (auto itr = _textureMap.begin();
 		itr != _textureMap.end();
 		itr++)
 	{
-		//for all the elements of the map
-		delete itr->second;
 		_textureMap.erase(itr);
 	}
 
@@ -90,15 +76,15 @@ void ResourceManager::ClearTextures() {
 	Logger::LogInfo(text);
 }
 
-Geometry* ResourceManager::LoadGeometry(string filepath) {
+std::weak_ptr<Geometry> ResourceManager::LoadGeometry(const string& filepath) {
 	Logger::LogInfo("Loading Geometry: " + filepath);
 
 	if (!_resourceLoader) {
 		Logger::LogError("No resource loader has been set");
-		return NULL;
+		return std::weak_ptr<Geometry>();
 	}
 
-	Geometry* model;
+	std::shared_ptr<Geometry> model;
 
 	auto it = _modelMap.find(filepath);
 	if (it != _modelMap.end()) {
@@ -110,7 +96,7 @@ Geometry* ResourceManager::LoadGeometry(string filepath) {
 		// Load new model
 		model = _resourceLoader->LoadGeometry(filepath);
 
-		if (model != NULL) {
+		if (model != nullptr) {
 			// Add to map
 			_modelMap[filepath] = model;
 		}
@@ -123,12 +109,11 @@ void ResourceManager::ClearModels() {
 	Logger::LogInfo("Clearing: _modelMap");
 
 	// Delete all contents
-	for (map<string, Geometry*>::iterator itr = _modelMap.begin();
+	for (auto itr = _modelMap.begin();
 		itr != _modelMap.end();
 		itr++)
 	{
 		//for all the elements of the map
-		delete itr->second;
 		_modelMap.erase(itr);
 	}
 
@@ -139,15 +124,15 @@ void ResourceManager::ClearModels() {
 	Logger::LogInfo(text);
 }
 
-IResource* ResourceManager::LoadResource(string filepath) {
+std::weak_ptr<IResource> ResourceManager::LoadResource(const string& filepath) {
 	Logger::LogInfo("Loading resource: " + filepath);
 
 	if (!_resourceLoader) {
 		Logger::LogError("No resource loader has been set");
-		return NULL;
+		return std::weak_ptr<IResource>();
 	}
 
-	IResource* resource;
+	std::shared_ptr<IResource> resource;
 
 	auto it = _resourceMap.find(filepath);
 	if (it != _resourceMap.end()) {
@@ -162,7 +147,6 @@ IResource* ResourceManager::LoadResource(string filepath) {
 			_resourceMap[filepath] = resource;
 		}
 	}
-
 	return resource;
 }
 
@@ -170,12 +154,11 @@ void ResourceManager::ClearResources() {
 	Logger::LogInfo("Clearing: _resourceMap");
 
 	// Delete all contents
-	for (map<string, IResource*>::iterator itr = _resourceMap.begin();
+	for (auto itr = _resourceMap.begin();
 		itr != _resourceMap.end();
 		itr++)
 	{
 		//for all the elements of the map
-		delete itr->second;
 		_resourceMap.erase(itr);
 	}
 
