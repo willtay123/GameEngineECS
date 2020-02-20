@@ -35,7 +35,7 @@ namespace EngineECS {
 		vector<IComponent*>* GetComponentsEditable();
 
 		const IComponent* GetComponent(int id) const;
-		const IComponent* GetComponent(string id) const;
+		const IComponent* GetComponentByType(type_index type) const;
 		IComponent* GetComponentEditable(int id);
 
 		void Message(IMessage* message);

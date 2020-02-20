@@ -5,18 +5,17 @@ using namespace EngineECS;
 
 ComponentTexture::ComponentTexture() :
 		_texture(std::weak_ptr<Texture>()) {
-	_componentType = ComponentManager::GetInstance().GenerateIDByString("Texture");
+	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
 }
 
 ComponentTexture::ComponentTexture(const string& filepath) {
 	_texture = ResourceManager::GetInstance().LoadTexture(filepath);
-	_componentType = ComponentManager::GetInstance().GenerateIDByString("Texture");
+	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
 }
 
 ComponentTexture::ComponentTexture(std::weak_ptr<Texture> texture) :
-	_texture(texture)
-{
-	_componentType = ComponentManager::GetInstance().GenerateIDByString("Texture");
+	_texture(texture) {
+	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
 }
 
 ComponentTexture::ComponentTexture(const ComponentTexture& rhs) :

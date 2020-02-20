@@ -49,14 +49,7 @@ bool SceneManager::RemoveScene(const string& sceneID) {
 bool SceneManager::HasScene(const string& sceneID) {
 	// Look in map
 	auto itr = _sceneMap.find(sceneID);
-	if (itr != _sceneMap.end()) {
-		// Match found
-		return true;
-	}
-	else {
-		// Match not found
-		return false;
-	}
+	return (itr != _sceneMap.end());
 }
 
 void SceneManager::SetScene(const string& sceneID) {

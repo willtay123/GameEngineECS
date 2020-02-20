@@ -7,7 +7,7 @@ ComponentTransform::ComponentTransform() :
 	_rot(0, 0, 0),
 	_scale(1, 1, 1) {
 	//_componentType = ComponentManager::GenerateIDByType(this);
-	_componentType = ComponentManager::GetInstance().GenerateIDByString("Transform");
+	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
 	Clean();
 }
 
@@ -16,7 +16,7 @@ ComponentTransform::ComponentTransform(float x, float y, float z) :
 	_rot(0, 0, 0),
 	_scale(1, 1, 1) {
 	//_componentType = ComponentManager::GenerateIDByType(this);
-	_componentType = ComponentManager::GetInstance().GenerateIDByString("Transform");
+	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
 	Clean();
 }
 
@@ -25,7 +25,7 @@ ComponentTransform::ComponentTransform(float xPos, float yPos, float zPos, float
 	_rot(xRot, yRot, zRot),
 	_scale(1, 1, 1) {
 	//_componentType = ComponentManager::GenerateIDByType(this);
-	_componentType = ComponentManager::GetInstance().GenerateIDByString("Transform");
+	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
 	Clean();
 }
 
@@ -34,7 +34,7 @@ ComponentTransform::ComponentTransform(float xPos, float yPos, float zPos, float
 	_rot(0, 0, 0),
 	_scale(scale) {
 	//_componentType = ComponentManager::GenerateIDByType(this);
-	_componentType = ComponentManager::GetInstance().GenerateIDByString("Transform");
+	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
 	Clean();
 }
 
@@ -43,7 +43,7 @@ ComponentTransform::ComponentTransform(float xPos, float yPos, float zPos, float
 	_rot(xRot, yRot, zRot),
 	_scale(xScale, yScale, zScale) {
 	//_componentType = ComponentManager::GenerateIDByType(this);
-	_componentType = ComponentManager::GetInstance().GenerateIDByString("Transform");
+	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
 	Clean();
 }
 

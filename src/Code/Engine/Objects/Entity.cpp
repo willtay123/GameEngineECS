@@ -91,9 +91,9 @@ const IComponent* Entity::GetComponent(int id) const {
 	return NULL;
 }
 
-const IComponent* Entity::GetComponent(string id) const {
-	int searchID = ComponentManager::GetInstance().GetIDForString(id);
-	return GetComponent(searchID);
+const IComponent* Entity::GetComponentByType(const type_index type) const {
+	int compID = ComponentManager::GetInstance().GetIDForType(type);
+	return GetComponent(compID);
 }
 
 IComponent* Entity::GetComponentEditable(int id) {

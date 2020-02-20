@@ -4,7 +4,7 @@ using namespace EngineECS;
 
 
 ComponentCollider::ComponentCollider() {
-	_componentType = ComponentManager::GetInstance().GenerateIDByString("collider");
+	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
 	_enabled = true;
 	_colliderType = string("Undefined Collider");
 }
