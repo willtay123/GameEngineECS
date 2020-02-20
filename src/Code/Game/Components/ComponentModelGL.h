@@ -1,9 +1,12 @@
 #pragma once
 
+#include <string>
 #include "Interfaces/IComponent.h"
 #include "Implementations/OpenGLModel.h"
 
 #include "Managers/ResourceManager.h"
+
+using std::string;
 
 class ComponentModelGL : public IComponent {
 private:
@@ -11,7 +14,7 @@ private:
 
 public:
 	ComponentModelGL();
-	ComponentModelGL(const char* filepath);
+	ComponentModelGL(const string& filepath);
 	ComponentModelGL(OpenGLModel* model);
 	ComponentModelGL(const ComponentModelGL& rhs);
 	~ComponentModelGL();

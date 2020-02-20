@@ -111,7 +111,7 @@ IComponent* EntityFactory::LoadComponentModelGL(xml_node& modelNode) {
 	string filepath = LoadAttributeString(modelNode.child("filepath"));
 
 	ComponentModelGL* component;
-	component = new ComponentModelGL(filepath.c_str());
+	component = new ComponentModelGL(filepath);
 	return component;
 }
 
