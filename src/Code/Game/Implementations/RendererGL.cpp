@@ -16,6 +16,7 @@ RendererGL::~RendererGL() {
 }
 
 bool RendererGL::Initialise() {
+	Logger::LogInfo("Initialising renderer");
 
 	if (!glfwInit()) {
 		Logger::LogError("Error initialising GLFW");
@@ -31,7 +32,7 @@ bool RendererGL::Initialise() {
 	_window = glfwCreateWindow(_screenWidth, _screenHeight, _windowTitle, NULL, NULL);
 	if (!_window) {
 		glfwTerminate();
-		Logger::LogError("Error creating window");
+		Logger::LogError("Failed to create window");
 		return false;
 	}
 

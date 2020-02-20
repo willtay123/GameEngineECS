@@ -42,8 +42,6 @@ public:
 	
 	void Initialise();
 
-	void GenerateItems(int numberOfItems);
-
 	void Update(double dt);
 	void Render();
 	void Close();

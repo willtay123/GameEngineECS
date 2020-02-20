@@ -8,7 +8,7 @@ using namespace EngineECS;
 double Engine::dt = 0;
 
 Engine::Engine() :
-	_initialised(false),
+	_engineState(EngineState::Uninitialised),
 	_now(),
 	_lastTime() {
 	Logger::LogInfo("Engine creation started");
@@ -41,6 +41,7 @@ bool Engine::Initialise() {
 		return false;
 	}
 
+	// TODO: Move to "CanStart" check
 	if (SceneManager::GetInstance().GetSceneCount() == 0) {
 		Logger::LogError("SceneManager has no scene added");
 		return false;
@@ -53,12 +54,25 @@ bool Engine::Initialise() {
 
 	Logger::LogInfo("Engine initialisation ended");
 
-	_initialised = true;
+	_engineState = EngineState::Initialised;
 	return true;
 }
 
 void Engine::SetInitialScene(const string& sceneID, std::unique_ptr<IScene> scene) {
-	SceneManager::GetInstance().SetScene(sceneID, std::move(scene));
+	if (_engineState != EngineState::Initialised) {
+		SceneManager::GetInstance().SetScene(sceneID, std::move(scene));
+		_engineState = EngineState::CanRun;
+	}
+	else {
+		Logger::LogError("Cannot set initial scene while engine is uninitialised");
+	}
+}
+
+void Engine::Run() {
+	while (IsState(EngineState::Running)) {
+		Update();
+		Render();
+	}
 }
 
 void Engine::Update() {

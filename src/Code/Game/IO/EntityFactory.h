@@ -30,5 +30,5 @@ private:
 	static IComponent* LoadComponentScore(xml_node& scoreNode);
 
 public:
-	static void LoadFromFile(string sceneName, string filepath);
+	static void LoadFromFile(const string& sceneName, const string& filepath);
 };

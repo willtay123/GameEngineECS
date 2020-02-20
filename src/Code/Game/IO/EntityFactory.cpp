@@ -7,7 +7,7 @@
 #include <Components\ComponentScore.h>
 
 
-void EntityFactory::LoadFromFile(string sceneName, string filepath) {
+void EntityFactory::LoadFromFile(const string& sceneName, const string& filepath) {
 	xml_document doc;
 	xml_parse_result result = doc.load_file(filepath.c_str());
 	if (!result) {
