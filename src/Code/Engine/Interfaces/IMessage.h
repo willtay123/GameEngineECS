@@ -9,7 +9,7 @@ namespace EngineECS {
 	private:
 	
 	public:
+		virtual ~IMessage() {}
 		virtual const string& GetSenderID() const = 0;
-		virtual ~IMessage() = 0;
 	};
 }

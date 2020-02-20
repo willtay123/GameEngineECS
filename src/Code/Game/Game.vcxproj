@@ -148,7 +148,6 @@
     <ClCompile Include="IO\EntityFactory.cpp" />
     <ClCompile Include="IO\Keyboard.cpp" />
     <ClCompile Include="IO\Mouse.cpp" />
-    <ClCompile Include="Scenes\EndScene.cpp" />
     <ClCompile Include="Scenes\TestScene.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Systems\SystemPhysics.cpp" />
@@ -173,7 +172,6 @@
     <ClInclude Include="IO\EntityFactory.h" />
     <ClInclude Include="IO\Keyboard.h" />
     <ClInclude Include="IO\Mouse.h" />
-    <ClInclude Include="Scenes\EndScene.h" />
     <ClInclude Include="Scenes\TestScene.h" />
     <ClInclude Include="Systems\SystemPhysics.h" />
   </ItemGroup>

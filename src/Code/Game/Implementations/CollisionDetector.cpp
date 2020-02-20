@@ -2,9 +2,13 @@
 
 
 
-ICollisionManifold* CollisionDetector::CollisionCheck(const Entity& entity1, const Entity& entity2) {
+CollisionDetector::~CollisionDetector() {
+
+}
+
+ICollisionManifold* CollisionDetector::DetectCollision(const Entity& entity1, const Entity& entity2) {
 	// work out collider types, call relevant method
-	int colliderID = ComponentManager::GetInstance().GenerateIDByString("collider");
+	int colliderID = ComponentManager::GetInstance().GetIDForType(typeid(ComponentSphereCollider));
 	ComponentCollider* collider1 = (ComponentCollider*)entity1.GetComponent(colliderID);
 	ComponentCollider* collider2 = (ComponentCollider*)entity2.GetComponent(colliderID);
 	string collider1Type = collider1->GetColliderType();
@@ -35,8 +39,8 @@ ICollisionManifold* CollisionDetector::CollisionCheck(const Entity& entity1, con
 	return NULL;
 }
 
-vector<ICollisionManifold*>* CollisionDetector::CollisionCheck(const std::shared_ptr<EntityList> entityList) {
-	vector<ICollisionManifold*>* manifoldList = new vector<ICollisionManifold*>();
+void CollisionDetector::DetectCollisions(const std::weak_ptr<EntityList> entityList, vector<ICollisionManifold*>& collisions) {
+	collisions = vector<ICollisionManifold*>();
 	//for (int i = 0; i < (int)(entityList->size()) - 1; i += 1) {
 	//	for (int j = i + 1; j < (int)(entityList->size()); j += 1) {
 	//		std::weak_ptr<Entity> ent1 = (*entityList)[i];
@@ -47,7 +51,6 @@ vector<ICollisionManifold*>* CollisionDetector::CollisionCheck(const std::shared
 	//		}
 	//	}
 	//}
-	return manifoldList;
 }
 
 ICollisionManifold* CollisionDetector::CheckBoxBox(const Entity& entity1, const Entity& entity2) {
@@ -59,8 +62,8 @@ ICollisionManifold* CollisionDetector::CheckSphereSphere(const Entity& entity1, 
 		return NULL;
 	}
 
-	int transformID = ComponentManager::GetInstance().GetIDForString("Transform");
-	int sphereID = ComponentManager::GetInstance().GetIDForString("collider");
+	int transformID = ComponentManager::GetInstance().GetIDForType(typeid(ComponentTransform));
+	int sphereID = ComponentManager::GetInstance().GetIDForType(typeid(ComponentSphereCollider));
 
 	ComponentTransform* transform1 = (ComponentTransform*)entity1.GetComponent(transformID);
 	ComponentSphereCollider* collider1 = (ComponentSphereCollider*)entity1.GetComponent(sphereID);

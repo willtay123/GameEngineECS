@@ -4,10 +4,14 @@
 #include <sstream>
 
 
-Texture* ResourceLoader::LoadTexture(string filepath) {
+ResourceLoader::~ResourceLoader() {
+
+}
+
+std::shared_ptr<Texture> ResourceLoader::LoadTexture(const string& filepath) {
 	Logger::LogInfo("Loading a texture");
 
-	Texture* texture;
+	std::shared_ptr<Texture> texture;
 
 	GLuint textureID;
 	int width, height, mipLevel = 0;
@@ -41,7 +45,7 @@ Texture* ResourceLoader::LoadTexture(string filepath) {
 	}
 
 	// Create a texture object
-	texture = new Texture(textureID, width, height, mipLevel);
+	texture = std::shared_ptr<Texture>(new Texture(textureID, width, height, mipLevel));
 
 	return texture;
 
@@ -52,17 +56,15 @@ Texture* ResourceLoader::LoadTexture(string filepath) {
 	Logger::LogInfo(text);
 }
 
-Geometry* ResourceLoader::LoadGeometry(string filepath) {
+std::shared_ptr<Geometry> ResourceLoader::LoadGeometry(const string& filepath) {
 	return LoadOBJ(filepath);
 }
 
-IResource* ResourceLoader::LoadResource(string filepath) {
-	return NULL;
+std::shared_ptr<IResource> ResourceLoader::LoadResource(const string& filepath) {
+	return nullptr;
 }
 
-Geometry* ResourceLoader::LoadOBJ(string filepath) {
-	Geometry* model;
-
+std::shared_ptr<Geometry> ResourceLoader::LoadOBJ(const string& filepath) {
 	Logger::LogInfo("Loading Geometry from OBJ");
 
 	ifstream inFile(filepath);
@@ -153,7 +155,7 @@ Geometry* ResourceLoader::LoadOBJ(string filepath) {
 	vector<vec3> vertices, normals;
 
 	//model = new Geometry(vertices, uvs, normals, indices);
-	model = new Geometry(temp_vertices, temp_uvs, temp_normals, triangles);
+	std::shared_ptr<Geometry> model = std::shared_ptr<Geometry>(new Geometry(temp_vertices, temp_uvs, temp_normals, triangles));
 
 	return model;
 }

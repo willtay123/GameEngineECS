@@ -13,7 +13,7 @@ namespace EngineECS {
 	private:
 
 	public:
-		virtual ~IResourceLoader() = 0;
+		virtual ~IResourceLoader() {};
 
 		virtual std::shared_ptr<Texture> LoadTexture(const string& filepath) = 0;
 		virtual std::shared_ptr<Geometry> LoadGeometry(const string& filepath) = 0;

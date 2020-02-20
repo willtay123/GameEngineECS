@@ -6,7 +6,7 @@ namespace EngineECS {
 	private:
 
 	public:
-		virtual ~IResource() = 0;
+		virtual ~IResource() {}
 
 	};
 }

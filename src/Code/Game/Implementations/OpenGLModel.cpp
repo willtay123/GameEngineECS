@@ -8,7 +8,7 @@ OpenGLModel::OpenGLModel() :
 
 }
 
-OpenGLModel::OpenGLModel(Geometry* geometry) :
+OpenGLModel::OpenGLModel(std::shared_ptr<Geometry> geometry) :
 	_DBO_Handle(0),
 	_IBO_Handle(0)
 {
@@ -61,7 +61,7 @@ OpenGLModel& OpenGLModel::operator=(const OpenGLModel& rhs) {
 	return *this;
 }
 
-void OpenGLModel::GenerateBuffers(Geometry* geometry) {
+void OpenGLModel::GenerateBuffers(std::shared_ptr<Geometry> geometry) {
 	// Take data from geometry
 	vector<vec3>* vertices = geometry->GetVertices();
 	vector<vec2>* uvs = geometry->GetUVs();

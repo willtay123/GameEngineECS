@@ -18,7 +18,8 @@ private:
 	ICollisionManifold* CheckBoxSphere(const Entity& entity1, const Entity& entity2);
 
 public:
+	~CollisionDetector();
 
-	ICollisionManifold* CollisionCheck(const Entity& entity1, const Entity& entity2);
-	vector<ICollisionManifold*>* CollisionCheck(const std::shared_ptr<EntityList> entityList);
+	ICollisionManifold* DetectCollision(const Entity& entity1, const Entity& entity2);
+	void DetectCollisions(const std::weak_ptr<EntityList> entityList, vector<ICollisionManifold*>& collisions) override;
 };

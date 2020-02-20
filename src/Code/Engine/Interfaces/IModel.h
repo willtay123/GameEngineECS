@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "Objects\Geometry.h"
 #include "IResource.h"
 
@@ -10,8 +11,8 @@ namespace EngineECS {
 
 
 	public:
-		virtual ~IModel() = 0;
+		virtual ~IModel() {}
 
-		virtual void GenerateBuffers(Geometry* geometry) = 0;
+		virtual void GenerateBuffers(std::shared_ptr<Geometry> geometry) = 0;
 	};
 }

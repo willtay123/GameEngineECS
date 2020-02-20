@@ -10,6 +10,10 @@ TestScene::TestScene() {
 	Logger::LogInfo(text);
 }
 
+TestScene::TestScene(const TestScene& rhs) {
+
+}
+
 TestScene::~TestScene() {
 
 }
@@ -103,7 +107,7 @@ void TestScene::Update(double dt) {
 	CollisionManager::GetInstance().DetectCollisions(entities.lock());
 	CollisionManager::GetInstance().HandleCollisions();
 
-	int transformID = ComponentManager::GetInstance().GetIDForString("Transform");
+	int transformID = ComponentManager::GetInstance().GetIDForType(typeid(ComponentTransform));
 
 	ProcessInput();
 
@@ -149,7 +153,7 @@ void TestScene::Render() {
 
 void TestScene::ProcessInput() {
 	std::shared_ptr<Entity> player = EntityManager::GetInstance().GetEntityEditable("game", "player").lock();
-	int physID = ComponentManager::GetInstance().GetIDForString("Physics");
+	int physID = ComponentManager::GetInstance().GetIDForType(typeid(ComponentPhysics));
 	ComponentPhysics* physComp = (ComponentPhysics*)player->GetComponentEditable(physID);
 
 	if (physComp) {

@@ -16,6 +16,6 @@ namespace EngineECS {
 		vec4 _pointOfCollision;
 
 	public:
-		virtual ~ICollisionManifold() = 0;
+		virtual ~ICollisionManifold() {}
 	};
 }

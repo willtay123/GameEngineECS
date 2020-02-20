@@ -44,6 +44,7 @@ bool SceneManager::RemoveScene(const string& sceneID) {
 	// Delete map entry
 	_sceneMap.erase(sceneID);
 	Logger::LogInfo("Scene deleted with ID: " + sceneID);
+	return true;
 }
 
 bool SceneManager::HasScene(const string& sceneID) {

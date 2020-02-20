@@ -17,7 +17,7 @@ namespace EngineECS {
 	private:
 
 	public:
-		virtual ~ICollisionDetector() = 0;
+		virtual ~ICollisionDetector() {}
 
 		virtual void DetectCollisions(const std::weak_ptr<EntityList> entityList, vector<ICollisionManifold*>& collisions) = 0;
 	};

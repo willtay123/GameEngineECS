@@ -90,9 +90,9 @@ bool RendererGL::Initialise() {
 
 void RendererGL::Draw(const Camera* camera, const Entity& entity) {
 
-	const ComponentTransform* transfComponent = static_cast<const ComponentTransform*>(entity.GetComponent("Transform"));
-	const ComponentModelGL* modelComponent = static_cast<const ComponentModelGL*>(entity.GetComponent("ModelGL"));
-	const ComponentTexture* textureComponent = static_cast<const ComponentTexture*>(entity.GetComponent("Texture"));
+	const ComponentTransform* transfComponent = static_cast<const ComponentTransform*>(entity.GetComponentByType(typeid(ComponentTransform)));
+	const ComponentModelGL* modelComponent = static_cast<const ComponentModelGL*>(entity.GetComponentByType(typeid(ComponentModelGL)));
+	const ComponentTexture* textureComponent = static_cast<const ComponentTexture*>(entity.GetComponentByType(typeid(ComponentTexture)));
 
 	if (transfComponent &&
 		modelComponent &&

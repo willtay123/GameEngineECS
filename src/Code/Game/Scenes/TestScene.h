@@ -21,7 +21,6 @@
 #include "Components/ComponentScore.h"
 
 #include "Systems/SystemPhysics.h"
-#include "Scenes/EndScene.h"
 
 #include "IO/Keyboard.h"
 #include "Implementations/RendererGL.h"
@@ -37,8 +36,8 @@ private:
 
 public:
 	TestScene();
-	TestScene(const TestScene& rhs) = delete;
-	~TestScene();
+	TestScene(const TestScene& rhs);
+	~TestScene() override;
 	TestScene& operator=(const TestScene& rhs) = delete;
 	
 	void Initialise();

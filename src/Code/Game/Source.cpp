@@ -19,14 +19,20 @@ using namespace EngineECS;
 
 int main(int argc, char* argv[]) {
 	Logger::LogInfo("Starting Game");
+	Engine engine;
 
 	RendererGL* renderer = new RendererGL();
 	ShaderGLSL* shader = new ShaderGLSL();
 	ResourceLoader* resourceLoader = new ResourceLoader();
 	ICollisionDetector* collisionDetector = new CollisionDetector();
 	ICollisionResponder* collisionResponder = new CollisionResponder();
-	Engine engine;
-	bool engineInitialised = engine.Initialise(renderer, shader, resourceLoader, collisionDetector, collisionResponder);
+
+	// Set first scene
+	std::unique_ptr<IScene> scene(new TestScene());
+	engine.SetInitialScene("game", std::move(scene));
+
+	// Initialise engine
+	bool engineInitialised = engine.Initialise();
 
 	ExternalLogger* logger = new ExternalLogger();
 	Logger::SetExternalLogger(logger);
@@ -37,9 +43,6 @@ int main(int argc, char* argv[]) {
 	Logger::LogError("err", "error");
 
 	if (engineInitialised) {
-		IScene* scene = new TestScene();
-		engine.SetInitialScene("game", scene);
-
 		while (true) {
 			engine.Update();
 			engine.Render();

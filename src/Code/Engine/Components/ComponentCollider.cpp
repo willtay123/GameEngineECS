@@ -18,6 +18,10 @@ IComponent* ComponentCollider::Clone() {
 	return NULL;
 }
 
+ComponentCollider::~ComponentCollider() {
+
+}
+
 int ComponentCollider::ComponentType() const {
 	return _componentType;
 }

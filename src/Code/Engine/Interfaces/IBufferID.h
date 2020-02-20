@@ -6,7 +6,7 @@ namespace EngineECS {
 	private:
 
 	public:
-		virtual ~IBufferID() = 0;
+		virtual ~IBufferID() {}
 
 		virtual const char* GetName() = 0;
 	};

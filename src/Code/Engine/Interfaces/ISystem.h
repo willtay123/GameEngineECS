@@ -10,7 +10,7 @@ using std::vector;
 namespace EngineECS {
 	class ISystem {
 	public:
-		virtual ~ISystem() = 0;
+		virtual ~ISystem() {}
 
 		virtual const string* GetName() = 0;
 

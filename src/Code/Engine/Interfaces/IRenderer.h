@@ -14,7 +14,7 @@ using glm::mat4;
 namespace EngineECS {
 	class IRenderer {
 	public:
-		virtual ~IRenderer() = 0;
+		virtual ~IRenderer() {};
 
 		virtual bool Initialise() = 0;
 		virtual void Draw(const Camera* camera, const Entity& entity) = 0;
