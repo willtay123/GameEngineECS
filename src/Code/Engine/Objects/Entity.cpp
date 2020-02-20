@@ -88,7 +88,7 @@ const IComponent* Entity::GetComponent(int id) const {
 			return component;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 const IComponent* Entity::GetComponentByType(const type_index type) const {
