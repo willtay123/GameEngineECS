@@ -37,24 +37,27 @@ int main(int argc, char* argv[]) {
 
 	// Create other implementations
 	ResourceLoader* resourceLoader = new ResourceLoader();
+	ResourceManager::GetInstance().SetResourceLoader(resourceLoader);
 	ICollisionDetector* collisionDetector = new CollisionDetector();
+	CollisionManager::GetInstance().SetCollisionDetector(collisionDetector);
 	ICollisionResponder* collisionResponder = new CollisionResponder();
+	CollisionManager::GetInstance().SetCollisionResponder(collisionResponder);
 
 	// Initialise engine
 	bool successfulInit = engine.Initialise();
-
-	//-----------------------------------------
-
-	// Set first scene
-	std::unique_ptr<IScene> scene(new TestScene());
-	engine.SetInitialScene("game", std::move(scene));
 
 	//Logger::LogInfo("inf", "info");
 	//Logger::LogWarning("war", "warning");
 	//Logger::LogError("err", "error");
 
-	if (engine.GetState() == EngineState::CanRun) {
-		engine.Run();
+	if (engine.GetState() == EngineState::Initialised) {
+		// Set first scene
+		std::unique_ptr<IScene> scene(new TestScene());
+		engine.SetInitialScene("game", std::move(scene));
+
+		if (engine.GetState() == EngineState::CanRun) {
+			engine.Run();
+		}
 	}
 
 	engine.End();
