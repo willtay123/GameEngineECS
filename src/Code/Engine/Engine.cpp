@@ -24,28 +24,24 @@ bool Engine::Initialise() {
 	Logger::LogInfo("Validating managers");
 
 	// Check for IRenderer
-	if (RenderManager::GetInstance().GetRenderer() != nullptr) {
+	if (RenderManager::GetInstance().GetRenderer() == nullptr) {
 		Logger::LogError("RenderManager has no renderer set");
 		return false;
 	}
 
 	// Check for IShader
-	if (RenderManager::GetInstance().GetShader() != nullptr) {
+	if (RenderManager::GetInstance().GetShader() == nullptr) {
 		Logger::LogError("RenderManager has no shader set");
 		return false;
 	}
 
 	// Check for IResourceLoader
-	if (ResourceManager::GetInstance().GetResourceLoader() != nullptr) {
+	if (ResourceManager::GetInstance().GetResourceLoader() == nullptr) {
 		Logger::LogError("ResourceManager has no resource loader set");
 		return false;
 	}
 
 	// TODO: Move to "CanStart" check
-	if (SceneManager::GetInstance().GetSceneCount() == 0) {
-		Logger::LogError("SceneManager has no scene added");
-		return false;
-	}
 
 	Logger::LogInfo("Finished validating managers");
 
@@ -59,7 +55,7 @@ bool Engine::Initialise() {
 }
 
 void Engine::SetInitialScene(const string& sceneID, std::unique_ptr<IScene> scene) {
-	if (_engineState != EngineState::Initialised) {
+	if (_engineState == EngineState::Initialised) {
 		SceneManager::GetInstance().SetScene(sceneID, std::move(scene));
 		_engineState = EngineState::CanRun;
 	}
@@ -69,9 +65,18 @@ void Engine::SetInitialScene(const string& sceneID, std::unique_ptr<IScene> scen
 }
 
 void Engine::Run() {
-	while (IsState(EngineState::Running)) {
-		Update();
-		Render();
+	if (IsState(EngineState::CanRun)) {
+
+		// Allow the engine to run
+		_engineState = EngineState::Running;
+
+		while (IsState(EngineState::Running)) {
+			Update();
+			Render();
+		}
+	}
+	else {
+		Logger::LogError("Cannot run the engine without setting an initial scene");
 	}
 }
 

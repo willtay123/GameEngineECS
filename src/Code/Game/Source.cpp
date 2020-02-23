@@ -19,11 +19,13 @@ using namespace EngineECS;
 
 int main(int argc, char* argv[]) {
 	Logger::LogInfo("Starting Game");
-	Engine engine;
 
 	ExternalLogger* logger = new ExternalLogger();
 	Logger::SetExternalLogger(logger);
-	Logger::SetLoggingDestination(LoggingDestination::File);
+	Logger::SetLoggingDestination(LoggingDestination::Console);
+
+	// Create engine
+	Engine engine;
 
 	// Create renderers
 	RendererGL* renderer = new RendererGL();
