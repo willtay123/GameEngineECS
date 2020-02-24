@@ -69,6 +69,12 @@ void EntityManager::ClearAllEntities() {
 	}
 }
 
+int EntityManager::GetEntityCount(const string& groupID) {
+	auto entities = GetEntities(groupID);
+	int count = entities.lock()->size();
+	return count;
+}
+
 void EntityManager::EnactRemovals() {
 	for (ToRemove remove : _entitiesToRemove) {
 		string mapID = remove._groupID;

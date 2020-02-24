@@ -12,7 +12,21 @@ namespace EngineUnitTests
 		TEST_CLASS(EntityManagerTest) {
 		public:
 
-			//TEST_METHOD(Initialise)
+			TEST_METHOD(GetInstance) {
+				std::unique_ptr<Entity> entity(new Entity("testEntity"));
+
+				// Add an entity to 1 instance
+				EntityManager em = EntityManager::GetInstance();
+				em.AddEntity("test", std::move(entity));
+				// Second instance should have the entity
+				EntityManager em2 = EntityManager::GetInstance();
+
+				// Get the number of entities in each instance
+				int entCount1 = em.GetEntityCount("test");
+				int entCount2 = em.GetEntityCount("test");
+
+				Assert::AreEqual(entCount1, entCount2, L"Instance not fetched correctly");
+			}
 
 			TEST_METHOD(AddingAnEntity) {
 				//string t = string("test");

@@ -44,6 +44,8 @@ namespace EngineECS {
 		void ClearAllEntities();
 		void EnactRemovals();
 
+		int GetEntityCount(const string& groupID);
+
 		void SetActiveEntityGroup(const string& groupID);
 
 		std::weak_ptr<EntityList> GetEntities();
