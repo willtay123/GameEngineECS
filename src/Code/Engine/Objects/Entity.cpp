@@ -122,3 +122,13 @@ bool Entity::GetComponentIndex(int id, int* outIndex) {
 	}
 	return false;
 }
+
+
+// Operators
+
+bool Entity::operator==(const Entity& rhs) {
+	// Give entity a GUID, use that to quickly compare
+
+	// TEMP
+	return (_id == rhs._id);
+}

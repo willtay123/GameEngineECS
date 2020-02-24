@@ -41,5 +41,8 @@ namespace EngineECS {
 		void Message(IMessage* message);
 
 		bool GetComponentIndex(int id, int* outIndex);
+
+		// Operators
+		bool operator==(const Entity& rhs);
 	};
 }

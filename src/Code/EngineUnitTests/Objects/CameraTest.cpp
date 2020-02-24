@@ -15,7 +15,7 @@ namespace EngineUnitTests
 
 			TEST_METHOD(CreateTheCamera) {
 				// Create camera
-				Camera camera();
+				Camera camera;
 
 				
 			}

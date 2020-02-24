@@ -29,17 +29,27 @@ namespace EngineUnitTests
 			}
 
 			TEST_METHOD(AddingAnEntity) {
-				//string t = string("test");
-				//Entity* entity = new Entity(&t);
-				//EntityManager::AddEntity("testList", entity);
-				//vector<Entity*> entities = *(EntityManager::GetEntities());
-				//Entity* entityBack = entities[0];
-				//
-				////Assert::AreSame(entityBack, entity); //Doesnt work because it's a custom class
-				//EntityManager::ClearEntities("testList");
+				std::unique_ptr<Entity> entity(new Entity("test"));
+				EntityManager::GetInstance().AddEntity("testList", std::move(entity));
+				std::shared_ptr<EntityList> entities = EntityManager::GetInstance().GetEntities().lock();
+				std::shared_ptr<Entity> entityBack = (*entities)[0].lock();
+				
+				Assert::IsTrue((*entityBack) == (*entity), L"Failed to add entity");
+				EntityManager::GetInstance().ClearEntityGroup("testList");
 			}
 
-			//TEST_METHOD(RemoveAnEntity)
+			TEST_METHOD(RemoveAnEntity) {
+				std::unique_ptr<Entity> entity(new Entity("testEntity"));
+				// Ensure it is added
+				EntityManager::GetInstance().AddEntity("testList", std::move(entity));
+				bool added = (EntityManager::GetInstance().GetEntityCount("testList") > 0);
+
+				// Ensure it is removed
+				EntityManager::GetInstance().RemoveEntity("testList", "testEntity");
+				bool removed = (EntityManager::GetInstance().GetEntityCount("testList") == 0);
+
+				Assert::IsTrue(added && removed, L"Failed to remove entity");
+			}
 
 			//TEST_METHOD(GetNonEditableEntities)
 
@@ -49,7 +59,18 @@ namespace EngineUnitTests
 
 			//TEST_METHOD(GetEditableEntity)
 
-			//TEST_METHOD(SwapEntityGroup)
+			TEST_METHOD(SwapEntityGroup) {
+				std::unique_ptr<Entity> entity1(new Entity("testEntity1"));
+				std::unique_ptr<Entity> entity2(new Entity("testEntity2"));
+				EntityManager::GetInstance().AddEntity("testList1", std::move(entity1));
+				EntityManager::GetInstance().AddEntity("testList2", std::move(entity2));
+
+				std::shared_ptr<EntityList> entities1 = EntityManager::GetInstance().GetEntities().lock();
+				EntityManager::GetInstance().SetActiveEntityGroup("testList2");
+				std::shared_ptr<EntityList> entities2 = EntityManager::GetInstance().GetEntities().lock();
+
+				Assert::IsTrue(entities1 == entities2, L"Failed to swap entity list");
+			}
 		};
 	}
 }
