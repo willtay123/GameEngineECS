@@ -14,7 +14,7 @@ const string& EntityList::GetName() const {
 	return _listName;
 }
 
-int EntityList::AddEntity(std::unique_ptr<Entity> entity) {
+int EntityList::AddEntity(std::shared_ptr<Entity> entity) {
 	if (!entity.get()) {
 		return -1;
 	}

@@ -158,6 +158,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DataStructs\EntityListTest.cpp" />
     <ClCompile Include="General\EngineTest.cpp" />
     <ClCompile Include="Managers\CollisionManagerTest.cpp" />
     <ClCompile Include="Managers\ComponentManagerTest.cpp" />

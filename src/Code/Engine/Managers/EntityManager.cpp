@@ -23,22 +23,22 @@ EntityManager& EntityManager::GetInstance() {
 	return *Instance;
 }
 
-int EntityManager::AddEntity(const string& groupID, std::unique_ptr<Entity> entity) {
+int EntityManager::AddEntity(const string& groupID, std::shared_ptr<Entity> entity) {
 	int index = -1;
 
 	// Get or create an EntityList
 	auto itr = _entityMap.find(groupID);
 	if (itr != _entityMap.end()) {
 		// Entity List match
-		std::weak_ptr<EntityList> entityList = itr->second;
-		index = entityList.lock()->AddEntity(std::move(entity));
+		std::shared_ptr<EntityList> entityList = itr->second;
+		index = entityList->AddEntity(entity);
 	}
 	else {
 		// No Entity List match
 
 		// Create new entity list
 		std::shared_ptr<EntityList> entityList(new EntityList(groupID));
-		index = entityList->AddEntity(std::move(entity));
+		index = entityList->AddEntity(entity);
 
 		// Add entity list to map using the given ID
 		_entityMap[groupID] = entityList;

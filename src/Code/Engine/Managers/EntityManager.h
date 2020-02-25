@@ -36,7 +36,7 @@ namespace EngineECS {
 		~EntityManager();
 		static EntityManager& GetInstance();
 
-		int AddEntity(const string& groupID, std::unique_ptr<Entity> entity);
+		int AddEntity(const string& groupID, std::shared_ptr<Entity> entity);
 		bool RemoveEntity(const string& groupID, const string& entityID);
 
 		void ClearEntityGroup(const string& groupID);

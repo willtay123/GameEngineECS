@@ -24,7 +24,7 @@ namespace EngineECS {
 		template<class Comp>
 		const vector<Entity const *> GetEntitiesWithComponent(Comp comp);
 
-		int AddEntity(std::unique_ptr<Entity> entity);
+		int AddEntity(std::shared_ptr<Entity> entity);
 		void RemoveEntity(const string& entityName);
 
 		std::weak_ptr<Entity> GetEntityByName(const string& name);
