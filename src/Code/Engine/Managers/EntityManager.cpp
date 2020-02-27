@@ -36,6 +36,11 @@ int EntityManager::AddEntity(const string& groupID, std::shared_ptr<Entity> enti
 	else {
 		// No Entity List match
 
+		// If it is the first list, make it the current list
+		if (_entityMap.size() == 0) {
+			_currentGroupID = groupID;
+		}
+
 		// Create new entity list
 		std::shared_ptr<EntityList> entityList(new EntityList(groupID));
 		index = entityList->AddEntity(entity);
@@ -64,9 +69,7 @@ void EntityManager::ClearCurrentEntities() {
 }
 
 void EntityManager::ClearAllEntities() {
-	for (auto itr = _entityMap.begin(); itr != _entityMap.end(); itr++) {
-		_entityMap.erase(itr);
-	}
+	_entityMap.clear();
 }
 
 int EntityManager::GetEntityCount(const string& groupID) {

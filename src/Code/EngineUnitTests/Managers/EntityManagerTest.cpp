@@ -13,24 +13,26 @@ namespace EngineUnitTests
 		public:
 
 			TEST_METHOD(GetInstance) {
-				std::unique_ptr<Entity> entity(new Entity("testEntity"));
+				string listID = "testList";
+
+				std::shared_ptr<Entity> entity = std::make_shared<Entity>("testEntity");
 
 				// Add an entity to 1 instance
 				EntityManager em = EntityManager::GetInstance();
-				em.AddEntity("test", std::move(entity));
+				em.AddEntity(listID, entity);
 				// Second instance should have the entity
 				EntityManager em2 = EntityManager::GetInstance();
 
 				// Get the number of entities in each instance
-				int entCount1 = em.GetEntityCount("test");
-				int entCount2 = em.GetEntityCount("test");
+				int entCount1 = em.GetEntityCount(listID);
+				int entCount2 = em.GetEntityCount(listID);
 
 				Assert::AreEqual(entCount1, entCount2, L"Instance not fetched correctly");
 			}
 
 			TEST_METHOD(AddingAnEntity) {
-				std::unique_ptr<Entity> entity(new Entity("test"));
-				EntityManager::GetInstance().AddEntity("testList", std::move(entity));
+				std::shared_ptr<Entity> entity = std::make_shared<Entity>("test");
+				EntityManager::GetInstance().AddEntity("testList", entity);
 				std::shared_ptr<EntityList> entities = EntityManager::GetInstance().GetEntities().lock();
 				std::shared_ptr<Entity> entityBack = (*entities)[0].lock();
 				
@@ -39,14 +41,18 @@ namespace EngineUnitTests
 			}
 
 			TEST_METHOD(RemoveAnEntity) {
-				std::unique_ptr<Entity> entity(new Entity("testEntity"));
-				// Ensure it is added
-				EntityManager::GetInstance().AddEntity("testList", std::move(entity));
-				bool added = (EntityManager::GetInstance().GetEntityCount("testList") > 0);
+				string listID = "testList";
+				string entityID = "testEntity";
 
+				std::shared_ptr<Entity> entity = std::make_shared<Entity>(entityID);
+				EntityManager::GetInstance().AddEntity(listID, entity);
+				// Ensure it is added
+				bool added = (EntityManager::GetInstance().GetEntityCount(listID) > 0);
+
+				EntityManager::GetInstance().RemoveEntity(listID, entityID);
+				EntityManager::GetInstance().EnactRemovals();
 				// Ensure it is removed
-				EntityManager::GetInstance().RemoveEntity("testList", "testEntity");
-				bool removed = (EntityManager::GetInstance().GetEntityCount("testList") == 0);
+				bool removed = (EntityManager::GetInstance().GetEntityCount(listID) == 0);
 
 				Assert::IsTrue(added && removed, L"Failed to remove entity");
 			}
@@ -60,16 +66,23 @@ namespace EngineUnitTests
 			//TEST_METHOD(GetEditableEntity)
 
 			TEST_METHOD(SwapEntityGroup) {
-				std::unique_ptr<Entity> entity1(new Entity("testEntity1"));
-				std::unique_ptr<Entity> entity2(new Entity("testEntity2"));
-				EntityManager::GetInstance().AddEntity("testList1", std::move(entity1));
-				EntityManager::GetInstance().AddEntity("testList2", std::move(entity2));
+				string entity1ID = "testEntity1";
+				string entity2ID = "testEntity2";
+				string list1ID = "testList1";
+				string list2ID = "testList2";
+
+				std::shared_ptr<Entity> entity1 = std::make_shared<Entity>(entity1ID);
+				std::shared_ptr<Entity> entity2 = std::make_shared<Entity>(entity2ID);
+				EntityManager::GetInstance().AddEntity(list1ID, entity1);
+				EntityManager::GetInstance().AddEntity(list2ID, entity2);
 
 				std::shared_ptr<EntityList> entities1 = EntityManager::GetInstance().GetEntities().lock();
-				EntityManager::GetInstance().SetActiveEntityGroup("testList2");
+				EntityManager::GetInstance().SetActiveEntityGroup(list2ID);
 				std::shared_ptr<EntityList> entities2 = EntityManager::GetInstance().GetEntities().lock();
 
-				Assert::IsTrue(entities1 == entities2, L"Failed to swap entity list");
+				// May need to edit this to check each list for the matching entity rather
+				// than a not-similar check which can be ambiguous
+				Assert::IsTrue(entities1 != entities2, L"Failed to swap entity list");
 			}
 		};
 	}

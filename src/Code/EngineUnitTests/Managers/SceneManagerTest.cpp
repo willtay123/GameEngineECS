@@ -9,7 +9,7 @@ using namespace EngineECS;
 namespace EngineUnitTests
 {
 	namespace Managers {
-		TEST_CLASS(EntityManagerTest) {
+		TEST_CLASS(SceneManagerTest) {
 		public:
 
 			TEST_METHOD(AddAScene) {
