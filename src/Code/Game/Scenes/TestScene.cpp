@@ -10,9 +10,9 @@ TestScene::TestScene() {
 	Logger::LogInfo(text);
 }
 
-TestScene::TestScene(const TestScene& rhs) {
-
-}
+//TestScene::TestScene(const TestScene& rhs) {
+//
+//}
 
 TestScene::~TestScene() {
 

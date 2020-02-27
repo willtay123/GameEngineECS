@@ -76,6 +76,8 @@ Debug/
 Engine/Debug/
 /src/External Resources/GLM/doc
 /src/External Resources/GLFW/docs/html
+/src/Code/Debug - OpenGL
+/src/Code/Game/Debug - OpenGL
 
 #Exceptions
 !glfw3.lib
