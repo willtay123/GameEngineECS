@@ -34,8 +34,8 @@ namespace EngineUnitTests
 			TEST_METHOD(AddingAnEntity) {
 				std::shared_ptr<Entity> entity = std::make_shared<Entity>("test");
 				EntityManager::GetInstance().AddEntity("testList", entity);
-				std::shared_ptr<const EntityList> entities = EntityManager::GetInstance().GetEntities().lock();
-				std::shared_ptr<Entity> entityBack = (*entities)[0].lock();
+				std::shared_ptr<const EntityList> entities = EntityManager::GetInstance().GetEntities();
+				std::shared_ptr<Entity> entityBack = (*entities)[0];
 				
 				Assert::IsTrue((*entityBack) == (*entity), L"Failed to add entity");
 				EntityManager::GetInstance().ClearAllEntities();
@@ -65,7 +65,7 @@ namespace EngineUnitTests
 
 				std::shared_ptr<Entity> entity = std::make_shared<Entity>(entityID);
 				EntityManager::GetInstance().AddEntity(listID, entity);
-				std::shared_ptr<const EntityList> entityList = EntityManager::GetInstance().GetEntities().lock();
+				std::shared_ptr<const EntityList> entityList = EntityManager::GetInstance().GetEntities();
 
 				Assert::IsTrue(entityList->size() > 0, L"Failed to get const entities");
 				EntityManager::GetInstance().ClearAllEntities();
@@ -77,7 +77,7 @@ namespace EngineUnitTests
 
 				std::shared_ptr<Entity> entity = std::make_shared<Entity>(entityID);
 				EntityManager::GetInstance().AddEntity(listID, entity);
-				std::shared_ptr<EntityList> entityList = EntityManager::GetInstance().GetEntitiesEditable().lock();
+				std::shared_ptr<EntityList> entityList = EntityManager::GetInstance().GetEntitiesEditable();
 
 				Assert::IsTrue(entityList->size() > 0, L"Failed to get non-const entities");
 				EntityManager::GetInstance().ClearAllEntities();
@@ -89,7 +89,7 @@ namespace EngineUnitTests
 
 				std::shared_ptr<Entity> entity = std::make_shared<Entity>(entityID);
 				EntityManager::GetInstance().AddEntity(listID, entity);
-				std::shared_ptr<const Entity> entityBack = EntityManager::GetInstance().GetEntity(listID, entityID).lock();
+				std::shared_ptr<const Entity> entityBack = EntityManager::GetInstance().GetEntity(listID, entityID);
 
 				Assert::IsTrue(entityBack != nullptr, L"Failed to get non-editable entity");
 				EntityManager::GetInstance().ClearAllEntities();
@@ -101,7 +101,7 @@ namespace EngineUnitTests
 
 				std::shared_ptr<Entity> entity = std::make_shared<Entity>(entityID);
 				EntityManager::GetInstance().AddEntity(listID, entity);
-				std::shared_ptr<Entity> entityBack = EntityManager::GetInstance().GetEntityEditable(listID, entityID).lock();
+				std::shared_ptr<Entity> entityBack = EntityManager::GetInstance().GetEntityEditable(listID, entityID);
 
 				Assert::IsTrue(entityBack != nullptr, L"Failed to get editable entity");
 				EntityManager::GetInstance().ClearAllEntities();
@@ -118,9 +118,9 @@ namespace EngineUnitTests
 				EntityManager::GetInstance().AddEntity(list1ID, entity1);
 				EntityManager::GetInstance().AddEntity(list2ID, entity2);
 
-				std::shared_ptr<const EntityList> entities1 = EntityManager::GetInstance().GetEntities().lock();
+				std::shared_ptr<const EntityList> entities1 = EntityManager::GetInstance().GetEntities();
 				EntityManager::GetInstance().SetActiveEntityGroup(list2ID);
-				std::shared_ptr<const EntityList> entities2 = EntityManager::GetInstance().GetEntities().lock();
+				std::shared_ptr<const EntityList> entities2 = EntityManager::GetInstance().GetEntities();
 
 				// May need to edit this to check each list for the matching entity rather
 				// than a not-similar check which can be ambiguous

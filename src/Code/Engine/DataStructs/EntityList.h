@@ -29,11 +29,12 @@ namespace EngineECS {
 
 		std::shared_ptr<const Entity> GetEntityByName(const string& name) const;
 		std::shared_ptr<Entity> GetEditableEntityByName(const string& name);
-		std::weak_ptr<Entity> GetEntityByIndex(const int index) {
+		std::shared_ptr<Entity> GetEntityByIndex(const int index) {
 			return (*this)[index];
 		}
 
-		std::weak_ptr<Entity> operator[](const int index) const {
+		// Operators
+		std::shared_ptr<Entity> operator[](const int index) const {
 			return _entities[index];
 		}
 	};

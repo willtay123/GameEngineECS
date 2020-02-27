@@ -74,7 +74,7 @@ void EntityManager::ClearAllEntities() {
 
 int EntityManager::GetEntityCount(const string& groupID) {
 	auto entities = GetEntities(groupID);
-	int count = entities.lock()->size();
+	int count = entities->size();
 	return count;
 }
 
@@ -103,30 +103,30 @@ void EntityManager::SetActiveEntityGroup(const string& groupID) {
 }
 
 // Getting Entities
-std::weak_ptr<const EntityList> EntityManager::GetEntities() {
+std::shared_ptr<const EntityList> EntityManager::GetEntities() {
 	return GetEntitiesEditable(_currentGroupID);
 }
-std::weak_ptr<const EntityList> EntityManager::GetEntities(const string& groupID) { //Problem, doesnt return all
+std::shared_ptr<const EntityList> EntityManager::GetEntities(const string& groupID) { //Problem, doesnt return all
 	return GetEntitiesEditable(groupID);
 }
-std::weak_ptr<EntityList> EntityManager::GetEntitiesEditable() {
+std::shared_ptr<EntityList> EntityManager::GetEntitiesEditable() {
 	return GetEntitiesEditable(_currentGroupID);
 }
-std::weak_ptr<EntityList> EntityManager::GetEntitiesEditable(const string& groupID) {
+std::shared_ptr<EntityList> EntityManager::GetEntitiesEditable(const string& groupID) {
 	auto itr = _entityMap.find(groupID);
 	if (itr != _entityMap.end()) {
 		// Entity list match
 		return itr->second;
 	}
-	return std::weak_ptr<EntityList>();
+	return std::shared_ptr<EntityList>();
 }
 
-const std::weak_ptr<const Entity> EntityManager::GetEntity(const string& groupID, const string& entityID) {
-	std::weak_ptr<const EntityList> entityList = GetEntities(groupID);
-	return entityList.lock()->GetEntityByName(entityID);
+const std::shared_ptr<const Entity> EntityManager::GetEntity(const string& groupID, const string& entityID) {
+	std::shared_ptr<const EntityList> entityList = GetEntities(groupID);
+	return entityList->GetEntityByName(entityID);
 }
 
-std::weak_ptr<Entity> EntityManager::GetEntityEditable(const string& groupID, const string& entityID) {
-	std::weak_ptr<EntityList> entityList = GetEntitiesEditable(groupID);
-	return entityList.lock()->GetEditableEntityByName(entityID);
+std::shared_ptr<Entity> EntityManager::GetEntityEditable(const string& groupID, const string& entityID) {
+	std::shared_ptr<EntityList> entityList = GetEntitiesEditable(groupID);
+	return entityList->GetEditableEntityByName(entityID);
 }

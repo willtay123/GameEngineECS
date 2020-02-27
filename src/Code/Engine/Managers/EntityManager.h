@@ -48,12 +48,12 @@ namespace EngineECS {
 
 		void SetActiveEntityGroup(const string& groupID);
 
-		std::weak_ptr<const EntityList> GetEntities();
-		std::weak_ptr<const EntityList> GetEntities(const string& groupID);
-		std::weak_ptr<EntityList> GetEntitiesEditable();
-		std::weak_ptr<EntityList> GetEntitiesEditable(const string& groupID);
+		std::shared_ptr<const EntityList> GetEntities();
+		std::shared_ptr<const EntityList> GetEntities(const string& groupID);
+		std::shared_ptr<EntityList> GetEntitiesEditable();
+		std::shared_ptr<EntityList> GetEntitiesEditable(const string& groupID);
 
-		const std::weak_ptr<const Entity> GetEntity(const string& groupID, const string& entityID);
-		std::weak_ptr<Entity> GetEntityEditable(const string& groupID, const string& entityID);
+		const std::shared_ptr<const Entity> GetEntity(const string& groupID, const string& entityID);
+		std::shared_ptr<Entity> GetEntityEditable(const string& groupID, const string& entityID);
 	};
 }
