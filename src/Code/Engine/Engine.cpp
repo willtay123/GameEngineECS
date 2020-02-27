@@ -95,7 +95,7 @@ void Engine::Update() {
 	EntityManager::GetInstance().EnactRemovals();
 
 	// Get the current entity list
-	auto entityList = EntityManager::GetInstance().GetEntities();
+	auto entityList = EntityManager::GetInstance().GetEntities().lock();
 	// Handle Collisions
 	CollisionManager::GetInstance().DetectCollisions(entityList);
 	CollisionManager::GetInstance().HandleCollisions();

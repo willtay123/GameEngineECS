@@ -37,14 +37,14 @@ void MessageManager::AddBroadcast(IMessage* message) {
 }
 
 void MessageManager::Broadcast() {
-	std::shared_ptr<EntityList> entities = EntityManager::GetInstance().GetEntities().lock();
-	if (entities != nullptr) {
-		for (int i = 0; i < entities->size(); i++) {
-			std::shared_ptr<Entity> entity = (*entities)[i].lock();
-			for (IMessage* message : _toBroadcast) {
-				entity->Message(message);
-			}
-		}
-		ClearBroadcasts();
-	}
+	//std::shared_ptr<EntityList> entities = EntityManager::GetInstance().GetEntities().lock();
+	//if (entities != nullptr) {
+	//	for (int i = 0; i < entities->size(); i++) {
+	//		std::shared_ptr<Entity> entity = (*entities)[i].lock();
+	//		for (IMessage* message : _toBroadcast) {
+	//			entity->Message(message);
+	//		}
+	//	}
+	//	ClearBroadcasts();
+	//}
 }

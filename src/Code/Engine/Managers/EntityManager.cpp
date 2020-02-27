@@ -102,11 +102,17 @@ void EntityManager::SetActiveEntityGroup(const string& groupID) {
 	_currentGroupID = groupID;
 }
 
-std::weak_ptr<EntityList> EntityManager::GetEntities() { //problem if null
-	return GetEntities(_currentGroupID);
+// Getting Entities
+std::weak_ptr<const EntityList> EntityManager::GetEntities() {
+	return GetEntitiesEditable(_currentGroupID);
 }
-
-std::weak_ptr<EntityList> EntityManager::GetEntities(const string& groupID) { //Problem, doesnt return all
+std::weak_ptr<const EntityList> EntityManager::GetEntities(const string& groupID) { //Problem, doesnt return all
+	return GetEntitiesEditable(groupID);
+}
+std::weak_ptr<EntityList> EntityManager::GetEntitiesEditable() {
+	return GetEntitiesEditable(_currentGroupID);
+}
+std::weak_ptr<EntityList> EntityManager::GetEntitiesEditable(const string& groupID) {
 	auto itr = _entityMap.find(groupID);
 	if (itr != _entityMap.end()) {
 		// Entity list match
@@ -115,12 +121,12 @@ std::weak_ptr<EntityList> EntityManager::GetEntities(const string& groupID) { //
 	return std::weak_ptr<EntityList>();
 }
 
-const std::weak_ptr<Entity> EntityManager::GetEntity(const string& groupID, const string& entityID) {
-	std::weak_ptr<EntityList> entityList = GetEntities(groupID);
+const std::weak_ptr<const Entity> EntityManager::GetEntity(const string& groupID, const string& entityID) {
+	std::weak_ptr<const EntityList> entityList = GetEntities(groupID);
 	return entityList.lock()->GetEntityByName(entityID);
 }
 
 std::weak_ptr<Entity> EntityManager::GetEntityEditable(const string& groupID, const string& entityID) {
-	std::weak_ptr<EntityList> entityList = GetEntities(groupID);
-	return entityList.lock()->GetEntityByName(entityID);
+	std::weak_ptr<EntityList> entityList = GetEntitiesEditable(groupID);
+	return entityList.lock()->GetEditableEntityByName(entityID);
 }

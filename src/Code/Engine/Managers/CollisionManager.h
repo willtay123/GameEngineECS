@@ -32,7 +32,7 @@ namespace EngineECS {
 		void SetCollisionDetector(ICollisionDetector* detector);
 		void SetCollisionResponder(ICollisionResponder* responder);
 
-		void DetectCollisions(const std::weak_ptr<EntityList> entityList);
+		void DetectCollisions(const std::shared_ptr<const EntityList> entityList);
 
 		void HandleCollisions();
 		void ClearCollisions();

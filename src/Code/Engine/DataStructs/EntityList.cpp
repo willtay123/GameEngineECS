@@ -32,11 +32,20 @@ void EntityList::RemoveEntity(const string& name) {
 	}
 }
 
-std::weak_ptr<Entity> EntityList::GetEntityByName(const string& name) {
+std::shared_ptr<const Entity> EntityList::GetEntityByName(const string& name) const {
 	for (std::shared_ptr<Entity> entity : _entities) {
 		if (entity->GetID() == name) {
 			return entity;
 		}
 	}
-	return std::weak_ptr<Entity>();
+	return std::shared_ptr<Entity>();
+}
+
+std::shared_ptr<Entity> EntityList::GetEditableEntityByName(const string& name) {
+	for (std::shared_ptr<Entity> entity : _entities) {
+		if (entity->GetID() == name) {
+			return entity;
+		}
+	}
+	return std::shared_ptr<Entity>();
 }

@@ -27,7 +27,8 @@ namespace EngineECS {
 		int AddEntity(std::shared_ptr<Entity> entity);
 		void RemoveEntity(const string& entityName);
 
-		std::weak_ptr<Entity> GetEntityByName(const string& name);
+		std::shared_ptr<const Entity> GetEntityByName(const string& name) const;
+		std::shared_ptr<Entity> GetEditableEntityByName(const string& name);
 		std::weak_ptr<Entity> GetEntityByIndex(const int index) {
 			return (*this)[index];
 		}

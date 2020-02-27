@@ -34,7 +34,7 @@ void CollisionManager::SetCollisionResponder(ICollisionResponder* responder) {
 	_collisionResponder = responder;
 }
 
-void CollisionManager::DetectCollisions(const std::weak_ptr<EntityList> entityList) {
+void CollisionManager::DetectCollisions(const std::shared_ptr<const EntityList> entityList) {
 	// Ensure a detector is set
 	if (_collisionDetector) {
 		// Get manifolds for all collisions

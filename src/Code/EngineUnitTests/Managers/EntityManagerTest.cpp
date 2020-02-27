@@ -28,16 +28,17 @@ namespace EngineUnitTests
 				int entCount2 = em.GetEntityCount(listID);
 
 				Assert::AreEqual(entCount1, entCount2, L"Instance not fetched correctly");
+				EntityManager::GetInstance().ClearAllEntities();
 			}
 
 			TEST_METHOD(AddingAnEntity) {
 				std::shared_ptr<Entity> entity = std::make_shared<Entity>("test");
 				EntityManager::GetInstance().AddEntity("testList", entity);
-				std::shared_ptr<EntityList> entities = EntityManager::GetInstance().GetEntities().lock();
+				std::shared_ptr<const EntityList> entities = EntityManager::GetInstance().GetEntities().lock();
 				std::shared_ptr<Entity> entityBack = (*entities)[0].lock();
 				
 				Assert::IsTrue((*entityBack) == (*entity), L"Failed to add entity");
-				EntityManager::GetInstance().ClearEntityGroup("testList");
+				EntityManager::GetInstance().ClearAllEntities();
 			}
 
 			TEST_METHOD(RemoveAnEntity) {
@@ -55,15 +56,56 @@ namespace EngineUnitTests
 				bool removed = (EntityManager::GetInstance().GetEntityCount(listID) == 0);
 
 				Assert::IsTrue(added && removed, L"Failed to remove entity");
+				EntityManager::GetInstance().ClearAllEntities();
 			}
 
-			//TEST_METHOD(GetNonEditableEntities)
+			TEST_METHOD(GetNonEditableEntities) {
+				string listID = "testList";
+				string entityID = "testEntity";
 
-			//TEST_METHOD(GetEditableEntities)
+				std::shared_ptr<Entity> entity = std::make_shared<Entity>(entityID);
+				EntityManager::GetInstance().AddEntity(listID, entity);
+				std::shared_ptr<const EntityList> entityList = EntityManager::GetInstance().GetEntities().lock();
 
-			//TEST_METHOD(GetNonEditableEntity)
+				Assert::IsTrue(entityList->size() > 0, L"Failed to get const entities");
+				EntityManager::GetInstance().ClearAllEntities();
+			}
 
-			//TEST_METHOD(GetEditableEntity)
+			TEST_METHOD(GetEditableEntities) {
+				string listID = "testList";
+				string entityID = "testEntity";
+
+				std::shared_ptr<Entity> entity = std::make_shared<Entity>(entityID);
+				EntityManager::GetInstance().AddEntity(listID, entity);
+				std::shared_ptr<EntityList> entityList = EntityManager::GetInstance().GetEntitiesEditable().lock();
+
+				Assert::IsTrue(entityList->size() > 0, L"Failed to get non-const entities");
+				EntityManager::GetInstance().ClearAllEntities();
+			}
+
+			TEST_METHOD(GetNonEditableEntity) {
+				string listID = "testList";
+				string entityID = "testEntity";
+
+				std::shared_ptr<Entity> entity = std::make_shared<Entity>(entityID);
+				EntityManager::GetInstance().AddEntity(listID, entity);
+				std::shared_ptr<const Entity> entityBack = EntityManager::GetInstance().GetEntity(listID, entityID).lock();
+
+				Assert::IsTrue(entityBack != nullptr, L"Failed to get non-editable entity");
+				EntityManager::GetInstance().ClearAllEntities();
+			}
+
+			TEST_METHOD(GetEditableEntity) {
+				string listID = "testList";
+				string entityID = "testEntity";
+
+				std::shared_ptr<Entity> entity = std::make_shared<Entity>(entityID);
+				EntityManager::GetInstance().AddEntity(listID, entity);
+				std::shared_ptr<Entity> entityBack = EntityManager::GetInstance().GetEntityEditable(listID, entityID).lock();
+
+				Assert::IsTrue(entityBack != nullptr, L"Failed to get editable entity");
+				EntityManager::GetInstance().ClearAllEntities();
+			}
 
 			TEST_METHOD(SwapEntityGroup) {
 				string entity1ID = "testEntity1";
@@ -76,13 +118,14 @@ namespace EngineUnitTests
 				EntityManager::GetInstance().AddEntity(list1ID, entity1);
 				EntityManager::GetInstance().AddEntity(list2ID, entity2);
 
-				std::shared_ptr<EntityList> entities1 = EntityManager::GetInstance().GetEntities().lock();
+				std::shared_ptr<const EntityList> entities1 = EntityManager::GetInstance().GetEntities().lock();
 				EntityManager::GetInstance().SetActiveEntityGroup(list2ID);
-				std::shared_ptr<EntityList> entities2 = EntityManager::GetInstance().GetEntities().lock();
+				std::shared_ptr<const EntityList> entities2 = EntityManager::GetInstance().GetEntities().lock();
 
 				// May need to edit this to check each list for the matching entity rather
 				// than a not-similar check which can be ambiguous
 				Assert::IsTrue(entities1 != entities2, L"Failed to swap entity list");
+				EntityManager::GetInstance().ClearAllEntities();
 			}
 		};
 	}
