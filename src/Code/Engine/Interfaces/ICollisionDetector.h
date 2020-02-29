@@ -7,6 +7,7 @@
 #include "DataStructs/EntityList.h"
 #include "Objects/Entity.h"
 #include "Interfaces/ICollisionManifold.h"
+#include "CleverPointers.h"
 
 using std::vector;
 using glm::vec3;
@@ -19,6 +20,6 @@ namespace EngineECS {
 	public:
 		virtual ~ICollisionDetector() {}
 
-		virtual void DetectCollisions(const std::shared_ptr<const EntityList> entityList, vector<ICollisionManifold*>& collisions) = 0;
+		virtual void DetectCollisions(const shared_ptr<const EntityList> entityList, vector<ICollisionManifold*>& collisions) = 0;
 	};
 }

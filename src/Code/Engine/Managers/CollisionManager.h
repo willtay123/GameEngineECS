@@ -34,6 +34,10 @@ namespace EngineECS {
 
 		void DetectCollisions(const std::shared_ptr<const EntityList> entityList);
 
+		const vector<ICollisionManifold *>& GetCollisions() const {
+			return _collisions;
+		}
+
 		void HandleCollisions();
 		void ClearCollisions();
 	};
