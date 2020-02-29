@@ -14,9 +14,9 @@ namespace EngineUnitTests
 
 			TEST_METHOD(ConstructEntityList) {
 				EntityList el("testList");
-				int size = el.size();
+				string name = el.GetName();
 
-				Assert::IsTrue(size == 0, L"Entity List failed construction");
+				Assert::IsTrue(name == "testList", L"Entity List failed construction");
 			}
 
 			TEST_METHOD(AddAnEntity) {
@@ -55,6 +55,19 @@ namespace EngineUnitTests
 
 				Assert::IsTrue(list2size == 1, L"EntityList failed instance test");
 			}
+
+			TEST_METHOD(Size) {
+				EntityList el("testList");
+				int size1 = el.size();
+				el.AddEntity(make_shared<Entity>("testEntity"));
+				int size2 = el.size();
+
+				Assert::IsTrue(size1 == 0 && size2 == 1, L"EntityList failed to return size");
+			}
+
+			//TEST_METHOD(GetEntityByName)
+
+			//TEST_METHOD(GetEditableEntity)
 		};
 	}
 }
