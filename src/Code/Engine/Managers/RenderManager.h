@@ -2,7 +2,6 @@
 
 #define GLM_ENABLE_EXPERIMENTAL
 
-#include <memory>
 #include <iostream>
 #include <vector>
 
@@ -20,6 +19,7 @@
 #include "Objects/Geometry.h"
 
 #include "Tools/Logger.h"
+#include "CleverPointers.h"
 
 
 using glm::vec4;
@@ -48,7 +48,7 @@ namespace EngineECS {
 		IBufferID* LoadShader(const string& filename, const ShaderType shaderType);
 
 		void Draw(const Camera* camera, const Entity& entity);
-		void Draw(const Camera* camera, const std::shared_ptr<EntityList> entities);
+		void Draw(const Camera* camera, const shared_ptr<EntityList> entities);
 
 		void BeforeUpdate();
 		void AfterUpdate();

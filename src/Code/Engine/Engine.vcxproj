@@ -219,6 +219,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CleverPointers.h" />
     <ClInclude Include="Components\ComponentCollider.h" />
     <ClInclude Include="Components\ComponentTexture.h" />
     <ClInclude Include="Components\ComponentTransform.h" />

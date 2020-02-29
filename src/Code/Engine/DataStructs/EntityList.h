@@ -1,8 +1,8 @@
 #pragma once
 
-#include <memory>
 #include <string>
 #include "Objects/Entity.h"
+#include "CleverPointers.h"
 
 using std::string;
 
@@ -10,16 +10,20 @@ namespace EngineECS {
 
 	class EntityList {
 	private:
+		typedef vector<shared_ptr<Entity>> EntityData;
+
 		string _listName;
-		vector<std::shared_ptr<Entity>> _entities;
+		shared_ptr<EntityData> _entities;
 
 	public:
 
 		EntityList(const string& name);
+		EntityList(const EntityList& other);
+		EntityList& operator=(const EntityList& rhs);
 		~EntityList();
 
 		const string& GetName() const;
-		int size() const { return (int)_entities.size(); }
+		int size() const { return (int)_entities->size(); }
 
 		template<class Comp>
 		const vector<Entity const *> GetEntitiesWithComponent(Comp comp);
@@ -35,7 +39,7 @@ namespace EngineECS {
 
 		// Operators
 		std::shared_ptr<Entity> operator[](const int index) const {
-			return _entities[index];
+			return (*_entities)[index];
 		}
 	};
 }

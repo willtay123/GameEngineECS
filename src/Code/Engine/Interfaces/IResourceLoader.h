@@ -1,10 +1,11 @@
 #pragma once
 
-#include <memory>
+#pragma once
 #include <string>
 #include "Objects/Texture.h"
 #include "Objects/Geometry.h"
 #include "Interfaces/IResource.h"
+#include "CleverPointers.h"
 
 using std::string;
 
@@ -15,8 +16,8 @@ namespace EngineECS {
 	public:
 		virtual ~IResourceLoader() {};
 
-		virtual std::shared_ptr<Texture> LoadTexture(const string& filepath) = 0;
-		virtual std::shared_ptr<Geometry> LoadGeometry(const string& filepath) = 0;
-		virtual std::shared_ptr<IResource> LoadResource(const string& filepath) = 0;
+		virtual shared_ptr<Texture> LoadTexture(const string& filepath) = 0;
+		virtual shared_ptr<Geometry> LoadGeometry(const string& filepath) = 0;
+		virtual shared_ptr<IResource> LoadResource(const string& filepath) = 0;
 	};
 }
