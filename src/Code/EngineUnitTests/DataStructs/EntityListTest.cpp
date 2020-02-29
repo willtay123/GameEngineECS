@@ -65,9 +65,23 @@ namespace EngineUnitTests
 				Assert::IsTrue(size1 == 0 && size2 == 1, L"EntityList failed to return size");
 			}
 
-			//TEST_METHOD(GetEntityByName)
+			TEST_METHOD(GetEntityByName) {
+				EntityList el("testList");
+				el.AddEntity(make_shared<Entity>("testEntity"));
 
-			//TEST_METHOD(GetEditableEntity)
+				shared_ptr<const Entity> entity = el.GetEntityByName("testEntity");
+
+				Assert::IsTrue(entity->GetID() == "testEntity", L"Failed to search by name");
+			}
+
+			TEST_METHOD(GetEditableEntity) {
+				EntityList el("testList");
+				el.AddEntity(make_shared<Entity>("testEntity"));
+
+				shared_ptr<Entity> entity = el.GetEditableEntityByName("testEntity");
+
+				Assert::IsTrue(entity->GetID() == "testEntity", L"Failed to search by name");
+			}
 		};
 	}
 }

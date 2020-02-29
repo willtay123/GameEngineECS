@@ -28,12 +28,16 @@ namespace EngineECS {
 		template<class Comp>
 		const vector<Entity const *> GetEntitiesWithComponent(Comp comp);
 
-		int AddEntity(std::shared_ptr<Entity> entity);
+		int AddEntity(shared_ptr<Entity> entity);
 		void RemoveEntity(const string& entityName);
 
-		std::shared_ptr<const Entity> GetEntityByName(const string& name) const;
-		std::shared_ptr<Entity> GetEditableEntityByName(const string& name);
-		std::shared_ptr<Entity> GetEntityByIndex(const int index) {
+		shared_ptr<const Entity> GetEntityByName(const string& name) const;
+		shared_ptr<Entity> GetEditableEntityByName(const string& name);
+
+		shared_ptr<const Entity> GetEntityByIndex(const int index) {
+			return (*this)[index];
+		}
+		shared_ptr<Entity> GetEditableEntityByIndex(const int index) {
 			return (*this)[index];
 		}
 
