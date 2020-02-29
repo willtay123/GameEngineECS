@@ -3,7 +3,8 @@
 using namespace EngineECS;
 
 EntityList::EntityList(const string& name) :
-	_listName(name) {
+	_listName(name),
+	_entities(make_shared<EntityData>()){
 }
 
 EntityList::EntityList(const EntityList& other) {
@@ -29,11 +30,11 @@ const string& EntityList::GetName() const {
 	return _listName;
 }
 
-int EntityList::AddEntity(std::shared_ptr<Entity> entity) {
+int EntityList::AddEntity(shared_ptr<Entity> entity) {
 	if (!entity.get()) {
 		return -1;
 	}
-	_entities->push_back(std::move(entity));
+	_entities->push_back(entity);
 	return _entities->size() - 1;
 }
 

@@ -45,6 +45,16 @@ namespace EngineUnitTests
 
 				Assert::IsTrue(id == "testEntity", L"Failed to get entity by []");
 			}
+
+			TEST_METHOD(DataInstancing) {
+				EntityList el1("list1");
+				EntityList el2 = el1;
+
+				el1.AddEntity(make_shared<Entity>("testEntity"));
+				int list2size = el2.size();
+
+				Assert::IsTrue(list2size == 1, L"EntityList failed instance test");
+			}
 		};
 	}
 }
