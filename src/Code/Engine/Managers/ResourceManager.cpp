@@ -31,15 +31,15 @@ void ResourceManager::SetResourceLoader(IResourceLoader* resourceLoader) {
 	_resourceLoader = resourceLoader;
 }
 
-std::weak_ptr<Texture> ResourceManager::LoadTexture(const string& filepath) {
+shared_ptr<Texture> ResourceManager::LoadTexture(const string& filepath) {
 	Logger::LogInfo("Loading texture: " + filepath);
 
 	if (!_resourceLoader) {
 		Logger::LogError("No resource loader has been set");
-		return std::weak_ptr<Texture>();
+		return shared_ptr<Texture>();
 	}
 
-	std::shared_ptr<Texture> texture;
+	shared_ptr<Texture> texture;
 
 	auto it = _textureMap.find(filepath);
 	if (it != _textureMap.end()) {
@@ -76,15 +76,15 @@ void ResourceManager::ClearTextures() {
 	Logger::LogInfo(text);
 }
 
-std::weak_ptr<Geometry> ResourceManager::LoadGeometry(const string& filepath) {
+shared_ptr<Geometry> ResourceManager::LoadGeometry(const string& filepath) {
 	Logger::LogInfo("Loading Geometry: " + filepath);
 
 	if (!_resourceLoader) {
 		Logger::LogError("No resource loader has been set");
-		return std::weak_ptr<Geometry>();
+		return shared_ptr<Geometry>();
 	}
 
-	std::shared_ptr<Geometry> model;
+	shared_ptr<Geometry> model;
 
 	auto it = _modelMap.find(filepath);
 	if (it != _modelMap.end()) {
@@ -124,15 +124,15 @@ void ResourceManager::ClearModels() {
 	Logger::LogInfo(text);
 }
 
-std::weak_ptr<IResource> ResourceManager::LoadResource(const string& filepath) {
+shared_ptr<IResource> ResourceManager::LoadResource(const string& filepath) {
 	Logger::LogInfo("Loading resource: " + filepath);
 
 	if (!_resourceLoader) {
 		Logger::LogError("No resource loader has been set");
-		return std::weak_ptr<IResource>();
+		return shared_ptr<IResource>();
 	}
 
-	std::shared_ptr<IResource> resource;
+	shared_ptr<IResource> resource;
 
 	auto it = _resourceMap.find(filepath);
 	if (it != _resourceMap.end()) {
@@ -165,6 +165,5 @@ void ResourceManager::ClearResources() {
 	std::stringstream ss = std::stringstream();
 	ss << "new _resourceMap size: ";
 	ss << _resourceMap.size();
-	string text = ss.str();
-	Logger::LogInfo(text);
+	Logger::LogInfo(ss.str());
 }

@@ -224,7 +224,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="TestObjects\Implementations\CollisionDetector.cpp" />
+    <ClCompile Include="TestData\Implementations\CollisionDetector.cpp" />
     <ClCompile Include="DataStructs\EntityListTest.cpp" />
     <ClCompile Include="General\EngineTest.cpp" />
     <ClCompile Include="Managers\CollisionManagerTest.cpp" />
@@ -247,15 +247,15 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TestObjects\Implementations\CollisionResponder.cpp" />
-    <ClCompile Include="TestObjects\Implementations\System.cpp" />
+    <ClCompile Include="TestData\Implementations\CollisionResponder.cpp" />
+    <ClCompile Include="TestData\Implementations\System.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TestObjects\Implementations\CollisionDetector.h" />
+    <ClInclude Include="TestData\Implementations\CollisionDetector.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="TestObjects\Implementations\CollisionResponder.h" />
-    <ClInclude Include="TestObjects\Implementations\System.h" />
+    <ClInclude Include="TestData\Implementations\CollisionResponder.h" />
+    <ClInclude Include="TestData\Implementations\System.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="EngineUnitTests.rc" />

@@ -35,13 +35,13 @@ namespace EngineECS {
 		void SetResourceLoader(IResourceLoader* _resourceLoader);
 		IResourceLoader* GetResourceLoader() const { return _resourceLoader; }
 
-		weak_ptr<Texture> LoadTexture(const string& filepath);
+		shared_ptr<Texture> LoadTexture(const string& filepath);
 		void ClearTextures();
 
-		weak_ptr<Geometry> LoadGeometry(const string& filepath);
+		shared_ptr<Geometry> LoadGeometry(const string& filepath);
 		void ClearModels();
 
-		weak_ptr<IResource> LoadResource(const string& filepath);
+		shared_ptr<IResource> LoadResource(const string& filepath);
 		void ClearResources();
 	};
 }

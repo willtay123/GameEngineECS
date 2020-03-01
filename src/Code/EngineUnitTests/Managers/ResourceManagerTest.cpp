@@ -12,8 +12,6 @@ namespace EngineUnitTests
 		TEST_CLASS(ResourceManagerTest) {
 		public:
 
-			//TEST_METHOD(Initialise)
-
 			TEST_METHOD(LoadTexture) {
 			}
 
