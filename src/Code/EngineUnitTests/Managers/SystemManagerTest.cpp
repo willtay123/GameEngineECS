@@ -3,7 +3,7 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "Managers/SystemManager.h"
-#include "TestObjects/Implementations/System.h"
+#include "TestData/Implementations/System.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace EngineECS;

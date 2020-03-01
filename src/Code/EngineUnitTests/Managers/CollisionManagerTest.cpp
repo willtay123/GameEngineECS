@@ -2,8 +2,8 @@
 #include "CppUnitTest.h"
 #include "Managers/CollisionManager.h"
 #include "Interfaces/ICollisionManifold.h"
-#include "TestObjects/Implementations/CollisionDetector.h"
-#include "TestObjects/Implementations/CollisionResponder.h"
+#include "TestData/Implementations/CollisionDetector.h"
+#include "TestData/Implementations/CollisionResponder.h"
 #include "Components/ComponentTransform.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;

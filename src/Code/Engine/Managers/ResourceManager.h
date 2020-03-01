@@ -36,12 +36,15 @@ namespace EngineECS {
 		IResourceLoader* GetResourceLoader() const { return _resourceLoader; }
 
 		shared_ptr<Texture> LoadTexture(const string& filepath);
+		int GetTextureCount() const { return _textureMap.size(); }
 		void ClearTextures();
 
-		shared_ptr<Geometry> LoadGeometry(const string& filepath);
+		shared_ptr<Geometry> LoadModel(const string& filepath);
+		int GetModelCount() const { return _modelMap.size(); }
 		void ClearModels();
 
 		shared_ptr<IResource> LoadResource(const string& filepath);
+		int GetResourceCount() const { return _resourceMap.size(); }
 		void ClearResources();
 	};
 }

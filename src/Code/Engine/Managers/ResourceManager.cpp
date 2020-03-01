@@ -76,7 +76,7 @@ void ResourceManager::ClearTextures() {
 	Logger::LogInfo(text);
 }
 
-shared_ptr<Geometry> ResourceManager::LoadGeometry(const string& filepath) {
+shared_ptr<Geometry> ResourceManager::LoadModel(const string& filepath) {
 	Logger::LogInfo("Loading Geometry: " + filepath);
 
 	if (!_resourceLoader) {
