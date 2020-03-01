@@ -14,6 +14,7 @@ namespace EngineUnitTests
 		public:
 
 			TEST_METHOD(LoadTexture) {
+				//ResourceManager::GetInstance().SetResourceLoader(new ResourceLoader());
 				shared_ptr<Texture> texture = ResourceManager::GetInstance().LoadTexture("TestData/Assets/testImage.png");
 
 				Assert::IsTrue(texture != nullptr, L"Failed to load texture");
@@ -27,7 +28,12 @@ namespace EngineUnitTests
 				Assert::IsTrue(sizeBefore == 1 && sizeAfter == 0, L"Failed to clear textures");
 			}
 
-			//TEST_METHOD(LoadGeometry)
+			TEST_METHOD(LoadGeometry) {
+				//ResourceManager::GetInstance().SetResourceLoader(new ResourceLoader());
+				shared_ptr<Geometry> model = ResourceManager::GetInstance().LoadModel("TestData/Assets/testModel.obj");
+
+				Assert::IsTrue(model != nullptr, L"Failed to load texture");
+			}
 
 			TEST_METHOD(ClearGeometry) {
 				int sizeBefore = ResourceManager::GetInstance().GetModelCount();
@@ -37,7 +43,12 @@ namespace EngineUnitTests
 				Assert::IsTrue(sizeBefore == 1 && sizeAfter == 0, L"Failed to clear models");
 			}
 
-			//TEST_METHOD(LoadResource)
+			TEST_METHOD(LoadResource) {
+				//ResourceManager::GetInstance().SetResourceLoader(new ResourceLoader());
+				shared_ptr<IResource> resource = ResourceManager::GetInstance().LoadResource("TestData/Assets/testResource.png");
+
+				Assert::IsTrue(resource != nullptr, L"Failed to load texture");
+			}
 
 			TEST_METHOD(ClearResources) {
 				int sizeBefore = ResourceManager::GetInstance().GetResourceCount();
