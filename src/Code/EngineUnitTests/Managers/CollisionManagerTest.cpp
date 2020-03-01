@@ -4,6 +4,7 @@
 #include "Interfaces/ICollisionManifold.h"
 #include "TestObjects/Implementations/CollisionDetector.h"
 #include "TestObjects/Implementations/CollisionResponder.h"
+#include "Components/ComponentTransform.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace EngineECS;
@@ -20,12 +21,12 @@ namespace EngineUnitTests
 				shared_ptr<EntityList> el = make_shared<EntityList>("testList");
 
 				shared_ptr<Entity> entity1 = make_shared<Entity>("testEntity1");
-				//entity1->AddComponent(new ComponentTransform());
-				//entity1->AddComponent(new ComponentSphereCollider());
+				entity1->AddComponent(new ComponentTransform(0, 0, 0));
+				//entity1->AddComponent(new ComponentSphereCollider(2));
 
 				shared_ptr<Entity> entity2 = make_shared<Entity>("testEntity1");
-				//entity2->AddComponent(new ComponentTransform());
-				//entity2->AddComponent(new ComponentSphereCollider());
+				entity2->AddComponent(new ComponentTransform(0, 0, 0));
+				//entity2->AddComponent(new ComponentSphereCollider(3));
 
 				CollisionManager::GetInstance().DetectCollisions(el);
 				const vector<ICollisionManifold*> collisions = CollisionManager::GetInstance().GetCollisions();
