@@ -56,7 +56,7 @@ bool Engine::Initialise() {
 
 void Engine::SetInitialScene(const string& sceneID, std::unique_ptr<IScene> scene) {
 	if (_engineState == EngineState::Initialised) {
-		SceneManager::GetInstance().SetScene(sceneID, std::move(scene));
+		SceneManager::GetInstance().AddScene(std::move(scene));
 		_engineState = EngineState::CanRun;
 	}
 	else {

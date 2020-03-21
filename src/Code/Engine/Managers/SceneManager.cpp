@@ -13,66 +13,32 @@ SceneManager& SceneManager::GetInstance() {
 	return *Instance;
 }
 
-SceneManager::SceneManager() :
-	_currentSceneID(),
-	_currentScene(nullptr) {
+SceneManager::SceneManager() {
 }
 
 SceneManager::~SceneManager() {
 }
 
-void SceneManager::AddScene(const string& sceneID, std::unique_ptr<IScene> scene) {
-	if (_sceneMap.size() == 0) {
-		_currentScene = scene.get();
-		_currentSceneID = sceneID;
-	}
+void SceneManager::AddScene(unique_ptr<IScene> scene) {
 	scene->Initialise();
-	_sceneMap[sceneID] = std::move(scene);
+	_scenes.push(move(scene));
 }
 
-bool SceneManager::RemoveScene(const string& sceneID) {
-	if (_currentSceneID == sceneID) {
-		return false;
-		Logger::LogError("Cannot the delete active scene");
-	}
-
-	if (!HasScene(sceneID)) {
-		return false;
-		Logger::LogWarning("Attempted to delete scene that doesn't exist");
-	}
-
-	// Delete map entry
-	_sceneMap.erase(sceneID);
-	Logger::LogInfo("Scene deleted with ID: " + sceneID);
-	return true;
+void SceneManager::RemoveScene() {
+	// Delete current scene
+	Logger::LogInfo("Scene deleted with ID: " + _scenes.top()->GetName());
+	_scenes.pop(); // If user calls this from the current scene, undefined behaviour
 }
 
-bool SceneManager::HasScene(const string& sceneID) {
-	// Look in map
-	auto itr = _sceneMap.find(sceneID);
-	return (itr != _sceneMap.end());
-}
-
-void SceneManager::SetScene(const string& sceneID) {
-	if (HasScene(sceneID)) {
-		// Match found, set active scene
-		_currentSceneID = sceneID;
-		_currentScene = _sceneMap[sceneID].get();
-		Logger::LogInfo("Scene Set: " + sceneID);
-	}
-}
-
-void SceneManager::SetScene(const string& sceneID, std::unique_ptr<IScene> scene) {
-	// Add scene to the map
-	AddScene(sceneID, std::move(scene));
-	// Set that scene
-	SetScene(sceneID);
+void SceneManager::SwapScene(unique_ptr<IScene> scene) {
+	RemoveScene();
+	AddScene(move(scene));
 }
 
 void SceneManager::Update(double dt) {
-	if (_currentScene != nullptr) { _currentScene->Update(dt); }
+	if (_scenes.top() != nullptr) { _scenes.top()->Update(dt); }
 }
 
 void SceneManager::Render() {
-	if (_currentScene != nullptr) { _currentScene->Render(); }
+	if (_scenes.top() != nullptr) { _scenes.top()->Render(); }
 }

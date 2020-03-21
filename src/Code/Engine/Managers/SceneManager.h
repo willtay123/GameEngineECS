@@ -1,20 +1,19 @@
 #pragma once
-#include <map>
+#include <stack>
 
 #include "Interfaces/IScene.h"
 #include "Scenes/DefaultScene.h"
 #include "Tools/Logger.h"
 #include "CleverPointers.h"
 
-using std::map;
+using std::stack;
 
 namespace EngineECS {
 	class SceneManager {
 	private:
 		static SceneManager* Instance;
-		string _currentSceneID;
-		IScene* _currentScene; // Be careful with this, do not call delete
-		map<string, unique_ptr<IScene>> _sceneMap;
+
+		stack<unique_ptr<IScene>> _scenes;
 
 		SceneManager();
 
@@ -25,13 +24,11 @@ namespace EngineECS {
 		void Update(double dt);
 		void Render();
 
-		void AddScene(const string& sceneID, unique_ptr<IScene> scene);
-		bool RemoveScene(const string& sceneID);
-		bool HasScene(const string& sceneID);
+		void AddScene(unique_ptr<IScene> scene);
+		void RemoveScene();
+		void SwapScene(unique_ptr<IScene> scene);
 
-		int GetSceneCount() const { return (int)_sceneMap.size(); }
-
-		void SetScene(const string& sceneID);
-		void SetScene(const string& sceneID, unique_ptr<IScene> scene);
+		int GetSceneCount() const { return (int)_scenes.size(); }
+		const string& GetCurrentSceneID() const { return _scenes.top()->GetName(); }
 	};
 }
