@@ -3,9 +3,9 @@
 #include <map>
 #include <vector>
 #include <string>
-#include <memory>
 #include "DataStructs/EntityList.h"
 #include "Objects/Entity.h"
+#include "CleverPointers.h"
 
 using std::map;
 using std::vector;
@@ -23,7 +23,7 @@ namespace EngineECS {
 
 	class EntityManager {
 	private:
-		typedef map<string, std::shared_ptr<EntityList>> EntityMap;
+		typedef map<string, shared_ptr<EntityList>> EntityMap;
 
 		static EntityManager* Instance;
 		EntityMap _entityMap;
@@ -36,7 +36,7 @@ namespace EngineECS {
 		~EntityManager();
 		static EntityManager& GetInstance();
 
-		int AddEntity(const string& groupID, std::shared_ptr<Entity> entity);
+		int AddEntity(const string& groupID, shared_ptr<Entity> entity);
 		bool RemoveEntity(const string& groupID, const string& entityID);
 
 		void ClearEntityGroup(const string& groupID);
@@ -48,12 +48,12 @@ namespace EngineECS {
 
 		void SetActiveEntityGroup(const string& groupID);
 
-		std::shared_ptr<const EntityList> GetEntities();
-		std::shared_ptr<const EntityList> GetEntities(const string& groupID);
-		std::shared_ptr<EntityList> GetEntitiesEditable();
-		std::shared_ptr<EntityList> GetEntitiesEditable(const string& groupID);
+		shared_ptr<const EntityList> GetEntities();
+		shared_ptr<const EntityList> GetEntities(const string& groupID);
+		shared_ptr<EntityList> GetEntitiesEditable();
+		shared_ptr<EntityList> GetEntitiesEditable(const string& groupID);
 
-		const std::shared_ptr<const Entity> GetEntity(const string& groupID, const string& entityID);
-		std::shared_ptr<Entity> GetEntityEditable(const string& groupID, const string& entityID);
+		const shared_ptr<const Entity> GetEntity(const string& groupID, const string& entityID);
+		shared_ptr<Entity> GetEntityEditable(const string& groupID, const string& entityID);
 	};
 }
