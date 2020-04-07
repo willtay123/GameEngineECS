@@ -27,8 +27,9 @@ namespace EngineECS {
 		void AddScene(unique_ptr<IScene> scene);
 		void RemoveScene();
 		void SwapScene(unique_ptr<IScene> scene);
+		void ClearScenes();
 
-		int GetSceneCount() const { return (int)_scenes.size(); }
+		int GetSceneCount() const { return static_cast<int>(_scenes.size()); }
 		const string& GetCurrentSceneID() const { return _scenes.top()->GetName(); }
 	};
 }

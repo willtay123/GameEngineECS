@@ -35,6 +35,14 @@ void SceneManager::SwapScene(unique_ptr<IScene> scene) {
 	AddScene(move(scene));
 }
 
+void SceneManager::ClearScenes() {
+	Logger::LogInfo("Clearing scenes");
+	
+	while (!_scenes.empty()) {
+		_scenes.pop();
+	}
+}
+
 void SceneManager::Update(double dt) {
 	if (_scenes.top() != nullptr) { _scenes.top()->Update(dt); }
 }
