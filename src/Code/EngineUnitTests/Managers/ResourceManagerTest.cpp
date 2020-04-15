@@ -15,7 +15,7 @@ namespace EngineUnitTests
 
 			TEST_METHOD(LoadTexture) {
 				//ResourceManager::GetInstance().SetResourceLoader(new ResourceLoader());
-				shared_ptr<Texture> texture = ResourceManager::GetInstance().LoadTexture("TestData/Assets/testImage.png");
+				shared_ptr<Texture> texture = ResourceManager::GetInstance().LoadTextureByPath("TestData/Assets/testImage.png");
 
 				Assert::IsTrue(texture != nullptr, L"Failed to load texture");
 			}
@@ -30,7 +30,7 @@ namespace EngineUnitTests
 
 			TEST_METHOD(LoadGeometry) {
 				//ResourceManager::GetInstance().SetResourceLoader(new ResourceLoader());
-				shared_ptr<Geometry> model = ResourceManager::GetInstance().LoadModel("TestData/Assets/testModel.obj");
+				shared_ptr<Geometry> model = ResourceManager::GetInstance().LoadModelByPath("TestData/Assets/testModel.obj");
 
 				Assert::IsTrue(model != nullptr, L"Failed to load texture");
 			}
@@ -45,7 +45,7 @@ namespace EngineUnitTests
 
 			TEST_METHOD(LoadResource) {
 				//ResourceManager::GetInstance().SetResourceLoader(new ResourceLoader());
-				shared_ptr<IResource> resource = ResourceManager::GetInstance().LoadResource("TestData/Assets/testResource.png");
+				shared_ptr<IResource> resource = ResourceManager::GetInstance().LoadResourceByPath("TestData/Assets/testResource.png");
 
 				Assert::IsTrue(resource != nullptr, L"Failed to load texture");
 			}

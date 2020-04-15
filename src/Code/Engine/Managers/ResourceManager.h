@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include <map>
+#include <unordered_map>
 #include <vector>
 #include <string>
 #include <sstream>
@@ -11,22 +11,31 @@
 #include "Objects/Geometry.h"
 #include "Tools/Logger.h"
 #include "CleverPointers.h"
+#include "DataStructs/ResourceTypes.h"
+#include "DataStructs/ResourceID.h"
+#include "DataStructs/ResourceData.h"
 
-using std::map;
+using std::unordered_map;
 using std::make_pair;
 using std::string;
 
 namespace EngineECS {
+
 	class ResourceManager {
 	private:
-		static ResourceManager* Instance;
-		map<string, shared_ptr<Texture>> _textureMap;
-		map<string, shared_ptr<Geometry>> _modelMap;
-		map<string, shared_ptr<IResource>> _resourceMap;
+		typedef unordered_map<string, ResourceID> PathMap;
+		typedef unordered_map<int, ResourceData> ResourceMap;
 
+		static ResourceManager* Instance;
 		IResourceLoader* _resourceLoader;
 
+		unsigned int _idTracker;
+		PathMap _pathMap;
+		ResourceMap _resourceMap;
+		
 		ResourceManager();
+
+		unsigned int GetNewID() { return _idTracker++; }
 
 	public:
 		~ResourceManager();
@@ -35,16 +44,18 @@ namespace EngineECS {
 		void SetResourceLoader(IResourceLoader* _resourceLoader);
 		IResourceLoader* GetResourceLoader() const { return _resourceLoader; }
 
-		shared_ptr<Texture> LoadTexture(const string& filepath);
-		int GetTextureCount() const { return _textureMap.size(); }
-		void ClearTextures();
+		shared_ptr<Texture> LoadTextureByPath(const string& filepath);
+		shared_ptr<Texture> FetchTextureByID(const int resourceID);
 
-		shared_ptr<Geometry> LoadModel(const string& filepath);
-		int GetModelCount() const { return _modelMap.size(); }
-		void ClearModels();
+		shared_ptr<Geometry> LoadModelByPath(const string& filepath);
+		shared_ptr<Geometry> FetchModelByID(const int resourceID);
 
-		shared_ptr<IResource> LoadResource(const string& filepath);
-		int GetResourceCount() const { return _resourceMap.size(); }
+		shared_ptr<IResource> LoadResourceByPath(const string& filepath);
+		shared_ptr<IResource> FetchResourceByID(const int resourceID);
+
 		void ClearResources();
+		void ClearResourcesByType(ResourceType resourceType);
+
+		int GetResourceCount() const { return _resourceMap.size(); }
 	};
 }

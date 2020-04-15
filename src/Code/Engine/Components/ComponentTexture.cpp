@@ -9,7 +9,7 @@ ComponentTexture::ComponentTexture() :
 }
 
 ComponentTexture::ComponentTexture(const string& filepath) {
-	_texture = ResourceManager::GetInstance().LoadTexture(filepath);
+	_texture = ResourceManager::GetInstance().LoadTextureByPath(filepath);
 	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
 }
 

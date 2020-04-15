@@ -6,8 +6,8 @@ using namespace EngineECS;
 ResourceManager* ResourceManager::Instance = nullptr;
 
 ResourceManager::ResourceManager() :
-	_textureMap(),
-	_modelMap(),
+	_idTracker(1),
+	_pathMap(),
 	_resourceMap(),
 	_resourceLoader() {
 
@@ -15,9 +15,8 @@ ResourceManager::ResourceManager() :
 
 ResourceManager::~ResourceManager() {
 	delete _resourceLoader;
-	_textureMap.clear();
-	_modelMap.clear();
 	_resourceMap.clear();
+	_pathMap.clear();
 }
 
 ResourceManager& ResourceManager::GetInstance() {
@@ -31,7 +30,7 @@ void ResourceManager::SetResourceLoader(IResourceLoader* resourceLoader) {
 	_resourceLoader = resourceLoader;
 }
 
-shared_ptr<Texture> ResourceManager::LoadTexture(const string& filepath) {
+shared_ptr<Texture> ResourceManager::LoadTextureByPath(const string& filepath) {
 	Logger::LogInfo("Loading texture: " + filepath);
 
 	if (!_resourceLoader) {
@@ -41,42 +40,47 @@ shared_ptr<Texture> ResourceManager::LoadTexture(const string& filepath) {
 
 	shared_ptr<Texture> texture;
 
-	auto it = _textureMap.find(filepath);
-	if (it != _textureMap.end()) {
-		Logger::LogInfo("- fetched from _textureMap");
-		texture = it->second;
+	auto it = _pathMap.find(filepath);
+	if (it != _pathMap.end()) {
+		Logger::LogInfo("Matching path for resource: " + filepath);
+		int resourceID = it->second._resourceID;
+		texture = FetchTextureByID(resourceID);
 	}
 	else {
 		texture = _resourceLoader->LoadTexture(filepath);
 
 		if (texture != nullptr) {
-			// Add to map
-			_textureMap[filepath] = texture;
+			Logger::LogInfo("Adding file to resources: " + filepath);
+			int resourceID = GetNewID();
+			// Add path to map
+			_pathMap[filepath] = ResourceID(ResourceType::Texture, resourceID);
+			// Add resource to map
+			_resourceMap[resourceID] = ResourceData(ResourceType::Texture, texture);
 		}
 	}
 
 	return texture;
 }
 
-void ResourceManager::ClearTextures() {
-	Logger::LogInfo("Clearing: _textureMap");
+shared_ptr<Texture> ResourceManager::FetchTextureByID(const int resourceID) {
+	Logger::LogInfo("Loading texture with ID: " + resourceID);
 
-	// Delete all contents
-	for (auto itr = _textureMap.begin();
-		itr != _textureMap.end();
-		itr++)
-	{
-		_textureMap.erase(itr);
+	shared_ptr<Texture> texture;
+
+	auto resourceFinder = _resourceMap.find(resourceID);
+	if (resourceFinder != _resourceMap.end()) {
+		Logger::LogInfo("Resource found");
+		texture = std::dynamic_pointer_cast<Texture>((resourceFinder->second)._resource);
+	}
+	else {
+		Logger::LogError("Failed to find resource by ID");
 	}
 
-	std::stringstream ss = std::stringstream();
-	ss << "new _textureMap size: ";
-	ss << _textureMap.size();
-	string text = ss.str();
-	Logger::LogInfo(text);
+	return texture;
 }
 
-shared_ptr<Geometry> ResourceManager::LoadModel(const string& filepath) {
+
+shared_ptr<Geometry> ResourceManager::LoadModelByPath(const string& filepath) {
 	Logger::LogInfo("Loading Geometry: " + filepath);
 
 	if (!_resourceLoader) {
@@ -86,45 +90,48 @@ shared_ptr<Geometry> ResourceManager::LoadModel(const string& filepath) {
 
 	shared_ptr<Geometry> model;
 
-	auto it = _modelMap.find(filepath);
-	if (it != _modelMap.end()) {
-		// Fetch from map
-		Logger::LogInfo("- fetched from _modelMap");
-		model = it->second;
+	auto it = _pathMap.find(filepath);
+	if (it != _pathMap.end()) {
+		Logger::LogInfo("Matching path for resource: " + filepath);
+		int resourceID = it->second._resourceID;
+		model = FetchModelByID(resourceID);
 	}
 	else {
 		// Load new model
 		model = _resourceLoader->LoadGeometry(filepath);
 
 		if (model != nullptr) {
-			// Add to map
-			_modelMap[filepath] = model;
+			Logger::LogInfo("Adding file to resources: " + filepath);
+			int resourceID = GetNewID();
+			// Add path to map
+			_pathMap[filepath] = ResourceID(ResourceType::Model, resourceID);
+			// Add resource to map
+			_resourceMap[resourceID] = ResourceData(ResourceType::Model, model);
 		}
 	}
 
 	return model;
 }
 
-void ResourceManager::ClearModels() {
-	Logger::LogInfo("Clearing: _modelMap");
+shared_ptr<Geometry> ResourceManager::FetchModelByID(const int resourceID) {
+	Logger::LogInfo("Loading model with ID: " + resourceID);
 
-	// Delete all contents
-	for (auto itr = _modelMap.begin();
-		itr != _modelMap.end();
-		itr++)
-	{
-		//for all the elements of the map
-		_modelMap.erase(itr);
+	shared_ptr<Geometry> model;
+
+	auto resourceFinder = _resourceMap.find(resourceID);
+	if (resourceFinder != _resourceMap.end()) {
+		Logger::LogInfo("Resource found");
+		model = std::dynamic_pointer_cast<Geometry>((resourceFinder->second)._resource);
+	}
+	else {
+		Logger::LogError("Failed to find resource by ID");
 	}
 
-	std::stringstream ss = std::stringstream();
-	ss << "new _modelMap size: ";
-	ss << _modelMap.size();
-	string text = ss.str();
-	Logger::LogInfo(text);
+	return model;
 }
 
-shared_ptr<IResource> ResourceManager::LoadResource(const string& filepath) {
+
+shared_ptr<IResource> ResourceManager::LoadResourceByPath(const string& filepath) {
 	Logger::LogInfo("Loading resource: " + filepath);
 
 	if (!_resourceLoader) {
@@ -134,26 +141,56 @@ shared_ptr<IResource> ResourceManager::LoadResource(const string& filepath) {
 
 	shared_ptr<IResource> resource;
 
-	auto it = _resourceMap.find(filepath);
-	if (it != _resourceMap.end()) {
+	auto it = _pathMap.find(filepath);
+	if (it != _pathMap.end()) {
 		Logger::LogInfo("- fetched from _resourceMap");
-		resource = it->second;
+		int resourceID = it->second._resourceID;
+		resource = FetchResourceByID(resourceID);
 	}
 	else {
 		resource = _resourceLoader->LoadResource(filepath);
 
 		if (resource != NULL) {
-			// Add to map
-			_resourceMap[filepath] = resource;
+			Logger::LogInfo("Adding file to resources: " + filepath);
+			int resourceID = GetNewID();
+			// Add path to map
+			_pathMap[filepath] = ResourceID(ResourceType::Unspecified, resourceID);
+			// Add resource to map
+			_resourceMap[resourceID] = ResourceData(ResourceType::Unspecified, resource);
 		}
 	}
 	return resource;
 }
 
-void ResourceManager::ClearResources() {
-	Logger::LogInfo("Clearing: _resourceMap");
+shared_ptr<IResource> ResourceManager::FetchResourceByID(const int resourceID) {
+	Logger::LogInfo("Loading resource with ID: " + resourceID);
 
-	// Delete all contents
+	shared_ptr<IResource> resource;
+
+	auto resourceFinder = _resourceMap.find(resourceID);
+	if (resourceFinder != _resourceMap.end()) {
+		Logger::LogInfo("Resource found");
+		resource = (resourceFinder->second)._resource;
+	}
+	else {
+		Logger::LogError("Failed to find resource by ID");
+	}
+
+	return resource;
+}
+
+
+void ResourceManager::ClearResources() {
+	Logger::LogInfo("Clearing Resources");
+
+	// Delete IDs
+	for (auto itr = _pathMap.begin();
+		itr != _pathMap.end();
+		itr++) {
+
+		_pathMap.erase(itr);
+	}
+	// Delete Resource Data
 	for (auto itr = _resourceMap.begin();
 		itr != _resourceMap.end();
 		itr++)
@@ -162,8 +199,20 @@ void ResourceManager::ClearResources() {
 		_resourceMap.erase(itr);
 	}
 
-	std::stringstream ss = std::stringstream();
-	ss << "new _resourceMap size: ";
-	ss << _resourceMap.size();
-	Logger::LogInfo(ss.str());
+	// NOTE: ID tracker is not reset to lower the risk of leftover errors
+}
+
+void ResourceManager::ClearResourcesByType(ResourceType resourceType) {
+	Logger::LogInfo("Deleting resources with type: ");
+	for (auto itr = _pathMap.begin();
+		itr != _pathMap.end();
+		itr++) {
+
+		if (resourceType == itr->second._resourceType) {
+			// Delete the resource data
+			_resourceMap.erase(itr->second._resourceID);
+			// Delete the ID
+			_pathMap.erase(itr);
+		}
+	}
 }

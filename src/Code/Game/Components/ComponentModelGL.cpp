@@ -9,7 +9,7 @@ ComponentModelGL::ComponentModelGL() :
 
 ComponentModelGL::ComponentModelGL(const string& filepath) {
 	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
-	std::shared_ptr<Geometry> geom = ResourceManager::GetInstance().LoadModel(filepath).lock();
+	std::shared_ptr<Geometry> geom = ResourceManager::GetInstance().LoadModelByPath(filepath).lock();
 	_model = new OpenGLModel(geom);
 }
 
