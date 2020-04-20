@@ -102,7 +102,7 @@ void Logger::LogInfo(const char* message) {
 }
 
 void Logger::LogInfo(const string& message) {
-	string tag = string("");
+	string tag = string("Untagged");
 	Logger::LogInfo(tag, message);
 }
 
@@ -123,7 +123,7 @@ void Logger::LogWarning(const char* message) {
 }
 
 void Logger::LogWarning(const string& message) {
-	string tag = string("");
+	string tag = string("Untagged");
 	Logger::LogWarning(tag, message);
 }
 
@@ -144,7 +144,7 @@ void Logger::LogError(const char* message) {
 }
 
 void Logger::LogError(const string& message) {
-	string tag = string("");
+	string tag = string("Untagged");
 	Logger::LogError(tag, message);
 }
 

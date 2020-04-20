@@ -1,8 +1,13 @@
+#pragma once
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "Managers/ResourceManager.h"
 #include "Interfaces/IResource.h"
 #include "CleverPointers.h"
+#include <Tools/Logger.h>
+#include <sstream>
+
+#include "TestData/Implementations/ResourceLoader.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace EngineECS;
@@ -18,6 +23,9 @@ namespace EngineUnitTests
 
 
 			TEST_METHOD(SetResourceLoader) {
+				EngineECS::Logger::SetLoggingDestination(LoggingDestination::File);
+				EngineECS::Logger::LogInfo("Test", "SetResourceLoader");
+
 				IResourceLoader* resourceLoader = new ResourceLoader();
 				ResourceManager::GetInstance().SetResourceLoader(resourceLoader);
 				
@@ -27,25 +35,41 @@ namespace EngineUnitTests
 			}
 
 			TEST_METHOD(LoadTexture) {
+				EngineECS::Logger::SetLoggingDestination(LoggingDestination::File);
+				EngineECS::Logger::LogInfo("Test", "LoadTexture");
+				ResourceManager::GetInstance().SetResourceLoader(new ResourceLoader());
+
 				ResourceID textureID = ResourceManager::GetInstance().LoadTextureByPath("TestData/Assets/testImage.png");
 				_textureID = textureID._resourceID;
 				Assert::IsTrue(textureID._resourceID != 0, L"Failed to load texture");
 			}
 
 			TEST_METHOD(LoadGeometry) {
+				EngineECS::Logger::SetLoggingDestination(LoggingDestination::File);
+				EngineECS::Logger::LogInfo("Test", "LoadModel");
+				ResourceManager::GetInstance().SetResourceLoader(new ResourceLoader());
+
 				ResourceID modelID = ResourceManager::GetInstance().LoadModelByPath("TestData/Assets/testCube.obj");
 				_modelID = modelID._resourceID;
 				Assert::IsTrue(modelID._resourceID != 0, L"Failed to load texture");
 			}
 
 			TEST_METHOD(LoadResource) {
+				EngineECS::Logger::SetLoggingDestination(LoggingDestination::File);
+				EngineECS::Logger::LogInfo("Test", "LoadResource");
+				ResourceManager::GetInstance().SetResourceLoader(new ResourceLoader());
+
 				ResourceID resourceID = ResourceManager::GetInstance().LoadResourceByPath("TestData/Assets/testResource.png", ResourceType::Unspecified);
 				_resourceID = resourceID._resourceID;
 				Assert::IsTrue(resourceID._resourceID != 0, L"Failed to load texture");
 			}
 
-			TEST_METHOD(GetResourceCount) {
+			TEST_METHOD(GetResourceCount) { // FAILURE: running before the loading tests, cant force order, test needs load logic added
+				EngineECS::Logger::SetLoggingDestination(LoggingDestination::File);
+				EngineECS::Logger::LogInfo("Test", "GetResourceCount");
+
 				int resourceCount = ResourceManager::GetInstance().GetResourceCount();
+				EngineECS::Logger::LogInfo("Test", "Resource count = " + std::to_string(resourceCount));
 
 				Assert::IsTrue(resourceCount == 3, L"Failed to get resource count");
 			}

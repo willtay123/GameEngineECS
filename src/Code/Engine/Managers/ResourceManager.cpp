@@ -31,10 +31,10 @@ void ResourceManager::SetResourceLoader(IResourceLoader* resourceLoader) {
 }
 
 ResourceID ResourceManager::LoadTextureByPath(const string& filepath) {
-	Logger::LogInfo("Loading texture: " + filepath);
+	Logger::LogInfo("ResourceManager", "Loading texture: " + filepath);
 
 	if (!_resourceLoader) {
-		Logger::LogError("No resource loader has been set");
+		Logger::LogError("ResourceManager", "No resource loader has been set");
 		return ResourceID();
 	}
 
@@ -42,14 +42,14 @@ ResourceID ResourceManager::LoadTextureByPath(const string& filepath) {
 
 	auto it = _pathMap.find(filepath);
 	if (it != _pathMap.end()) {
-		Logger::LogInfo("Matching path for resource: " + filepath);
+		Logger::LogInfo("ResourceManager", "Matching path for resource: " + filepath);
 		return it->second;
 	}
 	else {
 		shared_ptr<Texture> texture = _resourceLoader->LoadTexture(filepath);
 
 		if (texture != nullptr) {
-			Logger::LogInfo("Adding file to resources: " + filepath);
+			Logger::LogInfo("ResourceManager", "Adding file to resources: " + filepath);
 			int id = GetNewID();
 			// Add path to map
 			resourceID = ResourceID(ResourceType::Texture, id);
@@ -63,17 +63,17 @@ ResourceID ResourceManager::LoadTextureByPath(const string& filepath) {
 }
 
 shared_ptr<Texture> ResourceManager::FetchTextureByID(const int resourceID) {
-	Logger::LogInfo("Loading texture with ID: " + resourceID);
+	Logger::LogInfo("ResourceManager", "Loading texture with ID: " + resourceID);
 
 	shared_ptr<Texture> texture;
 
 	auto resourceFinder = _resourceMap.find(resourceID);
 	if (resourceFinder != _resourceMap.end()) {
-		Logger::LogInfo("Resource found");
+		Logger::LogInfo("ResourceManager", "Resource found");
 		texture = std::dynamic_pointer_cast<Texture>((resourceFinder->second)._resource);
 	}
 	else {
-		Logger::LogError("Failed to find resource by ID");
+		Logger::LogError("ResourceManager", "Failed to find resource by ID");
 	}
 
 	return texture;
@@ -81,10 +81,10 @@ shared_ptr<Texture> ResourceManager::FetchTextureByID(const int resourceID) {
 
 
 ResourceID ResourceManager::LoadModelByPath(const string& filepath) {
-	Logger::LogInfo("Loading Geometry: " + filepath);
+	Logger::LogInfo("ResourceManager", "Loading Geometry: " + filepath);
 
 	if (!_resourceLoader) {
-		Logger::LogError("No resource loader has been set");
+		Logger::LogError("ResourceManager", "No resource loader has been set");
 		return ResourceID();
 	}
 
@@ -92,7 +92,7 @@ ResourceID ResourceManager::LoadModelByPath(const string& filepath) {
 
 	auto it = _pathMap.find(filepath);
 	if (it != _pathMap.end()) {
-		Logger::LogInfo("Matching path for resource: " + filepath);
+		Logger::LogInfo("ResourceManager", "Matching path for resource: " + filepath);
 		return it->second;
 	}
 	else {
@@ -100,7 +100,7 @@ ResourceID ResourceManager::LoadModelByPath(const string& filepath) {
 		shared_ptr<Geometry> model = _resourceLoader->LoadGeometry(filepath);
 
 		if (model != nullptr) {
-			Logger::LogInfo("Adding file to resources: " + filepath);
+			Logger::LogInfo("ResourceManager", "Adding file to resources: " + filepath);
 			int id = GetNewID();
 			// Add path to map
 			resourceID = ResourceID(ResourceType::Model, id);
@@ -114,17 +114,17 @@ ResourceID ResourceManager::LoadModelByPath(const string& filepath) {
 }
 
 shared_ptr<Geometry> ResourceManager::FetchModelByID(const int resourceID) {
-	Logger::LogInfo("Loading model with ID: " + resourceID);
+	Logger::LogInfo("ResourceManager", "Loading model with ID: " + resourceID);
 
 	shared_ptr<Geometry> model;
 
 	auto resourceFinder = _resourceMap.find(resourceID);
 	if (resourceFinder != _resourceMap.end()) {
-		Logger::LogInfo("Resource found");
+		Logger::LogInfo("ResourceManager", "Resource found");
 		model = std::dynamic_pointer_cast<Geometry>((resourceFinder->second)._resource);
 	}
 	else {
-		Logger::LogError("Failed to find resource by ID");
+		Logger::LogError("ResourceManager", "Failed to find resource by ID");
 	}
 
 	return model;
@@ -132,10 +132,10 @@ shared_ptr<Geometry> ResourceManager::FetchModelByID(const int resourceID) {
 
 
 ResourceID ResourceManager::LoadResourceByPath(const string& filepath, ResourceType resourceType) {
-	Logger::LogInfo("Loading resource: " + filepath);
+	Logger::LogInfo("ResourceManager", "Loading resource: " + filepath);
 
 	if (!_resourceLoader) {
-		Logger::LogError("No resource loader has been set");
+		Logger::LogError("ResourceManager", "No resource loader has been set");
 		return ResourceID();
 	}
 
@@ -143,14 +143,14 @@ ResourceID ResourceManager::LoadResourceByPath(const string& filepath, ResourceT
 
 	auto it = _pathMap.find(filepath);
 	if (it != _pathMap.end()) {
-		Logger::LogInfo("- fetched from _resourceMap");
+		Logger::LogInfo("ResourceManager", "Fetched from _resourceMap");
 		return it->second;
 	}
 	else {
 		shared_ptr<IResource> resource = _resourceLoader->LoadResource(filepath);
 
 		if (resource != NULL) {
-			Logger::LogInfo("Adding file to resources: " + filepath);
+			Logger::LogInfo("ResourceManager", "Adding file to resources: " + filepath);
 			int id = GetNewID();
 			// Add path to map
 			resourceID = ResourceID(resourceType, id);
@@ -163,17 +163,17 @@ ResourceID ResourceManager::LoadResourceByPath(const string& filepath, ResourceT
 }
 
 shared_ptr<IResource> ResourceManager::FetchResourceByID(const int resourceID) {
-	Logger::LogInfo("Loading resource with ID: " + resourceID);
+	Logger::LogInfo("ResourceManager", "Loading resource with ID: " + resourceID);
 
 	shared_ptr<IResource> resource;
 
 	auto resourceFinder = _resourceMap.find(resourceID);
 	if (resourceFinder != _resourceMap.end()) {
-		Logger::LogInfo("Resource found");
+		Logger::LogInfo("ResourceManager", "Resource found");
 		resource = (resourceFinder->second)._resource;
 	}
 	else {
-		Logger::LogError("Failed to find resource by ID");
+		Logger::LogError("ResourceManager", "Failed to find resource by ID");
 	}
 
 	return resource;
@@ -181,7 +181,7 @@ shared_ptr<IResource> ResourceManager::FetchResourceByID(const int resourceID) {
 
 
 void ResourceManager::ClearResources() {
-	Logger::LogInfo("Clearing Resources");
+	Logger::LogInfo("ResourceManager", "Clearing Resources");
 
 	// Delete IDs
 	for (auto itr = _pathMap.begin();
@@ -203,7 +203,7 @@ void ResourceManager::ClearResources() {
 }
 
 void ResourceManager::ClearResourcesByType(ResourceType resourceType) {
-	Logger::LogInfo("Deleting resources with type: ");
+	Logger::LogInfo("ResourceManager", "Deleting resources with type: ");
 	for (auto itr = _pathMap.begin();
 		itr != _pathMap.end();
 		itr++) {
