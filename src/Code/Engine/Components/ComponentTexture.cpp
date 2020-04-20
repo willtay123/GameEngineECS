@@ -4,16 +4,11 @@ using namespace EngineECS;
 
 
 ComponentTexture::ComponentTexture() :
-		_texture(std::weak_ptr<Texture>()) {
+		_texture() {
 	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
 }
 
-ComponentTexture::ComponentTexture(const string& filepath) {
-	_texture = ResourceManager::GetInstance().LoadTextureByPath(filepath);
-	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
-}
-
-ComponentTexture::ComponentTexture(std::weak_ptr<Texture> texture) :
+ComponentTexture::ComponentTexture(ResourceID texture) :
 	_texture(texture) {
 	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
 }
@@ -48,18 +43,18 @@ void ComponentTexture::Message(IMessage* message) {
 
 }
 
-const std::weak_ptr<Texture> ComponentTexture::GetTexture() const {
+ResourceID ComponentTexture::GetTexture() const {
 	return _texture;
 }
 
 int ComponentTexture::GetID() const {
-	return (!_texture.expired()) ? _texture.lock()->GetID() : 0;
+	return _texture._resourceID;
 }
 
 int ComponentTexture::GetWidth() const {
-	return (!_texture.expired()) ? _texture.lock()->GetWidth() : 0;
+	return 0;
 }
 
 int ComponentTexture::GetHeight() const {
-	return (!_texture.expired()) ? _texture.lock()->GetHeight() : 0;
+	return 0;
 }

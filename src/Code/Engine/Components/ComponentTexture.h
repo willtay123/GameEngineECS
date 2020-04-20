@@ -8,12 +8,11 @@
 namespace EngineECS {
 	class ComponentTexture : public IComponent {
 	private:
-		weak_ptr<Texture> _texture;
+		ResourceID _texture;
 
 	public:
 		ComponentTexture();
-		ComponentTexture(const string& filepath);
-		ComponentTexture(weak_ptr<Texture> texture);
+		ComponentTexture(ResourceID texture);
 		ComponentTexture(const ComponentTexture& rhs);
 		~ComponentTexture();
 		ComponentTexture operator=(const ComponentTexture& rhs);
@@ -22,7 +21,7 @@ namespace EngineECS {
 		int ComponentType() const;
 		void Message(IMessage* message);
 
-		const weak_ptr<Texture> GetTexture() const;
+		ResourceID GetTexture() const;
 		int GetID() const;
 		int GetWidth() const;
 		int GetHeight() const;

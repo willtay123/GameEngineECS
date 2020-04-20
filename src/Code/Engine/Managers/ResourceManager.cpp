@@ -30,36 +30,36 @@ void ResourceManager::SetResourceLoader(IResourceLoader* resourceLoader) {
 	_resourceLoader = resourceLoader;
 }
 
-shared_ptr<Texture> ResourceManager::LoadTextureByPath(const string& filepath) {
+ResourceID ResourceManager::LoadTextureByPath(const string& filepath) {
 	Logger::LogInfo("Loading texture: " + filepath);
 
 	if (!_resourceLoader) {
 		Logger::LogError("No resource loader has been set");
-		return shared_ptr<Texture>();
+		return ResourceID();
 	}
 
-	shared_ptr<Texture> texture;
+	ResourceID resourceID;
 
 	auto it = _pathMap.find(filepath);
 	if (it != _pathMap.end()) {
 		Logger::LogInfo("Matching path for resource: " + filepath);
-		int resourceID = it->second._resourceID;
-		texture = FetchTextureByID(resourceID);
+		return it->second;
 	}
 	else {
-		texture = _resourceLoader->LoadTexture(filepath);
+		shared_ptr<Texture> texture = _resourceLoader->LoadTexture(filepath);
 
 		if (texture != nullptr) {
 			Logger::LogInfo("Adding file to resources: " + filepath);
-			int resourceID = GetNewID();
+			int id = GetNewID();
 			// Add path to map
-			_pathMap[filepath] = ResourceID(ResourceType::Texture, resourceID);
+			resourceID = ResourceID(ResourceType::Texture, id);
+			_pathMap[filepath] = resourceID;
 			// Add resource to map
-			_resourceMap[resourceID] = ResourceData(ResourceType::Texture, texture);
+			_resourceMap[id] = ResourceData(ResourceType::Texture, texture);
 		}
 	}
 
-	return texture;
+	return resourceID;
 }
 
 shared_ptr<Texture> ResourceManager::FetchTextureByID(const int resourceID) {
@@ -80,37 +80,37 @@ shared_ptr<Texture> ResourceManager::FetchTextureByID(const int resourceID) {
 }
 
 
-shared_ptr<Geometry> ResourceManager::LoadModelByPath(const string& filepath) {
+ResourceID ResourceManager::LoadModelByPath(const string& filepath) {
 	Logger::LogInfo("Loading Geometry: " + filepath);
 
 	if (!_resourceLoader) {
 		Logger::LogError("No resource loader has been set");
-		return shared_ptr<Geometry>();
+		return ResourceID();
 	}
 
-	shared_ptr<Geometry> model;
+	ResourceID resourceID;
 
 	auto it = _pathMap.find(filepath);
 	if (it != _pathMap.end()) {
 		Logger::LogInfo("Matching path for resource: " + filepath);
-		int resourceID = it->second._resourceID;
-		model = FetchModelByID(resourceID);
+		return it->second;
 	}
 	else {
 		// Load new model
-		model = _resourceLoader->LoadGeometry(filepath);
+		shared_ptr<Geometry> model = _resourceLoader->LoadGeometry(filepath);
 
 		if (model != nullptr) {
 			Logger::LogInfo("Adding file to resources: " + filepath);
-			int resourceID = GetNewID();
+			int id = GetNewID();
 			// Add path to map
-			_pathMap[filepath] = ResourceID(ResourceType::Model, resourceID);
+			resourceID = ResourceID(ResourceType::Model, id);
+			_pathMap[filepath] = resourceID;
 			// Add resource to map
-			_resourceMap[resourceID] = ResourceData(ResourceType::Model, model);
+			_resourceMap[id] = ResourceData(ResourceType::Model, model);
 		}
 	}
 
-	return model;
+	return resourceID;
 }
 
 shared_ptr<Geometry> ResourceManager::FetchModelByID(const int resourceID) {
@@ -131,35 +131,35 @@ shared_ptr<Geometry> ResourceManager::FetchModelByID(const int resourceID) {
 }
 
 
-shared_ptr<IResource> ResourceManager::LoadResourceByPath(const string& filepath) {
+ResourceID ResourceManager::LoadResourceByPath(const string& filepath, ResourceType resourceType) {
 	Logger::LogInfo("Loading resource: " + filepath);
 
 	if (!_resourceLoader) {
 		Logger::LogError("No resource loader has been set");
-		return shared_ptr<IResource>();
+		return ResourceID();
 	}
 
-	shared_ptr<IResource> resource;
+	ResourceID resourceID;
 
 	auto it = _pathMap.find(filepath);
 	if (it != _pathMap.end()) {
 		Logger::LogInfo("- fetched from _resourceMap");
-		int resourceID = it->second._resourceID;
-		resource = FetchResourceByID(resourceID);
+		return it->second;
 	}
 	else {
-		resource = _resourceLoader->LoadResource(filepath);
+		shared_ptr<IResource> resource = _resourceLoader->LoadResource(filepath);
 
 		if (resource != NULL) {
 			Logger::LogInfo("Adding file to resources: " + filepath);
-			int resourceID = GetNewID();
+			int id = GetNewID();
 			// Add path to map
-			_pathMap[filepath] = ResourceID(ResourceType::Unspecified, resourceID);
+			resourceID = ResourceID(resourceType, id);
+			_pathMap[filepath] = resourceID;
 			// Add resource to map
-			_resourceMap[resourceID] = ResourceData(ResourceType::Unspecified, resource);
+			_resourceMap[id] = ResourceData(resourceType, resource);
 		}
 	}
-	return resource;
+	return resourceID;
 }
 
 shared_ptr<IResource> ResourceManager::FetchResourceByID(const int resourceID) {

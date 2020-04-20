@@ -44,13 +44,13 @@ namespace EngineECS {
 		void SetResourceLoader(IResourceLoader* _resourceLoader);
 		IResourceLoader* GetResourceLoader() const { return _resourceLoader; }
 
-		shared_ptr<Texture> LoadTextureByPath(const string& filepath);
+		ResourceID LoadTextureByPath(const string& filepath);
 		shared_ptr<Texture> FetchTextureByID(const int resourceID);
 
-		shared_ptr<Geometry> LoadModelByPath(const string& filepath);
+		ResourceID LoadModelByPath(const string& filepath);
 		shared_ptr<Geometry> FetchModelByID(const int resourceID);
 
-		shared_ptr<IResource> LoadResourceByPath(const string& filepath);
+		ResourceID LoadResourceByPath(const string& filepath, ResourceType resourceType);
 		shared_ptr<IResource> FetchResourceByID(const int resourceID);
 
 		void ClearResources();
