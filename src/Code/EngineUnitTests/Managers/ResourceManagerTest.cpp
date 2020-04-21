@@ -17,9 +17,6 @@ namespace EngineUnitTests
 	namespace Managers {
 		TEST_CLASS(ResourceManagerTest) {
 		public:
-			unsigned int _textureID = 0;
-			unsigned int _modelID = 0;
-			unsigned int _resourceID = 0;
 
 
 			TEST_METHOD(SetResourceLoader) {
@@ -40,7 +37,6 @@ namespace EngineUnitTests
 				ResourceManager::GetInstance().SetResourceLoader(new ResourceLoader());
 
 				ResourceID textureID = ResourceManager::GetInstance().LoadTextureByPath("TestData/Assets/testImage.png");
-				_textureID = textureID._resourceID;
 				Assert::IsTrue(textureID._resourceID != 0, L"Failed to load texture");
 			}
 
@@ -50,7 +46,6 @@ namespace EngineUnitTests
 				ResourceManager::GetInstance().SetResourceLoader(new ResourceLoader());
 
 				ResourceID modelID = ResourceManager::GetInstance().LoadModelByPath("TestData/Assets/testCube.obj");
-				_modelID = modelID._resourceID;
 				Assert::IsTrue(modelID._resourceID != 0, L"Failed to load texture");
 			}
 
@@ -60,7 +55,6 @@ namespace EngineUnitTests
 				ResourceManager::GetInstance().SetResourceLoader(new ResourceLoader());
 
 				ResourceID resourceID = ResourceManager::GetInstance().LoadResourceByPath("TestData/Assets/testResource.png", ResourceType::Unspecified);
-				_resourceID = resourceID._resourceID;
 				Assert::IsTrue(resourceID._resourceID != 0, L"Failed to load texture");
 			}
 
@@ -93,27 +87,39 @@ namespace EngineUnitTests
 			}
 
 			TEST_METHOD(ClearGeometry) {
-				if (_modelID == 0) {
+				EngineECS::Logger::SetLoggingDestination(LoggingDestination::File);
+				EngineECS::Logger::LogInfo("Test", "Clear Models");
+				ResourceManager::GetInstance().SetResourceLoader(new ResourceLoader());
+				ResourceID modelID = ResourceManager::GetInstance().LoadModelByPath("TestData/Assets/testCube.obj");
+
+				if (modelID._resourceID == 0) {
 					// No need to test if the load failed
+					EngineECS::Logger::LogWarning("Test", "Aborted due to failed model load");
 					return;
 				}
 
 				ResourceManager::GetInstance().ClearResourcesByType(ResourceType::Model);
-				shared_ptr<Geometry> model = ResourceManager::GetInstance().FetchModelByID(_textureID);
+				shared_ptr<Geometry> model = ResourceManager::GetInstance().FetchModelByID(modelID._resourceID);
 
-				Assert::IsTrue(model != nullptr, L"Failed to clear models");
+				Assert::IsTrue(model == nullptr, L"Failed to clear models");
 			}
 
 			TEST_METHOD(ClearResources) {
-				if (_resourceID == 0) {
+				EngineECS::Logger::SetLoggingDestination(LoggingDestination::File);
+				EngineECS::Logger::LogInfo("Test", "Clear Resources");
+				ResourceManager::GetInstance().SetResourceLoader(new ResourceLoader());
+				ResourceID resourceID = ResourceManager::GetInstance().LoadResourceByPath("TestData/Assets/testImage.png", ResourceType::Unspecified);
+
+				if (resourceID._resourceID == 0) {
 					// No need to test if the load failed
+					EngineECS::Logger::LogWarning("Test", "Aborted due to failed resource load");
 					return;
 				}
 
 				ResourceManager::GetInstance().ClearResources();
-				shared_ptr<IResource> resource = ResourceManager::GetInstance().FetchResourceByID(_textureID);
+				shared_ptr<IResource> resource = ResourceManager::GetInstance().FetchResourceByID(resourceID._resourceID);
 
-				Assert::IsTrue(resource != nullptr, L"Failed to clear resources");
+				Assert::IsTrue(resource == nullptr, L"Failed to clear resources");
 			}
 		};
 	}
