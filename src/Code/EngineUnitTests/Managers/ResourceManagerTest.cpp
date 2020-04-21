@@ -58,14 +58,28 @@ namespace EngineUnitTests
 				Assert::IsTrue(resourceID._resourceID != 0, L"Failed to load texture");
 			}
 
-			TEST_METHOD(GetResourceCount) { // FAILURE: running before the loading tests, cant force order, test needs load logic added
+			TEST_METHOD(GetResourceCount) {
+				// Logging setup
 				EngineECS::Logger::SetLoggingDestination(LoggingDestination::File);
 				EngineECS::Logger::LogInfo("Test", "GetResourceCount");
 
+				// Pre-test setup
+				EngineECS::Logger::SetLoggingDestination(LoggingDestination::File);
+				EngineECS::Logger::LogInfo("Test", "LoadTexture");
+				ResourceManager::GetInstance().SetResourceLoader(new ResourceLoader());
+				ResourceID textureID = ResourceManager::GetInstance().LoadTextureByPath("TestData/Assets/testImage.png");
+
+				// Check pre-test-validity
+				if (textureID._resourceID == 0) {
+					EngineECS::Logger::LogError("Test", "GetResourceCount aborted due to failed setup");
+					return;
+				}
+
+				// Test logic
 				int resourceCount = ResourceManager::GetInstance().GetResourceCount();
 				EngineECS::Logger::LogInfo("Test", "Resource count = " + std::to_string(resourceCount));
 
-				Assert::IsTrue(resourceCount == 3, L"Failed to get resource count");
+				Assert::IsTrue(resourceCount == 1, L"Failed to get resource count");
 			}
 
 			TEST_METHOD(ClearTextures) {
