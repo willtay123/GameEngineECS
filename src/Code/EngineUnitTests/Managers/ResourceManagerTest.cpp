@@ -75,15 +75,21 @@ namespace EngineUnitTests
 			}
 
 			TEST_METHOD(ClearTextures) {
-				if (_textureID == 0) {
+				EngineECS::Logger::SetLoggingDestination(LoggingDestination::File);
+				EngineECS::Logger::LogInfo("Test", "Clear Textures");
+				ResourceManager::GetInstance().SetResourceLoader(new ResourceLoader());
+				ResourceID textureID = ResourceManager::GetInstance().LoadTextureByPath("TestData/Assets/testImage.png");
+
+				if (textureID._resourceID == 0) {
 					// No need to test if the load failed
+					EngineECS::Logger::LogWarning("Test", "Aborted due to failed texture load");
 					return;
 				}
 
 				ResourceManager::GetInstance().ClearResourcesByType(ResourceType::Texture);
-				shared_ptr<Texture> texture = ResourceManager::GetInstance().FetchTextureByID(_textureID);
+				shared_ptr<Texture> texture = ResourceManager::GetInstance().FetchTextureByID(textureID._resourceID);
 
-				Assert::IsTrue(texture != nullptr, L"Failed to clear textures");
+				Assert::IsTrue(texture == nullptr, L"Failed to clear textures");
 			}
 
 			TEST_METHOD(ClearGeometry) {

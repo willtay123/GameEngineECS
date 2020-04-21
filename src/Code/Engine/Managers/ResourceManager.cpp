@@ -63,7 +63,7 @@ ResourceID ResourceManager::LoadTextureByPath(const string& filepath) {
 }
 
 shared_ptr<Texture> ResourceManager::FetchTextureByID(const int resourceID) {
-	Logger::LogInfo("ResourceManager", "Loading texture with ID: " + resourceID);
+	Logger::LogInfo("ResourceManager", "Loading texture with ID: " + std::to_string(resourceID));
 
 	shared_ptr<Texture> texture;
 
@@ -114,7 +114,7 @@ ResourceID ResourceManager::LoadModelByPath(const string& filepath) {
 }
 
 shared_ptr<Geometry> ResourceManager::FetchModelByID(const int resourceID) {
-	Logger::LogInfo("ResourceManager", "Loading model with ID: " + resourceID);
+	Logger::LogInfo("ResourceManager", "Loading model with ID: " + std::to_string(resourceID));
 
 	shared_ptr<Geometry> model;
 
@@ -163,7 +163,7 @@ ResourceID ResourceManager::LoadResourceByPath(const string& filepath, ResourceT
 }
 
 shared_ptr<IResource> ResourceManager::FetchResourceByID(const int resourceID) {
-	Logger::LogInfo("ResourceManager", "Loading resource with ID: " + resourceID);
+	Logger::LogInfo("ResourceManager", "Loading resource with ID: " + std::to_string(resourceID));
 
 	shared_ptr<IResource> resource;
 
@@ -184,35 +184,25 @@ void ResourceManager::ClearResources() {
 	Logger::LogInfo("ResourceManager", "Clearing Resources");
 
 	// Delete IDs
-	for (auto itr = _pathMap.begin();
-		itr != _pathMap.end();
-		itr++) {
-
-		_pathMap.erase(itr);
-	}
+	_pathMap.clear();
 	// Delete Resource Data
-	for (auto itr = _resourceMap.begin();
-		itr != _resourceMap.end();
-		itr++)
-	{
-		//for all the elements of the map
-		_resourceMap.erase(itr);
-	}
+	_resourceMap.clear();
 
 	// NOTE: ID tracker is not reset to lower the risk of leftover errors
 }
 
 void ResourceManager::ClearResourcesByType(ResourceType resourceType) {
 	Logger::LogInfo("ResourceManager", "Deleting resources with type: ");
-	for (auto itr = _pathMap.begin();
-		itr != _pathMap.end();
-		itr++) {
-
+	auto itr = _pathMap.begin();
+	while (itr != _pathMap.end()) {
 		if (resourceType == itr->second._resourceType) {
 			// Delete the resource data
 			_resourceMap.erase(itr->second._resourceID);
 			// Delete the ID
-			_pathMap.erase(itr);
+			itr = _pathMap.erase(itr);
+		}
+		else {
+			itr++;
 		}
 	}
 }
