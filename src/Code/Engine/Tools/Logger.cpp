@@ -101,12 +101,12 @@ void Logger::LogInfo(const char* message) {
 	LogInfo(messageAsString);
 }
 
-void Logger::LogInfo(string& message) {
-	string tag = string("");
+void Logger::LogInfo(const string& message) {
+	string tag = string("Untagged");
 	Logger::LogInfo(tag, message);
 }
 
-void Logger::LogInfo(string& tag, string& message) {
+void Logger::LogInfo(const string& tag, const string& message) {
 	LogMessage logMessage = LogMessage(LogLevel::Info, _logIndex, tag, message);
 	Log(logMessage);
 }
@@ -122,12 +122,12 @@ void Logger::LogWarning(const char* message) {
 	LogWarning(messageAsString);
 }
 
-void Logger::LogWarning(string& message) {
-	string tag = string("");
+void Logger::LogWarning(const string& message) {
+	string tag = string("Untagged");
 	Logger::LogWarning(tag, message);
 }
 
-void Logger::LogWarning(string& tag, string& message) {
+void Logger::LogWarning(const string& tag, const string& message) {
 	LogMessage logMessage = LogMessage(LogLevel::Warning, _logIndex, tag, message);
 	Log(logMessage);
 }
@@ -143,12 +143,12 @@ void Logger::LogError(const char* message) {
 	LogError(messageAsString);
 }
 
-void Logger::LogError(string& message) {
-	string tag = string("");
+void Logger::LogError(const string& message) {
+	string tag = string("Untagged");
 	Logger::LogError(tag, message);
 }
 
-void Logger::LogError(string& tag, string& message) {
+void Logger::LogError(const string& tag, const string& message) {
 	LogMessage logMessage = LogMessage(LogLevel::Error, _logIndex, tag, message);
 	Log(logMessage);
 }
@@ -159,7 +159,7 @@ void Logger::GetLogs(vector<LogMessage>& logs) {
 	}
 }
 
-void Logger::GetLogsByTag(string& tag, vector<LogMessage>& logs) {
+void Logger::GetLogsByTag(const string& tag, vector<LogMessage>& logs) {
 	for (size_t i = 0; i < _logs.size(); i++) {
 		if (_logs[i]._tag == tag) {
 			logs.push_back(_logs[i]);

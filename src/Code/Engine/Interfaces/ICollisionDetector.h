@@ -4,8 +4,10 @@
 #include <GLM/glm/vec3.hpp>
 #include <GLM/glm/vec4.hpp>
 
+#include "DataStructs/EntityList.h"
 #include "Objects/Entity.h"
 #include "Interfaces/ICollisionManifold.h"
+#include "CleverPointers.h"
 
 using std::vector;
 using glm::vec3;
@@ -16,7 +18,8 @@ namespace EngineECS {
 	private:
 
 	public:
-		virtual ICollisionManifold* CollisionCheck(Entity* entity1, Entity* entity2) = 0;
-		virtual vector<ICollisionManifold*>* CollisionCheck(vector<Entity*>* entityList) = 0;
+		virtual ~ICollisionDetector() {}
+
+		virtual void DetectCollisions(const shared_ptr<const EntityList> entityList, vector<ICollisionManifold*>& collisions) = 0;
 	};
 }

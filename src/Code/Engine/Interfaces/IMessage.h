@@ -7,6 +7,9 @@ using std::string;
 namespace EngineECS {
 	class IMessage {
 	private:
-		virtual const string* GetSenderID() const = 0;
+	
+	public:
+		virtual ~IMessage() {}
+		virtual const string& GetSenderID() const = 0;
 	};
 }

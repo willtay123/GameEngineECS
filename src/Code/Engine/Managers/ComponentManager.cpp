@@ -3,60 +3,44 @@
 using namespace EngineECS;
 
 
-int ComponentManager::idCount = 0;
-map<type_index, int> ComponentManager::componentTypeMap;
-map<string, int> ComponentManager::componentStringMap;
+ComponentManager* ComponentManager::Instance = nullptr;
 
-void ComponentManager::Initialise() {
+ComponentManager::ComponentManager() :
+	_idCount(0),
+	_typeMap() {
 
 }
 
-int ComponentManager::GenerateIDByType(IComponent* component) {
+ComponentManager::~ComponentManager() {
+
+}
+
+ComponentManager& ComponentManager::GetInstance() {
+	if (!Instance) {
+		Instance = new ComponentManager();
+	}
+	return *Instance;
+}
+
+int ComponentManager::GenerateIDByType(IComponent const * const component) {
 	//try finding the key in the map
-	if (componentTypeMap.find(typeid(component)) != componentTypeMap.end()) {
+	const type_index typing = typeid(component);
+	if (_typeMap.find(typing) != _typeMap.end()) {
 		//found
-		return componentTypeMap[typeid(component)];
+		return _typeMap[typing];
 	}
 	else {
 		//not found
-		idCount += 1;
-		componentTypeMap[typeid(component)] = idCount;
-		return idCount;
+		_idCount += 1;
+		_typeMap.insert(std::pair<const type_index, const int>(typing, _idCount));
+		return _idCount;
 	}
-	return -1;
 }
 
-int ComponentManager::GenerateIDByString(string label) {
-	//try finding the key in the map
-	if (componentStringMap.find(label) != componentStringMap.end()) {
+int ComponentManager::GetIDForType(const type_index type) {
+	if (_typeMap.find(type) != _typeMap.end()) {
 		//found
-		return componentStringMap[label];
-	}
-	else {
-		//not found
-		idCount += 1;
-		componentStringMap[label] = idCount;
-		return idCount;
+		return _typeMap[type];
 	}
 	return -1;
-}
-
-int ComponentManager::GetIDForType(type_index type) {
-	if (componentTypeMap.find(type) != componentTypeMap.end()) {
-		//found
-		return componentTypeMap[type];
-	}
-	return -1;
-}
-
-int ComponentManager::GetIDForString(string label) {
-	if (componentStringMap.find(label) != componentStringMap.end()) {
-		//found
-		return componentStringMap[label];
-	}
-	return -1;
-}
-
-void ComponentManager::End() {
-	//delete objects
 }

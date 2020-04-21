@@ -7,5 +7,6 @@ class ExternalLogger : public IExternalLogger {
 private:
 
 public:
+	~ExternalLogger();
 	void WriteLog(LogMessage& logMessage);
 };

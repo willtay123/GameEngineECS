@@ -9,6 +9,8 @@
 #include <GLM/glm/mat4x4.hpp>
 #include <GLM/glm/gtx/transform.hpp>
 
+#include "DataStructs/EntityList.h"
+
 #include "Interfaces/IRenderer.h"
 #include "Interfaces/IShader.h"
 
@@ -17,6 +19,7 @@
 #include "Objects/Geometry.h"
 
 #include "Tools/Logger.h"
+#include "CleverPointers.h"
 
 
 using glm::vec4;
@@ -26,24 +29,31 @@ using std::vector;
 namespace EngineECS {
 	class RenderManager {
 	private:
+		static RenderManager* Instance;
+		IRenderer* _renderer;
+		IShader* _shader;
+
+		RenderManager();
 
 	public:
-		static IRenderer* _renderer;
-		static IShader* _shader;
+		~RenderManager();
+		static RenderManager& GetInstance();
 
-		static void Initialise(IRenderer* renderer, IShader* shader);
+		bool SetRenderer(IRenderer* renderer);
+		bool SetShader(IShader* shader);
 
-		static IBufferID* LoadShader(const char* filename, ShaderType shaderType);
+		IRenderer* GetRenderer() const { return _renderer; }
+		IShader* GetShader() const { return _shader; }
 
-		static void Draw(const Camera* camera, const Entity* entity);
-		static void Draw(const Camera* camera, const vector<Entity*>* entities);
+		IBufferID* LoadShader(const string& filename, const ShaderType shaderType);
 
-		static void StartUpdate();
-		static void EndUpdate();
+		void Draw(const Camera* camera, const Entity& entity);
+		void Draw(const Camera* camera, const shared_ptr<EntityList> entities);
 
-		static void StartRender();
-		static void EndRender();
+		void BeforeUpdate();
+		void AfterUpdate();
 
-		static void End();
+		void BeforeRender();
+		void AfterRender();
 	};
 }

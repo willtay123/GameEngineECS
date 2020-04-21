@@ -1,7 +1,6 @@
 #pragma once
-
 #include <iostream>
-#include <map>
+#include <unordered_map>
 #include <vector>
 #include <string>
 #include <sstream>
@@ -11,32 +10,52 @@
 #include "Objects/Texture.h"
 #include "Objects/Geometry.h"
 #include "Tools/Logger.h"
+#include "CleverPointers.h"
+#include "DataStructs/ResourceTypes.h"
+#include "DataStructs/ResourceID.h"
+#include "DataStructs/ResourceData.h"
 
-using std::map;
+using std::unordered_map;
 using std::make_pair;
 using std::string;
 
 namespace EngineECS {
+
 	class ResourceManager {
 	private:
-		static map<string, Texture*> _textureMap;
-		static map<string, Geometry*> _modelMap;
-		static map<string, IResource*> _resourceMap;
+		typedef unordered_map<string, ResourceID> PathMap;
+		typedef unordered_map<int, ResourceData> ResourceMap;
 
-		static IResourceLoader* _resourceLoader;
+		static ResourceManager* Instance;
+		IResourceLoader* _resourceLoader;
+
+		unsigned int _idTracker;
+		PathMap _pathMap;
+		ResourceMap _resourceMap;
+		
+		ResourceManager();
+
+		unsigned int GetNewID() { return _idTracker++; }
 
 	public:
-		static void Initialise(IResourceLoader* resourceLoader);
+		~ResourceManager();
+		static ResourceManager& GetInstance();
 
-		static Texture* LoadTexture(string filepath);
-		static void ClearTextures();
+		void SetResourceLoader(IResourceLoader* _resourceLoader);
+		IResourceLoader* GetResourceLoader() const { return _resourceLoader; }
 
-		static Geometry* LoadGeometry(string filepath);
-		static void ClearModels();
+		ResourceID LoadTextureByPath(const string& filepath);
+		shared_ptr<Texture> FetchTextureByID(const int resourceID);
 
-		static IResource* LoadResource(string filepath);
-		static void ClearResources();
+		ResourceID LoadModelByPath(const string& filepath);
+		shared_ptr<Geometry> FetchModelByID(const int resourceID);
 
-		static void End();
+		ResourceID LoadResourceByPath(const string& filepath, ResourceType resourceType);
+		shared_ptr<IResource> FetchResourceByID(const int resourceID);
+
+		void ClearResources();
+		void ClearResourcesByType(ResourceType resourceType);
+
+		int GetResourceCount() const { return _resourceMap.size(); }
 	};
 }

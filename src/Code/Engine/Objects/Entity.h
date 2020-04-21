@@ -17,13 +17,12 @@ namespace EngineECS {
 
 	public:
 		Entity();
-		Entity(const char* id);
-		Entity(string* id);
+		Entity(const string& id);
 		Entity(const Entity& rhs);
 		~Entity();
 		Entity& operator= (const Entity& rhs);
 
-		const string* GetID() const;
+		const string& GetID() const;
 		void SetID(string value);
 
 
@@ -36,11 +35,14 @@ namespace EngineECS {
 		vector<IComponent*>* GetComponentsEditable();
 
 		const IComponent* GetComponent(int id) const;
-		const IComponent* GetComponent(string id) const;
+		const IComponent* GetComponentByType(type_index type) const;
 		IComponent* GetComponentEditable(int id);
 
 		void Message(IMessage* message);
 
 		bool GetComponentIndex(int id, int* outIndex);
+
+		// Operators
+		bool operator==(const Entity& rhs);
 	};
 }

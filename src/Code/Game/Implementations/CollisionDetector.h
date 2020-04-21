@@ -3,6 +3,8 @@
 
 #include <stdlib.h>
 
+#include "Managers/ComponentManager.h"
+#include "DataStructs/EntityList.h"
 #include "Components/ComponentTransform.h"
 #include "Components/ComponentCollider.h"
 #include "Components/ComponentBoxCollider.h"
@@ -11,12 +13,13 @@
 
 class CollisionDetector : public ICollisionDetector {
 private:
-	ICollisionManifold* CheckBoxBox(Entity* entity1, Entity* entity2);
-	ICollisionManifold* CheckSphereSphere(Entity* entity1, Entity* entity2);
-	ICollisionManifold* CheckBoxSphere(Entity* entity1, Entity* entity2);
+	ICollisionManifold* CheckBoxBox(const Entity& entity1, const Entity& entity2);
+	ICollisionManifold* CheckSphereSphere(const Entity& entity1, const Entity& entity2);
+	ICollisionManifold* CheckBoxSphere(const Entity& entity1, const Entity& entity2);
 
 public:
+	~CollisionDetector();
 
-	ICollisionManifold* CollisionCheck(Entity* entity1, Entity* entity2);
-	vector<ICollisionManifold*>* CollisionCheck(vector<Entity*>* entityList);
+	ICollisionManifold* DetectCollision(const Entity& entity1, const Entity& entity2);
+	void DetectCollisions(const std::weak_ptr<EntityList> entityList, vector<ICollisionManifold*>& collisions) override;
 };

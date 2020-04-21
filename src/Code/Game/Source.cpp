@@ -20,29 +20,45 @@ using namespace EngineECS;
 int main(int argc, char* argv[]) {
 	Logger::LogInfo("Starting Game");
 
-	RendererGL* renderer = new RendererGL();
-	ShaderGLSL* shader = new ShaderGLSL();
-	ResourceLoader* resourceLoader = new ResourceLoader();
-	ICollisionDetector* collisionDetector = new CollisionDetector();
-	ICollisionResponder* collisionResponder = new CollisionResponder();
-	Engine engine;
-	bool engineInitialised = engine.Initialise(renderer, shader, resourceLoader, collisionDetector, collisionResponder);
-
 	ExternalLogger* logger = new ExternalLogger();
 	Logger::SetExternalLogger(logger);
-	Logger::SetLoggingDestination(LoggingDestination::File);
+	Logger::SetLoggingDestination(LoggingDestination::Console);
 
-	Logger::LogInfo("inf", "info");
-	Logger::LogWarning("war", "warning");
-	Logger::LogError("err", "error");
+	// Create engine
+	Engine engine;
 
-	if (engineInitialised) {
-		IScene* scene = new TestScene();
-		engine.SetInitialScene("game", scene);
+	// Create renderers
+	RendererGL* renderer = new RendererGL();
+	renderer->Initialise();
+	ShaderGLSL* shader = new ShaderGLSL();
+	shader->Initialise();
 
-		while (true) {
-			engine.Update();
-			engine.Render();
+	// Set renderers
+	RenderManager::GetInstance().SetRenderer(renderer);
+	RenderManager::GetInstance().SetShader(shader);
+
+	// Create other implementations
+	ResourceLoader* resourceLoader = new ResourceLoader();
+	ResourceManager::GetInstance().SetResourceLoader(resourceLoader);
+	ICollisionDetector* collisionDetector = new CollisionDetector();
+	CollisionManager::GetInstance().SetCollisionDetector(collisionDetector);
+	ICollisionResponder* collisionResponder = new CollisionResponder();
+	CollisionManager::GetInstance().SetCollisionResponder(collisionResponder);
+
+	// Initialise engine
+	bool successfulInit = engine.Initialise();
+
+	//Logger::LogInfo("inf", "info");
+	//Logger::LogWarning("war", "warning");
+	//Logger::LogError("err", "error");
+
+	if (engine.GetState() == EngineState::Initialised) {
+		// Set first scene
+		std::unique_ptr<IScene> scene(new TestScene());
+		engine.SetInitialScene("game", std::move(scene));
+
+		if (engine.GetState() == EngineState::CanRun) {
+			engine.Run();
 		}
 	}
 

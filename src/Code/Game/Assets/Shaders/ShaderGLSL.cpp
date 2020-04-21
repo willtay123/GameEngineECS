@@ -13,8 +13,8 @@ ShaderGLSL::~ShaderGLSL() {
 bool ShaderGLSL::Initialise() {
 	int pgmID = glCreateProgram();
 
-	GLBufferID* vertShaderID = static_cast<GLBufferID*>(LoadShader("Assets/Shaders/basic.v", VertexShader));
-	GLBufferID* fragShaderID = static_cast<GLBufferID*>(LoadShader("Assets/Shaders/basic.f", FragmentShader));
+	GLBufferID* vertShaderID = static_cast<GLBufferID*>(LoadShader("Assets/Shaders/basic.v", ShaderType::VertexShader));
+	GLBufferID* fragShaderID = static_cast<GLBufferID*>(LoadShader("Assets/Shaders/basic.f", ShaderType::FragmentShader));
 	LinkShaders(pgmID, vertShaderID->GetID(), fragShaderID->GetID());
 	delete vertShaderID;
 	delete fragShaderID;
@@ -24,12 +24,12 @@ bool ShaderGLSL::Initialise() {
 	return true;
 }
 
-IBufferID* ShaderGLSL::LoadShader(const char* filepath, ShaderType shaderType) {
+IBufferID* ShaderGLSL::LoadShader(const string& filepath, const ShaderType shaderType) {
 
 	int glShaderType = 0;
-	if (shaderType == VertexShader)
+	if (shaderType == ShaderType::VertexShader)
 		glShaderType = GL_VERTEX_SHADER;
-	if (shaderType == FragmentShader)
+	if (shaderType == ShaderType::FragmentShader)
 		glShaderType = GL_FRAGMENT_SHADER;
 	
 	GLuint shaderID = glCreateShader(glShaderType);

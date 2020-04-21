@@ -9,14 +9,8 @@ Entity::Entity() :
 	_components(new vector<IComponent*>()) {
 }
 
-Entity::Entity(const char* id) :
-	_enabled(true),
-	_components(new vector<IComponent*>()) {
-	_id = string(id);
-}
-
-Entity::Entity(string* id) :
-	_id(*id),
+Entity::Entity(const string& id) :
+	_id(id),
 	_enabled(true),
 	_components(new vector<IComponent*>()) {
 
@@ -50,8 +44,8 @@ Entity::~Entity() {
 	_components->clear();
 }
 
-const string* Entity::GetID() const {
-	return &_id;
+const string& Entity::GetID() const {
+	return _id;
 }
 
 void Entity::SetID(string value) {
@@ -94,12 +88,12 @@ const IComponent* Entity::GetComponent(int id) const {
 			return component;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
-const IComponent* Entity::GetComponent(string id) const {
-	int searchID = ComponentManager::GetIDForString(id);
-	return GetComponent(searchID);
+const IComponent* Entity::GetComponentByType(const type_index type) const {
+	int compID = ComponentManager::GetInstance().GetIDForType(type);
+	return GetComponent(compID);
 }
 
 IComponent* Entity::GetComponentEditable(int id) {
@@ -127,4 +121,14 @@ bool Entity::GetComponentIndex(int id, int* outIndex) {
 		//}
 	}
 	return false;
+}
+
+
+// Operators
+
+bool Entity::operator==(const Entity& rhs) {
+	// Give entity a GUID, use that to quickly compare
+
+	// TEMP
+	return (_id == rhs._id);
 }

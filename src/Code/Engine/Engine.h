@@ -14,25 +14,35 @@
 
 
 namespace EngineECS {
+	enum class EngineState {
+		Uninitialised,
+		Initialised,
+		CanRun,
+		Running
+	};
+
 	class Engine {
 	private:
-		bool initialised;
-
 		static double dt;
-		clock_t now;
-		clock_t lastTime;
-
-		SceneManager* sceneManager;
+		EngineState _engineState;
+		clock_t _now;
+		clock_t _lastTime;
 
 	public:
 		static double GetDT();
 
 		Engine();
+		Engine(const Engine& rhs) = delete;
 		~Engine();
+		Engine& operator=(const Engine& rhs) = delete;
 
-		bool Initialise(IRenderer* renderer, IShader* shader, IResourceLoader* resourceLoader, ICollisionDetector* collisionDetector, ICollisionResponder* collisionResponder);
-		void SetInitialScene(const char* sceneID, IScene* scene);
+		bool Initialise();
+		void SetInitialScene(const string& sceneID, std::unique_ptr<IScene> scene);
 
+		EngineState GetState() const { return _engineState; }
+		bool IsState(EngineState state) { return (_engineState == state); }
+
+		void Run();
 		void Update();
 		void Render();
 		static void End();

@@ -4,8 +4,9 @@
 
 #include <vector>
 
-#include "Objects\Camera.h"
-#include "Objects\Entity.h"
+#include "DataStructs/EntityList.h"
+#include "Objects/Camera.h"
+#include "Objects/Entity.h"
 
 using std::vector;
 using glm::mat4;
@@ -13,9 +14,11 @@ using glm::mat4;
 namespace EngineECS {
 	class IRenderer {
 	public:
+		virtual ~IRenderer() {};
+
 		virtual bool Initialise() = 0;
-		virtual void Draw(const Camera* camera, const Entity* entity) = 0;
-		virtual void Draw(const Camera* camera, const vector<Entity*>* entityList) = 0;
+		virtual void Draw(const Camera* camera, const Entity& entity) = 0;
+		virtual void Draw(const Camera* camera, const std::shared_ptr<EntityList> entityList) = 0;
 
 		virtual void StartUpdate() = 0;
 		virtual void EndUpdate() = 0;

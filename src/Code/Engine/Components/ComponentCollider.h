@@ -18,6 +18,7 @@ namespace EngineECS {
 		string _colliderType;
 
 	public:
+		virtual ~ComponentCollider();
 		virtual IComponent* Clone();
 
 		virtual int ComponentType() const;

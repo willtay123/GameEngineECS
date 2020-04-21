@@ -11,9 +11,9 @@ namespace EngineECS {
 		string _name;
 
 	public:
-		IScene();
+		virtual ~IScene() {}
 
-		const string* GetName() const;
+		const string& GetName() const { return _name; };
 
 		virtual void Initialise() = 0;
 

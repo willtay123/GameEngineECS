@@ -5,6 +5,7 @@
 
 #include "Interfaces/IModel.h"
 #include "Objects/Geometry.h"
+#include <memory>
 #include <map>
 
 using namespace EngineECS;
@@ -35,12 +36,12 @@ private:
 
 public:
 	OpenGLModel();
-	OpenGLModel(Geometry* geomtry);
+	OpenGLModel(std::shared_ptr<Geometry> geomtry);
 	OpenGLModel(const OpenGLModel& rhs);
 	~OpenGLModel();
 	OpenGLModel& operator=(const OpenGLModel& rhs);
 
-	void GenerateBuffers(Geometry* geometry);
+	void GenerateBuffers(std::shared_ptr<Geometry> geometry);
 
 	const GLuint GetDBOHandle() const;
 	const GLuint GetIBOHandle() const;

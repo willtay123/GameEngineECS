@@ -45,21 +45,21 @@ namespace EngineECS {
 	public:
 		static void LogInfo(const char* message);
 		static void LogInfo(const char* tag, const char* message);
-		static void LogInfo(string& message);
-		static void LogInfo(string& tag, string& message);
+		static void LogInfo(const string& message);
+		static void LogInfo(const string& tag, const string& message);
 
 		static void LogWarning(const char* message);
 		static void LogWarning(const char* tag, const char* message);
-		static void LogWarning(string& message);
-		static void LogWarning(string& tag, string& message);
+		static void LogWarning(const string& message);
+		static void LogWarning(const string& tag, const string& message);
 
 		static void LogError(const char* message);
 		static void LogError(const char* tag, const char* message);
-		static void LogError(string& message);
-		static void LogError(string& tag, string& message);
+		static void LogError(const string& message);
+		static void LogError(const string& tag, const string& message);
 
 		static void GetLogs(vector<LogMessage>& logs);
-		static void GetLogsByTag(string& tag, vector<LogMessage>& logs);
+		static void GetLogsByTag(const string& tag, vector<LogMessage>& logs);
 
 		static void SetLogCountLimit(unsigned int limit);
 

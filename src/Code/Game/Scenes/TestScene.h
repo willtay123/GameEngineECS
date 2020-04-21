@@ -13,15 +13,12 @@
 
 #include "Objects/Entity.h"
 #include "Interfaces/IComponent.h"
-#include "Components/ComponentTransform.h"
 
+#include "Components/ComponentTransform.h"
 #include "Components/BasicGL.h"
 #include "Components/ComponentPhysics.h"
 #include "Components/ComponentSphereCollider.h"
 #include "Components/ComponentScore.h"
-
-#include "Systems/SystemPhysics.h"
-#include "Scenes/EndScene.h"
 
 #include "IO/Keyboard.h"
 #include "Implementations/RendererGL.h"
@@ -38,12 +35,10 @@ private:
 public:
 	TestScene();
 	TestScene(const TestScene& rhs) = delete;
-	~TestScene();
+	~TestScene() override;
 	TestScene& operator=(const TestScene& rhs) = delete;
 	
 	void Initialise();
-
-	void GenerateItems(int numberOfItems);
 
 	void Update(double dt);
 	void Render();

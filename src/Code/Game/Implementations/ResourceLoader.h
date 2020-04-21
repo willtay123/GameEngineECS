@@ -24,10 +24,11 @@ class ResourceLoader : public IResourceLoader {
 private:
 
 public:
+	~ResourceLoader();
 
-	Texture* LoadTexture(string filepath);
-	Geometry* LoadGeometry(string filepath);
-	IResource* LoadResource(string filepath);
+	std::shared_ptr<Texture> LoadTexture(const string& filepath);
+	std::shared_ptr<Geometry> LoadGeometry(const string& filepath);
+	std::shared_ptr<IResource> LoadResource(const string& filepath);
 
-	Geometry* LoadOBJ(string filpath);
+	std::shared_ptr<Geometry> LoadOBJ(const string& filpath);
 };

@@ -7,7 +7,7 @@
 #include <Components\ComponentScore.h>
 
 
-void EntityFactory::LoadFromFile(string sceneName, string filepath) {
+void EntityFactory::LoadFromFile(const string& sceneName, const string& filepath) {
 	xml_document doc;
 	xml_parse_result result = doc.load_file(filepath.c_str());
 	if (!result) {
@@ -15,9 +15,9 @@ void EntityFactory::LoadFromFile(string sceneName, string filepath) {
 	}
 
 	for (xml_node entityNode : doc.root().first_child().children()) {
-		Entity* entity = LoadEntity(entityNode);
+		std::unique_ptr<Entity> entity(LoadEntity(entityNode));
 
-		EntityManager::AddEntity(sceneName.c_str(), entity);
+		EntityManager::GetInstance().AddEntity(sceneName, std::move(entity));
 	}
 }
 
@@ -32,7 +32,7 @@ Entity* EntityFactory::LoadEntity(xml_node& entityNode) {
 		components.push_back(component);
 	}
 
-	Entity* entity = new Entity(&name);
+	Entity* entity = new Entity(name);
 
 	for (size_t i = 0; i < components.size(); i++) {
 		entity->AddComponent(components[i]);
@@ -111,7 +111,7 @@ IComponent* EntityFactory::LoadComponentModelGL(xml_node& modelNode) {
 	string filepath = LoadAttributeString(modelNode.child("filepath"));
 
 	ComponentModelGL* component;
-	component = new ComponentModelGL(filepath.c_str());
+	component = new ComponentModelGL(filepath);
 	return component;
 }
 

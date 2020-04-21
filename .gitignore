@@ -76,11 +76,16 @@ Debug/
 Engine/Debug/
 /src/External Resources/GLM/doc
 /src/External Resources/GLFW/docs/html
+/src/Code/Debug - OpenGL
+/src/Code/Game/Debug - OpenGL
 
 #Exceptions
 !glfw3.lib
 !glfw3dll.lib
 !SOIL.lib
 
-#Logging files
+# Logging files
 /src/Code/Game/Info/output.log
+
+# Analysis files
+*.lastcodeanalysissucceeded

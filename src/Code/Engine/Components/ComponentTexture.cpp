@@ -4,20 +4,13 @@ using namespace EngineECS;
 
 
 ComponentTexture::ComponentTexture() :
-	_texture(NULL)
-{
-	_componentType = ComponentManager::GenerateIDByString("Texture");
+		_texture() {
+	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
 }
 
-ComponentTexture::ComponentTexture(string filepath) {
-	_texture = ResourceManager::LoadTexture(filepath);
-	_componentType = ComponentManager::GenerateIDByString("Texture");
-}
-
-ComponentTexture::ComponentTexture(Texture* texture) :
-	_texture(texture)
-{
-	_componentType = ComponentManager::GenerateIDByString("Texture");
+ComponentTexture::ComponentTexture(ResourceID texture) :
+	_texture(texture) {
+	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
 }
 
 ComponentTexture::ComponentTexture(const ComponentTexture& rhs) :
@@ -50,18 +43,18 @@ void ComponentTexture::Message(IMessage* message) {
 
 }
 
-const Texture* ComponentTexture::GetTexture() const {
+ResourceID ComponentTexture::GetTexture() const {
 	return _texture;
 }
 
 int ComponentTexture::GetID() const {
-	return _texture->GetID();
+	return _texture._resourceID;
 }
 
 int ComponentTexture::GetWidth() const {
-	return _texture->GetWidth();
+	return 0;
 }
 
 int ComponentTexture::GetHeight() const {
-	return _texture->GetHeight();
+	return 0;
 }

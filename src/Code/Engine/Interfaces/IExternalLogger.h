@@ -5,6 +5,8 @@
 namespace EngineECS {
 	class IExternalLogger {
 	public:
+		virtual ~IExternalLogger() {}
+
 		virtual void WriteLog(LogMessage& message) = 0;
 	};
 }

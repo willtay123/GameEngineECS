@@ -2,12 +2,30 @@
 
 using namespace EngineECS;
 
-vector<ISystem*> SystemManager::_updateSystems;
-vector<ISystem*> SystemManager::_renderSystems;
+SystemManager* SystemManager::Instance = nullptr;
 
+SystemManager::SystemManager() :
+	_updateSystems(),
+	_renderSystems() {
 
-void SystemManager::Initialise() {
+}
 
+SystemManager::~SystemManager() {
+	for (ISystem* system : _updateSystems) {
+		delete system;
+	}
+	_updateSystems.clear();
+	for (ISystem* system : _renderSystems) {
+		delete system;
+	}
+	_renderSystems.clear();
+}
+
+SystemManager& SystemManager::GetInstance() {
+	if (!Instance) {
+		Instance = new SystemManager();
+	}
+	return *Instance;
 }
 
 void SystemManager::AddUpdateSystem(ISystem* system) {
@@ -32,22 +50,14 @@ void SystemManager::ClearRenderSystems() {
 	_renderSystems.clear();
 }
 
-void SystemManager::ActionUpdateSystems(double deltaTime, const char* entityGroup) {
-	vector<Entity*>* entityList = EntityManager::GetEntitiesEditable(entityGroup);
+void SystemManager::ActionUpdateSystems(double deltaTime) {
 	for (ISystem* system : _updateSystems) {
-		system->GiveEntities(entityList);
 		system->OnAction(deltaTime);
 	}
 }
 
-void SystemManager::ActionRenderSystems(double deltaTime, const char* entityGroup) {
-	vector<Entity*>* entityList = EntityManager::GetEntitiesEditable(entityGroup);
+void SystemManager::ActionRenderSystems(double deltaTime) {
 	for (ISystem* system : _renderSystems) {
-		system->GiveEntities(entityList);
 		system->OnAction(deltaTime);
 	}
-}
-
-void SystemManager::End() {
-
 }

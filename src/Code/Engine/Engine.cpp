@@ -7,85 +7,104 @@ using namespace EngineECS;
 
 double Engine::dt = 0;
 
-Engine::Engine() {
+Engine::Engine() :
+	_engineState(EngineState::Uninitialised),
+	_now(),
+	_lastTime() {
 	Logger::LogInfo("Engine creation started");
-
-	initialised = false;
-	sceneManager = SceneManager::GetInstance();
-
 	Logger::LogInfo("Engine creation ended");
 }
 
 Engine::~Engine() {
-	delete sceneManager;
-	RenderManager::End();
-	EntityManager::End();
-	ComponentManager::End();
-	SystemManager::End();
-	MessageManager::End();
-	ResourceManager::End();
-	CollisionManager::End();
 }
 
-bool Engine::Initialise(
-	IRenderer* renderer,
-	IShader* shader,
-	IResourceLoader* resourceLoader,
-	ICollisionDetector* collisionDetector,
-	ICollisionResponder* collisionResponder
-) {
+bool Engine::Initialise() {
 	Logger::LogInfo("Engine initialisation started");
 
+	Logger::LogInfo("Validating managers");
 
-	// Initialise and create managers
-	Logger::LogInfo("Initialising Managers");
+	// Check for IRenderer
+	if (RenderManager::GetInstance().GetRenderer() == nullptr) {
+		Logger::LogError("RenderManager has no renderer set");
+		return false;
+	}
 
-	RenderManager::Initialise(renderer, shader);
-	EntityManager::Initialise();
-	ComponentManager::Initialise();
-	SystemManager::Initialise();
-	MessageManager::Initialise();
-	ResourceManager::Initialise(resourceLoader);
-	CollisionManager::Initialise(collisionDetector, collisionResponder);
+	// Check for IShader
+	if (RenderManager::GetInstance().GetShader() == nullptr) {
+		Logger::LogError("RenderManager has no shader set");
+		return false;
+	}
 
-	Logger::LogInfo("Managers Initialised");
+	// Check for IResourceLoader
+	if (ResourceManager::GetInstance().GetResourceLoader() == nullptr) {
+		Logger::LogError("ResourceManager has no resource loader set");
+		return false;
+	}
+
+	// TODO: Move to "CanStart" check
+
+	Logger::LogInfo("Finished validating managers");
 
 	// Delta Time
-	lastTime = clock();
+	_lastTime = clock();
 
 	Logger::LogInfo("Engine initialisation ended");
 
-	initialised = true;
+	_engineState = EngineState::Initialised;
 	return true;
 }
 
-void Engine::SetInitialScene(const char* sceneID, IScene* scene) {
-	if (!initialised) {
-		throw "ERROR: Engine must be initialised before a scene can be set";
+void Engine::SetInitialScene(const string& sceneID, std::unique_ptr<IScene> scene) {
+	if (_engineState == EngineState::Initialised) {
+		SceneManager::GetInstance().AddScene(std::move(scene));
+		_engineState = EngineState::CanRun;
 	}
-	sceneManager->SetScene(sceneID, scene);
+	else {
+		Logger::LogError("Cannot set initial scene while engine is uninitialised");
+	}
+}
+
+void Engine::Run() {
+	if (IsState(EngineState::CanRun)) {
+
+		// Allow the engine to run
+		_engineState = EngineState::Running;
+
+		while (IsState(EngineState::Running)) {
+			Update();
+			Render();
+		}
+	}
+	else {
+		Logger::LogError("Cannot run the engine without setting an initial scene");
+	}
 }
 
 void Engine::Update() {
-	RenderManager::StartUpdate();
-
 	// DT
-	now = clock();
-	dt = (double)(now - lastTime) / 1000;
-	lastTime = clock();
+	_now = clock();
+	dt = (static_cast<double>(_now) - static_cast<double>(_lastTime)) / 1000;
+	_lastTime = clock();
 
-	sceneManager->Update(dt);
+	// Perform update logic
+	RenderManager::GetInstance().BeforeUpdate();
+	SceneManager::GetInstance().Update(dt);
+	RenderManager::GetInstance().AfterUpdate();
 
-	RenderManager::EndUpdate();
-	EntityManager::EnactFinal();
+	// Remove entities marked for removal
+	EntityManager::GetInstance().EnactRemovals();
+
+	// Get the current entity list
+	auto entityList = EntityManager::GetInstance().GetEntities();
+	// Handle Collisions
+	CollisionManager::GetInstance().DetectCollisions(entityList);
+	CollisionManager::GetInstance().HandleCollisions();
 }
 
 void Engine::Render() {
-	RenderManager::StartRender();
-
-	sceneManager->Render();
-
-	RenderManager::EndRender();
+	RenderManager::GetInstance().BeforeRender();
+	SceneManager::GetInstance().Render();
+	RenderManager::GetInstance().AfterRender();
 }
 
 double Engine::GetDT() {
@@ -93,9 +112,4 @@ double Engine::GetDT() {
 }
 
 void Engine::End() {
-	SceneManager::End();
-	ResourceManager::End();
-	EntityManager::End();
-	ComponentManager::End();
-	RenderManager::End();
 }

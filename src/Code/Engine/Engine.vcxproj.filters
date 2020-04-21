@@ -123,6 +123,21 @@
     <ClInclude Include="DataStructs\LogMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DataStructs\EntityList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CleverPointers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStructs\ResourceID.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStructs\ResourceData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStructs\ResourceTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -173,9 +188,6 @@
     <ClCompile Include="Scenes\DefaultScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\IScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Components\ComponentCollider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -183,6 +195,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Tools\Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataStructs\EntityList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

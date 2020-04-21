@@ -3,57 +3,91 @@
 using namespace EngineECS;
 
 
-IRenderer* RenderManager::_renderer = NULL;
-IShader* RenderManager::_shader = NULL;
+RenderManager* RenderManager::Instance = nullptr;
 
-void RenderManager::Initialise(IRenderer* renderer, IShader* shader) {
+RenderManager::RenderManager() :
+	_renderer(nullptr),
+	_shader(nullptr) {
+
+}
+
+RenderManager::~RenderManager() {
+	if (_renderer) {
+		_renderer->Unload();
+	}
+	if (_shader) {
+		_shader->Unload();
+	}
+
+	delete _renderer;
+	delete _shader;
+}
+
+RenderManager& RenderManager::GetInstance() {
+	if (!Instance) {
+		Instance = new RenderManager();
+	}
+	return *Instance;
+}
+
+bool RenderManager::SetRenderer(IRenderer* renderer) {
 	// Set the renderer
 	_renderer = renderer;
 	if (!(_renderer->Initialise())) {
-		throw "IRenderer failed to initialise";
+		Logger::LogError("IRenderer failed to initialise");
+		return false;
 	}
+	return true;
+}
 
+bool RenderManager::SetShader(IShader* shader) {
 	// Set the shader
 	_shader = shader;
 	if (!(_shader->Initialise())) {
-		throw "IShader failed to initialise";
+		Logger::LogError("IShader failed to initialise");
+		return false;
 	}
+	return true;
 }
 
-IBufferID* RenderManager::LoadShader(const char* filename, ShaderType shaderType) {
+IBufferID* RenderManager::LoadShader(const string& filename, const ShaderType shaderType) {
 	IBufferID* shaderID = _shader->LoadShader(filename, shaderType);
 
 	return shaderID;
 }
 
-void RenderManager::Draw(const Camera* camera, const Entity* entity) {
-	// Pass on to an IRenderer
-
-	_renderer->Draw(camera, entity);
+void RenderManager::Draw(const Camera* camera, const Entity& entity) {
+	if (_renderer) {
+		_renderer->Draw(camera, entity);
+	}
 }
 
-void RenderManager::Draw(const Camera* camera, const vector<Entity*>* entityList) {
-	_renderer->Draw(camera, entityList);
+void RenderManager::Draw(const Camera* camera, const std::shared_ptr<EntityList> entityList) {
+	if (_renderer) {
+		_renderer->Draw(camera, entityList);
+	}
 }
 
-void RenderManager::StartUpdate() {
-	_renderer->StartUpdate();
+void RenderManager::BeforeUpdate() {
+	if (_renderer) {
+		_renderer->StartUpdate();
+	}
 }
 
-void RenderManager::EndUpdate() {
-	_renderer->EndUpdate();
+void RenderManager::AfterUpdate() {
+	if (_renderer) {
+		_renderer->EndUpdate();
+	}
 }
 
-void RenderManager::StartRender() {
-	_renderer->StartRender();
+void RenderManager::BeforeRender() {
+	if (_renderer) {
+		_renderer->StartRender();
+	}
 }
 
-void RenderManager::EndRender() {
-	_renderer->EndRender();
-}
-
-void RenderManager::End() {
-	//delete objects;
-	_renderer->Unload();
-	_shader->Unload();
+void RenderManager::AfterRender() {
+	if (_renderer) {
+		_renderer->EndRender();
+	}
 }

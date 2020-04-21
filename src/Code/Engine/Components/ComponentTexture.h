@@ -2,18 +2,17 @@
 
 #include "Interfaces/IComponent.h"
 #include "Objects/Texture.h"
-
 #include "Managers/ResourceManager.h"
+#include "CleverPointers.h"
 
 namespace EngineECS {
 	class ComponentTexture : public IComponent {
 	private:
-		Texture* _texture;
+		ResourceID _texture;
 
 	public:
 		ComponentTexture();
-		ComponentTexture(string filepath);
-		ComponentTexture(Texture* texture);
+		ComponentTexture(ResourceID texture);
 		ComponentTexture(const ComponentTexture& rhs);
 		~ComponentTexture();
 		ComponentTexture operator=(const ComponentTexture& rhs);
@@ -22,7 +21,7 @@ namespace EngineECS {
 		int ComponentType() const;
 		void Message(IMessage* message);
 
-		const Texture* GetTexture() const;
+		ResourceID GetTexture() const;
 		int GetID() const;
 		int GetWidth() const;
 		int GetHeight() const;

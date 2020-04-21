@@ -2,20 +2,21 @@
 
 
 
-ComponentModelGL::ComponentModelGL() {
-
+ComponentModelGL::ComponentModelGL() :
+	_model(nullptr) {
+	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
 }
 
-ComponentModelGL::ComponentModelGL(const char* filepath) {
-	_componentType = ComponentManager::GenerateIDByString("ModelGL");
-	Geometry* geom = ResourceManager::LoadGeometry(filepath);
+ComponentModelGL::ComponentModelGL(const string& filepath) {
+	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
+	std::shared_ptr<Geometry> geom = ResourceManager::GetInstance().LoadModelByPath(filepath).lock();
 	_model = new OpenGLModel(geom);
 }
 
 ComponentModelGL::ComponentModelGL(OpenGLModel* model) :
 	_model(model)
 {
-	_componentType = ComponentManager::GenerateIDByString("ModelGL");
+	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
 }
 
 ComponentModelGL::ComponentModelGL(const ComponentModelGL& rhs) :

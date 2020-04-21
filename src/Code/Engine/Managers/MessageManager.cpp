@@ -2,38 +2,49 @@
 
 using namespace EngineECS;
 
-vector<IMessage*>* MessageManager::_toBroadcast;
+
+MessageManager* MessageManager::Instance = nullptr;
+
+MessageManager::MessageManager() :
+	_toBroadcast() {
+
+}
+
+MessageManager::~MessageManager() {
+	for (IMessage* message : _toBroadcast) {
+		delete message;
+	}
+	_toBroadcast.clear();
+}
+
+MessageManager& MessageManager::GetInstance() {
+	if (!Instance) {
+		Instance = new MessageManager();
+	}
+	return *Instance;
+}
 
 void MessageManager::ClearBroadcasts() {
 	// Delete all messages in _toBroadcast
-	for (IMessage* message : (*_toBroadcast)) {
+	for (IMessage* message : _toBroadcast) {
 		delete message;
 	}
-
-	// Clear _toBroadcast
-	_toBroadcast->clear();
-}
-
-void MessageManager::Initialise() {
-	_toBroadcast = new vector<IMessage*>();
+	_toBroadcast.clear();
 }
 
 void MessageManager::AddBroadcast(IMessage* message) {
-	_toBroadcast->push_back(message);
+	_toBroadcast.push_back(message);
 }
 
 void MessageManager::Broadcast() {
-	const vector<Entity*>* entities = EntityManager::GetEntities();
-
-	for (Entity* entity : (*entities)) {
-		for (IMessage* message : (*_toBroadcast)) {
-			entity->Message(message);
-		}
-	}
-
-	ClearBroadcasts();
-}
-
-void MessageManager::End() {
-
+	//std::shared_ptr<EntityList> entities = EntityManager::GetInstance().GetEntities().lock();
+	//if (entities != nullptr) {
+	//	for (int i = 0; i < entities->size(); i++) {
+	//		std::shared_ptr<Entity> entity = (*entities)[i].lock();
+	//		for (IMessage* message : _toBroadcast) {
+	//			entity->Message(message);
+	//		}
+	//	}
+	//	ClearBroadcasts();
+	//}
 }
