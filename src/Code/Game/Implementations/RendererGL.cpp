@@ -100,14 +100,14 @@ void RendererGL::Draw(const Camera* camera, const Entity& entity) {
 		textureComponent) {
 
 		// Camera matrix
-		const glm::mat4* view = camera->GetView();
-		const glm::mat4* projection = camera->GetProjection();
+		const glm::mat4 view = camera->GetView();
+		const glm::mat4 projection = camera->GetProjection();
 
 		// Model Matrix
 		const mat4 modelMatrix = transfComponent->GetMatrix();
 
 		// Our ModelViewProjection : multiplication of our 3 matrices
-		mat4 mvp = (*projection) * (*view) * modelMatrix;
+		mat4 mvp = projection * view * modelMatrix;
 
 		// Fetch model data
 		const OpenGLModel* model = modelComponent->GetModel();
