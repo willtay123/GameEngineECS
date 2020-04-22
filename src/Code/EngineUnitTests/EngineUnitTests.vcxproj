@@ -115,6 +115,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>..\..\External Resources;..\Engine;$(ProjectDir);$(IncludePath)</IncludePath>
+    <LibraryPath>..\EngineBuild;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - OpenGL|x64'">
     <LinkIncremental>true</LinkIncremental>
