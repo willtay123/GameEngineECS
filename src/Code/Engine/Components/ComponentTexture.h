@@ -8,11 +8,11 @@
 namespace EngineECS {
 	class ComponentTexture : public IComponent {
 	private:
-		ResourceID _texture;
+		shared_ptr<Texture> _texture;
 
 	public:
 		ComponentTexture();
-		ComponentTexture(ResourceID texture);
+		ComponentTexture(ResourceID resourceID);
 		ComponentTexture(const ComponentTexture& rhs);
 		~ComponentTexture();
 		ComponentTexture operator=(const ComponentTexture& rhs);
@@ -21,8 +21,8 @@ namespace EngineECS {
 		int ComponentType() const;
 		void Message(IMessage* message);
 
-		ResourceID GetTexture() const;
-		int GetID() const;
+		const shared_ptr<const Texture> GetTexture() const;
+		int GetTextureID() const;
 		int GetWidth() const;
 		int GetHeight() const;
 	};

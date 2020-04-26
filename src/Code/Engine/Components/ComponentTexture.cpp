@@ -4,12 +4,12 @@ using namespace EngineECS;
 
 
 ComponentTexture::ComponentTexture() :
-		_texture() {
+	_texture() {
 	_componentType = ComponentManager::GetInstance().GetIDByType(typeid(ComponentTexture));
 }
 
-ComponentTexture::ComponentTexture(ResourceID texture) :
-	_texture(texture) {
+ComponentTexture::ComponentTexture(ResourceID resourceID) :
+	_texture(ResourceManager::GetInstance().FetchTextureByID(resourceID._resourceID)) {
 	_componentType = ComponentManager::GetInstance().GetIDByType(typeid(ComponentTexture));
 }
 
@@ -43,12 +43,12 @@ void ComponentTexture::Message(IMessage* message) {
 
 }
 
-ResourceID ComponentTexture::GetTexture() const {
+const shared_ptr<const Texture> ComponentTexture::GetTexture() const {
 	return _texture;
 }
 
-int ComponentTexture::GetID() const {
-	return _texture._resourceID;
+int ComponentTexture::GetTextureID() const {
+	return _texture->GetID();
 }
 
 int ComponentTexture::GetWidth() const {

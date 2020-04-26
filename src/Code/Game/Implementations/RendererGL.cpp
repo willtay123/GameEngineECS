@@ -115,7 +115,7 @@ void RendererGL::Draw(const Camera& camera, const shared_ptr<const Entity> entit
 		GLuint indicesHandle = model->GetIBOHandle();
 
 		// Fetch texture data
-		GLuint textureID = textureComponent->GetID();
+		GLuint textureID = textureComponent->GetTextureID(); // ID of resource and not GL id?
 
 		// Update uniform shader variables
 		GLuint _uniform_MVP = 0; //TODO: get this value from the shader
