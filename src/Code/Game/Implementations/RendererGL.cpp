@@ -89,7 +89,7 @@ bool RendererGL::Initialise() {
 	return true;
 }
 
-void RendererGL::Draw(const Camera& camera, const shared_ptr<const Entity> entity) { // Likely to fail here due to resource change
+void RendererGL::Draw(const Camera& camera, const shared_ptr<const Entity> entity) {
 
 	const ComponentTransform* transfComponent = static_cast<const ComponentTransform*>(entity->GetComponentByType(typeid(ComponentTransform)));
 	const ComponentModelGL* modelComponent = static_cast<const ComponentModelGL*>(entity->GetComponentByType(typeid(ComponentModelGL)));
@@ -115,7 +115,7 @@ void RendererGL::Draw(const Camera& camera, const shared_ptr<const Entity> entit
 		GLuint indicesHandle = model->GetIBOHandle();
 
 		// Fetch texture data
-		GLuint textureID = textureComponent->GetTextureID(); // ID of resource and not GL id?
+		GLuint textureID = textureComponent->GetTextureID();
 
 		// Update uniform shader variables
 		GLuint _uniform_MVP = 0; //TODO: get this value from the shader
