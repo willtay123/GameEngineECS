@@ -9,7 +9,7 @@
 #include "Implementations/CollisionResponder.h"
 #include "Implementations/ResourceLoader.h"
 #include "Implementations/ExternalLogger.h"
-#include "Scenes/TestScene.h"
+#include "Scenes/MainScene.h"
 #include "Assets/Shaders/ShaderGLSL.h"
 #include <IO\EntityFactory.h>
 #include "Tools\Logger.h"
@@ -48,13 +48,9 @@ int main(int argc, char* argv[]) {
 	// Initialise engine
 	bool successfulInit = engine.Initialise();
 
-	//Logger::LogInfo("inf", "info");
-	//Logger::LogWarning("war", "warning");
-	//Logger::LogError("err", "error");
-
 	if (engine.GetState() == EngineState::Initialised) {
 		// Set first scene
-		std::unique_ptr<IScene> scene(new TestScene());
+		std::unique_ptr<IScene> scene(new MainScene());
 		engine.SetInitialScene("game", std::move(scene));
 
 		if (engine.GetState() == EngineState::CanRun) {

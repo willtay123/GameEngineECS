@@ -21,5 +21,5 @@ public:
 	~CollisionDetector();
 
 	ICollisionManifold* DetectCollision(const Entity& entity1, const Entity& entity2);
-	void DetectCollisions(const std::weak_ptr<EntityList> entityList, vector<ICollisionManifold*>& collisions) override;
+	void DetectCollisions(const shared_ptr<const EntityList> entityList, vector<ICollisionManifold*>& collisions) override;
 };

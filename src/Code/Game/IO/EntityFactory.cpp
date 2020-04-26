@@ -117,9 +117,13 @@ IComponent* EntityFactory::LoadComponentModelGL(xml_node& modelNode) {
 
 IComponent* EntityFactory::LoadComponentTexture(xml_node& textureNode) {
 	string filepath = LoadAttributeString(textureNode.child("filepath"));
+	// load into resource manager
+	ResourceID resourceID = ResourceManager::GetInstance().LoadTextureByPath(filepath);
 
+	// create component with ResourceID
 	ComponentTexture* component;
-	component = new ComponentTexture(filepath);
+	component = new ComponentTexture(resourceID);
+	
 	return component;
 }
 

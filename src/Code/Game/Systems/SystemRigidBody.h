@@ -13,14 +13,14 @@ using namespace EngineECS;
 using std::vector;
 using std::string;
 
-class SystemPhysics : public ISystem {
+class SystemRigidBody : public ISystem {
 private:
 	string* _name;
 	vector<Entity*>* _entityList;
 
 public:
-	SystemPhysics();
-	~SystemPhysics();
+	SystemRigidBody();
+	~SystemRigidBody();
 
 	const string* GetName();
 

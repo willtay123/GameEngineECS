@@ -89,7 +89,7 @@ bool RendererGL::Initialise() {
 	return true;
 }
 
-void RendererGL::Draw(const Camera* camera, const Entity& entity) {
+void RendererGL::Draw(const Camera& camera, const Entity& entity) {
 
 	const ComponentTransform* transfComponent = static_cast<const ComponentTransform*>(entity.GetComponentByType(typeid(ComponentTransform)));
 	const ComponentModelGL* modelComponent = static_cast<const ComponentModelGL*>(entity.GetComponentByType(typeid(ComponentModelGL)));
@@ -100,8 +100,8 @@ void RendererGL::Draw(const Camera* camera, const Entity& entity) {
 		textureComponent) {
 
 		// Camera matrix
-		const glm::mat4 view = camera->GetView();
-		const glm::mat4 projection = camera->GetProjection();
+		const glm::mat4 view = camera.GetView();
+		const glm::mat4 projection = camera.GetProjection();
 
 		// Model Matrix
 		const mat4 modelMatrix = transfComponent->GetMatrix();
@@ -179,7 +179,7 @@ void RendererGL::Draw(const Camera* camera, const Entity& entity) {
 	}
 }
 
-void RendererGL::Draw(const Camera* camera, const std::shared_ptr<EntityList> entityList) {
+void RendererGL::Draw(const Camera& camera, const std::shared_ptr<const EntityList> entityList) {
 	// Draw all entities one after another, slow and inefficient due to memory swaps
 	// For a more efficient draw, try to re-organise for similar textures
 	//vector<Entity*> entities = entityList->GetEntities();

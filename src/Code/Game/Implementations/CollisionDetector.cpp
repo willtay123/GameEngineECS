@@ -39,7 +39,7 @@ ICollisionManifold* CollisionDetector::DetectCollision(const Entity& entity1, co
 	return NULL;
 }
 
-void CollisionDetector::DetectCollisions(const std::weak_ptr<EntityList> entityList, vector<ICollisionManifold*>& collisions) {
+void CollisionDetector::DetectCollisions(const shared_ptr<const EntityList> entityList, vector<ICollisionManifold*>& collisions) {
 	collisions = vector<ICollisionManifold*>();
 	//for (int i = 0; i < (int)(entityList->size()) - 1; i += 1) {
 	//	for (int j = i + 1; j < (int)(entityList->size()); j += 1) {
@@ -81,11 +81,11 @@ ICollisionManifold* CollisionDetector::CheckSphereSphere(const Entity& entity1, 
 		vec4 dVec = collisionCentre2 - collisionCentre1;
 		float distance = std::sqrt(dVec.x * dVec.x + dVec.y * dVec.y + dVec.z * dVec.z);
 
-		//cout << "Position1: " << collisionCentre1.x << " " << collisionCentre1.y << " " << collisionCentre1.z << endl;
-		//cout << "Position2: " << collisionCentre2.x << " " << collisionCentre2.y << " " << collisionCentre2.z << endl;
-		//cout << "Radius1: " << radius1 << endl;
-		//cout << "Radius2: " << radius2 << endl;
-		//cout << "Distance: " << distance << endl;
+		// << "Position1: " << collisionCentre1.x << " " << collisionCentre1.y << " " << collisionCentre1.z << endl;
+		// << "Position2: " << collisionCentre2.x << " " << collisionCentre2.y << " " << collisionCentre2.z << endl;
+		// << "Radius1: " << radius1 << endl;
+		// << "Radius2: " << radius2 << endl;
+		// << "Distance: " << distance << endl;
 
 		if (distance < radiiSum) {
 			// Collision

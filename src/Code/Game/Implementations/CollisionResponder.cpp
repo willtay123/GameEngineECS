@@ -14,7 +14,6 @@ CollisionResponder::~CollisionResponder() {
 void CollisionResponder::HandleCollisions(const vector<ICollisionManifold*>& manifoldList) {
 	for (ICollisionManifold* iManifold : manifoldList) {
 		//handle collisions
-		//cout << "Collision Detected" << endl;
 
 		CollisionManifold* manifold = (CollisionManifold*)iManifold;
 

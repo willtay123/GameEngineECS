@@ -1,24 +1,24 @@
-#include "SystemPhysics.h"
+#include "SystemRigidBody.h"
 
 
 
-SystemPhysics::SystemPhysics() {
+SystemRigidBody::SystemRigidBody() {
 	_name = new string("Physics System");
 }
 
-SystemPhysics::~SystemPhysics() {
+SystemRigidBody::~SystemRigidBody() {
 
 }
 
-const string* SystemPhysics::GetName() {
+const string* SystemRigidBody::GetName() {
 	return _name;
 }
 
-void SystemPhysics::GiveEntities(vector<Entity*>* entityList) {
+void SystemRigidBody::GiveEntities(vector<Entity*>* entityList) {
 	_entityList = entityList;
 }
 
-void SystemPhysics::OnAction(double deltaTime) {
+void SystemRigidBody::OnAction(double deltaTime) {
 	int transformID = ComponentManager::GetInstance().GetIDForType(typeid(ComponentTransform));
 	int physicsID = ComponentManager::GetInstance().GetIDForType(typeid(ComponentPhysics));
 

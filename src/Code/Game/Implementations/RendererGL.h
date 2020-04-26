@@ -26,8 +26,8 @@ public:
 
 	bool Initialise();
 	
-	void Draw(const Camera* camera, const Entity& entity);
-	void Draw(const Camera* camera, const std::shared_ptr<EntityList> entityList);
+	void Draw(const Camera& camera, const Entity& entity);
+	void Draw(const Camera& camera, const std::shared_ptr<const EntityList> entityList);
 
 	GLFWwindow* GetWindow();
 

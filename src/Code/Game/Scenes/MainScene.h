@@ -25,7 +25,7 @@
 
 using namespace EngineECS;
 
-class TestScene : public IScene {
+class MainScene : public IScene {
 private:
 	Camera* _camera;
 	double _timeSinceStart;
@@ -33,10 +33,10 @@ private:
 	void ProcessInput();
 
 public:
-	TestScene();
-	TestScene(const TestScene& rhs) = delete;
-	~TestScene() override;
-	TestScene& operator=(const TestScene& rhs) = delete;
+	MainScene();
+	MainScene(const MainScene& rhs) = delete;
+	~MainScene() override;
+	MainScene& operator=(const MainScene& rhs) = delete;
 	
 	void Initialise();
 

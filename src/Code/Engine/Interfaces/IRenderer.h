@@ -17,8 +17,8 @@ namespace EngineECS {
 		virtual ~IRenderer() {};
 
 		virtual bool Initialise() = 0;
-		virtual void Draw(const Camera* camera, const Entity& entity) = 0;
-		virtual void Draw(const Camera* camera, const std::shared_ptr<EntityList> entityList) = 0;
+		virtual void Draw(const Camera& camera, const Entity& entity) = 0;
+		virtual void Draw(const Camera& camera, const std::shared_ptr<const EntityList> entityList) = 0;
 
 		virtual void StartUpdate() = 0;
 		virtual void EndUpdate() = 0;

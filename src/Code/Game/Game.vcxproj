@@ -203,9 +203,9 @@
     <ClCompile Include="IO\EntityFactory.cpp" />
     <ClCompile Include="IO\Keyboard.cpp" />
     <ClCompile Include="IO\Mouse.cpp" />
-    <ClCompile Include="Scenes\TestScene.cpp" />
+    <ClCompile Include="Scenes\MainScene.cpp" />
     <ClCompile Include="Source.cpp" />
-    <ClCompile Include="Systems\SystemPhysics.cpp" />
+    <ClCompile Include="Systems\SystemRigidBody.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Assets\Shaders\ShaderGLSL.h" />
@@ -227,8 +227,8 @@
     <ClInclude Include="IO\EntityFactory.h" />
     <ClInclude Include="IO\Keyboard.h" />
     <ClInclude Include="IO\Mouse.h" />
-    <ClInclude Include="Scenes\TestScene.h" />
-    <ClInclude Include="Systems\SystemPhysics.h" />
+    <ClInclude Include="Scenes\MainScene.h" />
+    <ClInclude Include="Systems\SystemRigidBody.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Assets\Data\entities.xml" />
