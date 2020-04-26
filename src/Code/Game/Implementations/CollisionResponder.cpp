@@ -50,7 +50,7 @@ void CollisionResponder::HandlePlayerItem(Entity* player, Entity* item) {
 	EntityManager::GetInstance().RemoveEntity("game", itemName);
 
 	// Add score to player
-	int scoreID = ComponentManager::GetInstance().GetIDForType(typeid(ComponentScore));
+	int scoreID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentScore));
 	ComponentScore* scoreComp = (ComponentScore*)player->GetComponentEditable(scoreID);
 	scoreComp->IncreaseScore(1);
 }

@@ -27,7 +27,6 @@ namespace EngineECS {
 		~ComponentManager();
 		static ComponentManager& GetInstance();
 
-		int GenerateIDByType(IComponent const * const component);
-		int GetIDForType(const type_index type);
+		int GetIDByType(const type_index& typing);
 	};
 }

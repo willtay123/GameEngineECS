@@ -8,7 +8,7 @@ CollisionDetector::~CollisionDetector() {
 
 ICollisionManifold* CollisionDetector::DetectCollision(const Entity& entity1, const Entity& entity2) {
 	// work out collider types, call relevant method
-	int colliderID = ComponentManager::GetInstance().GetIDForType(typeid(ComponentSphereCollider));
+	int colliderID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentSphereCollider));
 	ComponentCollider* collider1 = (ComponentCollider*)entity1.GetComponent(colliderID);
 	ComponentCollider* collider2 = (ComponentCollider*)entity2.GetComponent(colliderID);
 	string collider1Type = collider1->GetColliderType();
@@ -62,8 +62,8 @@ ICollisionManifold* CollisionDetector::CheckSphereSphere(const Entity& entity1, 
 		return NULL;
 	}
 
-	int transformID = ComponentManager::GetInstance().GetIDForType(typeid(ComponentTransform));
-	int sphereID = ComponentManager::GetInstance().GetIDForType(typeid(ComponentSphereCollider));
+	int transformID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentTransform));
+	int sphereID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentSphereCollider));
 
 	ComponentTransform* transform1 = (ComponentTransform*)entity1.GetComponent(transformID);
 	ComponentSphereCollider* collider1 = (ComponentSphereCollider*)entity1.GetComponent(sphereID);

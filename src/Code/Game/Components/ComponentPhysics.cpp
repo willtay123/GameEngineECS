@@ -2,7 +2,7 @@
 
 
 ComponentPhysics::ComponentPhysics(float gravity) {
-	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
+	_componentType = ComponentManager::GetInstance().GetIDByType(typeid(ComponentPhysics));
 	_isGravityAffected = false;
 	_gravityVal = gravity;
 	_acceleration = vec3(0, 0, 0);

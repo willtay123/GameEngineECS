@@ -3,7 +3,7 @@
 
 
 ComponentSphereCollider::ComponentSphereCollider(float xOff, float yOff, float zOff, float radius) : ComponentCollider(true) {
-	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
+	_componentType = ComponentManager::GetInstance().GetIDByType(typeid(ComponentSphereCollider));
 	_colliderType = string("Sphere");
 	_centreOffset = vec4(xOff, yOff, zOff, 0);
 	_radius = radius;

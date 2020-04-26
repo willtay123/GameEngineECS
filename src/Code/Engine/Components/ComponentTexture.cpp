@@ -5,12 +5,12 @@ using namespace EngineECS;
 
 ComponentTexture::ComponentTexture() :
 		_texture() {
-	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
+	_componentType = ComponentManager::GetInstance().GetIDByType(typeid(ComponentTexture));
 }
 
 ComponentTexture::ComponentTexture(ResourceID texture) :
 	_texture(texture) {
-	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
+	_componentType = ComponentManager::GetInstance().GetIDByType(typeid(ComponentTexture));
 }
 
 ComponentTexture::ComponentTexture(const ComponentTexture& rhs) :

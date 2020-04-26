@@ -92,7 +92,7 @@ const IComponent* Entity::GetComponent(int id) const {
 }
 
 const IComponent* Entity::GetComponentByType(const type_index type) const {
-	int compID = ComponentManager::GetInstance().GetIDForType(type);
+	int compID = ComponentManager::GetInstance().GetIDByType(type);
 	return GetComponent(compID);
 }
 

@@ -83,13 +83,13 @@ bool RendererGL::Initialise() {
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	//initial settings
-	glClearColor(0, 100, 100, 1);
+	glClearColor(1, 0.5, 0, 1); // Normalised RGBA
 
 	// Successful
 	return true;
 }
 
-void RendererGL::Draw(const Camera& camera, const shared_ptr<const Entity> entity) {
+void RendererGL::Draw(const Camera& camera, const shared_ptr<const Entity> entity) { // Likely to fail here due to resource change
 
 	const ComponentTransform* transfComponent = static_cast<const ComponentTransform*>(entity->GetComponentByType(typeid(ComponentTransform)));
 	const ComponentModelGL* modelComponent = static_cast<const ComponentModelGL*>(entity->GetComponentByType(typeid(ComponentModelGL)));

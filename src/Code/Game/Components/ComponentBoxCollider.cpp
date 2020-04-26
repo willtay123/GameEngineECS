@@ -4,7 +4,7 @@
 
 ComponentBoxCollider::ComponentBoxCollider(float xOff, float yOff, float zOff, float xSize, float ySize, float zSize) : 
 	ComponentCollider(true) {
-	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
+	_componentType = ComponentManager::GetInstance().GetIDByType(typeid(ComponentCollider));
 	_colliderType = string("Box");
 	_centreOffset = vec4(xOff, yOff, zOff, 0);
 	_size[0] = xSize;

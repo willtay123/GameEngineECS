@@ -3,12 +3,12 @@
 
 
 ComponentScore::ComponentScore() {
-	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
+	_componentType = ComponentManager::GetInstance().GetIDByType(typeid(ComponentScore));
 	_score = 0;
 }
 
 ComponentScore::ComponentScore(int score) {
-	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
+	_componentType = ComponentManager::GetInstance().GetIDByType(typeid(ComponentScore));
 	_score = score;
 }
 

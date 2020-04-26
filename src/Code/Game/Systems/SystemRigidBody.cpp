@@ -19,8 +19,8 @@ void SystemRigidBody::GiveEntities(vector<Entity*>* entityList) {
 }
 
 void SystemRigidBody::OnAction(double deltaTime) {
-	int transformID = ComponentManager::GetInstance().GetIDForType(typeid(ComponentTransform));
-	int physicsID = ComponentManager::GetInstance().GetIDForType(typeid(ComponentPhysics));
+	int transformID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentTransform));
+	int physicsID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentPhysics));
 
 	for (Entity* entity : (*_entityList)) {
 		ComponentTransform* transfComponent = static_cast<ComponentTransform*>(entity->GetComponentEditable(transformID));

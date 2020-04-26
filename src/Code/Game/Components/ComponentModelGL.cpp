@@ -4,11 +4,11 @@
 
 ComponentModelGL::ComponentModelGL() :
 	_model(nullptr) {
-	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
+	_componentType = ComponentManager::GetInstance().GetIDByType(typeid(ComponentModelGL));
 }
 
 ComponentModelGL::ComponentModelGL(const string& filepath) {
-	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
+	_componentType = ComponentManager::GetInstance().GetIDByType(typeid(ComponentModelGL));
 	ResourceID geomID = ResourceManager::GetInstance().LoadModelByPath(filepath);
 	shared_ptr<Geometry> geom = ResourceManager::GetInstance().FetchModelByID(geomID._resourceID);
 	_model = new OpenGLModel(geom);
@@ -17,7 +17,7 @@ ComponentModelGL::ComponentModelGL(const string& filepath) {
 ComponentModelGL::ComponentModelGL(OpenGLModel* model) :
 	_model(model)
 {
-	_componentType = ComponentManager::GetInstance().GenerateIDByType(this);
+	_componentType = ComponentManager::GetInstance().GetIDByType(typeid(ComponentModelGL));
 }
 
 ComponentModelGL::ComponentModelGL(const ComponentModelGL& rhs) :
