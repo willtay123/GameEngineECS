@@ -8,6 +8,7 @@
 #include "Components/ComponentTransform.h"
 #include "Components/ComponentModelGL.h"
 #include "Components/ComponentTexture.h"
+#include "CleverPointers.h"
 
 using namespace EngineECS;
 
@@ -26,8 +27,8 @@ public:
 
 	bool Initialise();
 	
-	void Draw(const Camera& camera, const Entity& entity);
-	void Draw(const Camera& camera, const std::shared_ptr<const EntityList> entityList);
+	void Draw(const Camera& camera, const shared_ptr<const Entity> entity);
+	void Draw(const Camera& camera, const shared_ptr<const EntityList> entityList);
 
 	GLFWwindow* GetWindow();
 

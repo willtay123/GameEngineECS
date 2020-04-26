@@ -47,7 +47,7 @@ namespace EngineECS {
 
 		IBufferID* LoadShader(const string& filename, const ShaderType shaderType);
 
-		void Draw(const Camera& camera, const Entity& entity);
+		void Draw(const Camera& camera, const shared_ptr<const Entity> entity);
 		void Draw(const Camera& camera, const shared_ptr<const EntityList> entities);
 
 		void BeforeUpdate();

@@ -56,7 +56,7 @@ IBufferID* RenderManager::LoadShader(const string& filename, const ShaderType sh
 	return shaderID;
 }
 
-void RenderManager::Draw(const Camera& camera, const Entity& entity) {
+void RenderManager::Draw(const Camera& camera, const shared_ptr<const Entity> entity) {
 	if (_renderer) {
 		_renderer->Draw(camera, entity);
 	}
