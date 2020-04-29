@@ -168,7 +168,7 @@ void RendererGL::Draw(const Camera& camera, const shared_ptr<const Entity> entit
 		// Draw the triangles !
 		glDrawElements(
 			GL_TRIANGLES,					// mode
-			model->GetTriangleCount(),		// count
+			model->GetTriangleCount() * 3,	// count
 			GL_UNSIGNED_SHORT,				// type
 			(void*)0						// element array buffer offset
 		);
