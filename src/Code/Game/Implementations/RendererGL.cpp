@@ -74,8 +74,8 @@ bool RendererGL::Initialise() {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glDepthFunc(GL_LESS);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glCullFace(GL_BACK);
 
 	//alpha blending
@@ -83,7 +83,7 @@ bool RendererGL::Initialise() {
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	//initial settings
-	glClearColor(1, 0.5, 0, 1); // Normalised RGBA
+	glClearColor(0.5, 0.5, 1, 1); // Normalised RGBA
 
 	// Successful
 	return true;
@@ -139,7 +139,6 @@ void RendererGL::Draw(const Camera& camera, const shared_ptr<const Entity> entit
 			(void*)0					// array buffer offset
 		);
 
-		//NOTE: buffer offset may be wrong
 		// UVs
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(
@@ -152,15 +151,15 @@ void RendererGL::Draw(const Camera& camera, const shared_ptr<const Entity> entit
 		);
 
 		// Normals
-		//glEnableVertexAttribArray(2);
-		//glVertexAttribPointer(
-		//	2,                          // attribute. No particular reason for 1, but must match the layout in the shader.
-		//	2,                          // size
-		//	GL_FLOAT,                   // type
-		//	GL_FALSE,                   // normalized?
-		//	8 * sizeof(float),			// stride
-		//	(float*)(5 * sizeof(float))	// array buffer offset
-		//);
+		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(
+			2,                          // attribute. No particular reason for 1, but must match the layout in the shader.
+			2,                          // size
+			GL_FLOAT,                   // type
+			GL_FALSE,                   // normalized?
+			8 * sizeof(float),			// stride
+			(float*)(5 * sizeof(float))	// array buffer offset
+		);
 
 		// Index buffer
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->GetIBOHandle());
@@ -175,7 +174,7 @@ void RendererGL::Draw(const Camera& camera, const shared_ptr<const Entity> entit
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
-		//glDisableVertexArrayAttrib(2);
+		glDisableVertexAttribArray(2);
 	}
 }
 

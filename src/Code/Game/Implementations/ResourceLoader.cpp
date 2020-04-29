@@ -93,12 +93,12 @@ std::shared_ptr<Geometry> ResourceLoader::LoadOBJ(const string& filepath) {
 			mesh->mNormals[i].z
 		);
 
-		//vertex.uv = vec2(
-		//	mesh->mTextureCoords[0][i].x,
-		//	mesh->mTextureCoords[0][i].y
-		//);
+		vertex.uv = vec2(
+			mesh->mTextureCoords[0][i].x,
+			mesh->mTextureCoords[0][i].y
+		);
 
-		vertex.uv = vec2(0,0);
+		//vertex.uv = vec2(0,0);
 
 		vertices.push_back(vertex);
 	}
