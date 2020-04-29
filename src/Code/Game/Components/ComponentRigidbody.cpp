@@ -1,58 +1,58 @@
 #include "ComponentRigidbody.h"
 
 
-ComponentRigibody::ComponentRigibody(float gravity) {
-	_componentType = ComponentManager::GetInstance().GetIDByType(typeid(ComponentRigibody));
+ComponentRigidbody::ComponentRigidbody(float gravity) {
+	_componentType = ComponentManager::GetInstance().GetIDByType(typeid(ComponentRigidbody));
 	_isGravityAffected = false;
 	_gravityVal = gravity;
 	_acceleration = vec3(0, 0, 0);
 	_velocity = vec3(0, 0, 0);
 }
 
-ComponentRigibody::~ComponentRigibody() {
+ComponentRigidbody::~ComponentRigidbody() {
 
 }
 
-IComponent* ComponentRigibody::Clone() {
-	return new ComponentRigibody(_gravityVal);
+IComponent* ComponentRigidbody::Clone() {
+	return new ComponentRigidbody(_gravityVal);
 }
 
-int ComponentRigibody::ComponentType() const {
+int ComponentRigidbody::ComponentType() const {
 	return _componentType;
 }
 
-void ComponentRigibody::Message(IMessage* message) {
+void ComponentRigidbody::Message(IMessage* message) {
 	// nothing to do
 }
 
-void ComponentRigibody::SetGravity(float value) {
+void ComponentRigidbody::SetGravity(float value) {
 	_gravityVal = value;
 }
 
-float ComponentRigibody::GetGravity() const {
+float ComponentRigidbody::GetGravity() const {
 	return _gravityVal;
 }
 
-void ComponentRigibody::SetIsGravityAffected(bool isAffected) {
+void ComponentRigidbody::SetIsGravityAffected(bool isAffected) {
 	_isGravityAffected = isAffected;
 }
 
-bool ComponentRigibody::IsGravityAffected() const {
+bool ComponentRigidbody::IsGravityAffected() const {
 	return _isGravityAffected;
 }
 
-void ComponentRigibody::SetAcceleration(float x, float y, float z) {
+void ComponentRigidbody::SetAcceleration(float x, float y, float z) {
 	_acceleration = vec3(x, y, z);
 }
 
-const vec3& ComponentRigibody::GetAcceleration() {
+const vec3& ComponentRigidbody::GetAcceleration() {
 	return _acceleration;
 }
 
-void ComponentRigibody::SetVelocity(float x, float y, float z) {
+void ComponentRigidbody::SetVelocity(float x, float y, float z) {
 	_velocity = vec3(x, y, z);
 }
 
-const vec3& ComponentRigibody::GetVelocity() {
+const vec3& ComponentRigidbody::GetVelocity() {
 	return _velocity;
 }

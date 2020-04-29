@@ -130,8 +130,8 @@ IComponent* EntityFactory::LoadComponentTexture(xml_node& textureNode) {
 IComponent* EntityFactory::LoadComponentRigidbody(xml_node& physicsNode) {
 	float gravity = physicsNode.child("gravity").text().as_float();
 
-	ComponentRigibody* component;
-	component = new ComponentRigibody(gravity);
+	ComponentRigidbody* component;
+	component = new ComponentRigidbody(gravity);
 	return component;
 }
 

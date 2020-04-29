@@ -16,13 +16,13 @@ const string& SystemRigidBody::GetName() {
 
 void SystemRigidBody::OnAction(double deltaTime) {
 	int transformID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentTransform));
-	int physicsID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentRigibody));
+	int physicsID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentRigidbody));
 
 	shared_ptr<EntityList> entityList = EntityManager::GetInstance().GetEntitiesEditable();
 
 	for (int i = 0; i < entityList->size(); i++) {
 		ComponentTransform* transfComponent = static_cast<ComponentTransform*>((*entityList)[i]->GetComponentEditable(transformID));
-		ComponentRigibody* physicsComponent = static_cast<ComponentRigibody*>((*entityList)[i]->GetComponentEditable(physicsID));
+		ComponentRigidbody* physicsComponent = static_cast<ComponentRigidbody*>((*entityList)[i]->GetComponentEditable(physicsID));
 
 		if (transfComponent &&
 			physicsComponent) {
@@ -39,9 +39,7 @@ void SystemRigidBody::OnAction(double deltaTime) {
 			}
 
 			float frictionValue = 0.97f;
-			vel.x += (acc.x * (float)deltaTime);
-			vel.y += (acc.y * (float)deltaTime);
-			vel.z += (acc.z * (float)deltaTime);
+			vel += (acc * static_cast<float>(deltaTime));
 			vel *= frictionValue;
 
 			// Set values

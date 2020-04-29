@@ -59,8 +59,8 @@ void MainScene::Render() {
 
 void MainScene::ProcessInput() {
 	shared_ptr<Entity> player = EntityManager::GetInstance().GetEntityEditable("game", "player");
-	int physID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentRigibody));
-	ComponentRigibody* physComp = (ComponentRigibody*)player->GetComponentEditable(physID);
+	int physID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentRigidbody));
+	ComponentRigidbody* physComp = (ComponentRigidbody*)player->GetComponentEditable(physID);
 	
 	if (physComp) {
 		float x = 0, y = 0, z = 0;
