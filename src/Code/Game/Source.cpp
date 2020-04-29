@@ -29,9 +29,7 @@ int main(int argc, char* argv[]) {
 
 	// Create renderers
 	RendererGL* renderer = new RendererGL();
-	renderer->Initialise();
 	ShaderGLSL* shader = new ShaderGLSL();
-	shader->Initialise();
 
 	// Set renderers
 	RenderManager::GetInstance().SetRenderer(renderer);
