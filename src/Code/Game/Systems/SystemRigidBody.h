@@ -24,6 +24,5 @@ public:
 
 	const string& GetName();
 
-	void GiveEntities(vector<Entity*>* entityList);
 	void OnAction(double deltaTime);
 };

@@ -13,7 +13,6 @@
 
 class CollisionDetector : public ICollisionDetector {
 private:
-	ICollisionManifold* CheckBoxBox(const Entity& entity1, const Entity& entity2);
 	ICollisionManifold* CheckSphereSphere(const Entity& entity1, const Entity& entity2);
 	ICollisionManifold* CheckBoxSphere(const Entity& entity1, const Entity& entity2);
 

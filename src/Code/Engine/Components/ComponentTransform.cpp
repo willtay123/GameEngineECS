@@ -89,8 +89,8 @@ void ComponentTransform::Message(IMessage* message) {
 
 }
 
-const vec4* ComponentTransform::GetPosition() const {
-	return &_pos;
+const vec4& ComponentTransform::GetPosition() const {
+	return _pos;
 }
 void ComponentTransform::SetPosition(vec4* pos) {
 	_pos = *pos;
@@ -103,8 +103,8 @@ void ComponentTransform::SetPosition(float x, float y, float z) {
 	Clean();
 }
 
-const vec3* ComponentTransform::GetRotation() const {
-	return &_rot;
+const vec3& ComponentTransform::GetRotation() const {
+	return _rot;
 }
 void ComponentTransform::SetRotation(vec3* rot) {
 	_rot = *rot;
@@ -117,8 +117,8 @@ void ComponentTransform::SetRotation(float x, float y, float z) {
 	Clean();
 }
 
-const vec3* ComponentTransform::GetScale() const {
-	return &_scale;
+const vec3& ComponentTransform::GetScale() const {
+	return _scale;
 }
 void ComponentTransform::SetScale(vec3* scale) {
 	_scale = *scale;
@@ -154,16 +154,16 @@ void ComponentTransform::Clean() {
 	_dirty = false;
 }
 
-const mat4* ComponentTransform::GetMatrixTransform() const {
-	return &_mTransform;
+const mat4& ComponentTransform::GetMatrixTransform() const {
+	return _mTransform;
 }
 
-const mat4* ComponentTransform::GetMatrixRotation() const {
-	return &_mRotation;
+const mat4& ComponentTransform::GetMatrixRotation() const {
+	return _mRotation;
 }
 
-const mat4* ComponentTransform::GetMatrixScale() const {
-	return &_mScale;
+const mat4& ComponentTransform::GetMatrixScale() const {
+	return _mScale;
 }
 
 const mat4 ComponentTransform::GetMatrix() const {

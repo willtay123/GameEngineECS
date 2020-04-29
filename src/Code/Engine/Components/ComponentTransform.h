@@ -40,24 +40,24 @@ namespace EngineECS {
 		int ComponentType() const;
 		void Message(IMessage* message);
 
-		const vec4* GetPosition() const;
+		const vec4& GetPosition() const;
 		void SetPosition(vec4* pos);
 		void SetPosition(float x, float y, float z);
 
-		const vec3* GetRotation() const;
+		const vec3& GetRotation() const;
 		void SetRotation(vec3* rot);
 		void SetRotation(float x, float y, float z);
 
-		const vec3* GetScale() const;
+		const vec3& GetScale() const;
 		void SetScale(vec3* scale);
 		void SetScale(float a);
 		void SetScale(float x, float y, float z);
 
 		void Clean();
 
-		const mat4* GetMatrixTransform() const;
-		const mat4* GetMatrixRotation() const;
-		const mat4* GetMatrixScale() const;
+		const mat4& GetMatrixTransform() const;
+		const mat4& GetMatrixRotation() const;
+		const mat4& GetMatrixScale() const;
 		const mat4 GetMatrix() const;
 	};
 }

@@ -14,11 +14,6 @@ ICollisionManifold* CollisionDetector::DetectCollision(const Entity& entity1, co
 	string collider1Type = collider1->GetColliderType();
 	string collider2Type = collider2->GetColliderType();
 
-	if (collider1Type == "Box" && collider2Type == "Box") {
-		// call Box Box
-		return CheckBoxBox(entity1, entity2);
-	}
-
 	if (collider1Type == "Sphere" && collider2Type == "Sphere") {
 		// Call Sphere Sphere
 		return CheckSphereSphere(entity1, entity2);
@@ -40,21 +35,16 @@ ICollisionManifold* CollisionDetector::DetectCollision(const Entity& entity1, co
 }
 
 void CollisionDetector::DetectCollisions(const shared_ptr<const EntityList> entityList, vector<ICollisionManifold*>& collisions) {
-	collisions = vector<ICollisionManifold*>();
-	//for (int i = 0; i < (int)(entityList->size()) - 1; i += 1) {
-	//	for (int j = i + 1; j < (int)(entityList->size()); j += 1) {
-	//		std::weak_ptr<Entity> ent1 = (*entityList)[i];
-	//		std::weak_ptr<Entity> ent2 = (*entityList)[j];
-	//		ICollisionManifold* manifold = CollisionCheck(ent1.lock().get(), ent2.lock().get());
-	//		if (manifold) {
-	//			manifoldList->push_back(manifold);
-	//		}
-	//	}
-	//}
-}
-
-ICollisionManifold* CollisionDetector::CheckBoxBox(const Entity& entity1, const Entity& entity2) {
-	return NULL;
+	for (int i = 0; i < (int)(entityList->size()) - 1; i += 1) {
+		for (int j = i + 1; j < (int)(entityList->size()); j += 1) {
+			shared_ptr<Entity> ent1 = (*entityList)[i];
+			shared_ptr<Entity> ent2 = (*entityList)[j];
+			ICollisionManifold* manifold = DetectCollision(*ent1, *ent2);
+			if (manifold) {
+				collisions.push_back(manifold);
+			}
+		}
+	}
 }
 
 ICollisionManifold* CollisionDetector::CheckSphereSphere(const Entity& entity1, const Entity& entity2) {
@@ -72,8 +62,8 @@ ICollisionManifold* CollisionDetector::CheckSphereSphere(const Entity& entity1, 
 
 	if (transform1 && collider1 &&
 		transform2 && collider2) {
-		vec4 collisionCentre1 = *(transform1->GetPosition()) + collider1->GetCentreOffset();
-		vec4 collisionCentre2 = *(transform2->GetPosition()) + collider2->GetCentreOffset();
+		vec4 collisionCentre1 = transform1->GetPosition() + collider1->GetCentreOffset();
+		vec4 collisionCentre2 = transform2->GetPosition() + collider2->GetCentreOffset();
 		float radius1 = collider1->GetRadius();
 		float radius2 = collider2->GetRadius();
 		float radiiSum = radius1 + radius2;

@@ -31,7 +31,7 @@ void SystemRigidBody::OnAction(double deltaTime) {
 			vec3 acc = physicsComponent->GetAcceleration();
 			vec3 vel = physicsComponent->GetVelocity();
 
-			const vec4* position = transfComponent->GetPosition();
+			const vec4 position = transfComponent->GetPosition();
 
 			// Calculate physics
 			if (physicsComponent->IsGravityAffected()) {
@@ -48,9 +48,9 @@ void SystemRigidBody::OnAction(double deltaTime) {
 			physicsComponent->SetVelocity(vel.x, vel.y, vel.z);
 
 			transfComponent->SetPosition(
-				position->x + (vel.x * (float)deltaTime),
-				position->y + (vel.y * (float)deltaTime),
-				position->z + (vel.z * (float)deltaTime)
+				position.x + (vel.x * (float)deltaTime),
+				position.y + (vel.y * (float)deltaTime),
+				position.z + (vel.z * (float)deltaTime)
 			);
 		}
 	}
