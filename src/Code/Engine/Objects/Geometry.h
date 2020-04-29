@@ -4,6 +4,7 @@
 #include <vector>
 #include <GLM/glm/vec2.hpp>
 #include <GLM/glm/vec3.hpp>
+#include "DataStructs/Vertex.h"
 
 using std::vector;
 using glm::vec2;
@@ -12,33 +13,21 @@ using glm::vec3;
 namespace EngineECS {
 	struct TriangleIndices {
 		unsigned short vertices[3];
-		unsigned short uvs[3];
-		unsigned short normals[3];
 	};
 
 	class Geometry : public IResource {
 	private:
-		vector<vec3> _vertices;
-		vector<vec2> _uvs;
-		vector<vec3> _normals;
-		vector<TriangleIndices> _triangles;
-
-
-		int _verticesSize;
-		int _uvSize;
-		int _normalsSize;
-		int _triangleCount;
+		vector<Vertex> _vertices;
+		vector<TriangleIndices> _faces;
 
 	public:
 		Geometry();
-		Geometry(vector<vec3> vertices, vector<vec2> uvs, vector<vec3> normals, vector<TriangleIndices> triangles);
+		Geometry(vector<Vertex>& vertices, vector<TriangleIndices>& faces);
 		Geometry(const Geometry& rhs);
 		~Geometry();
 		Geometry& operator=(const Geometry& rhs);
 
-		vector<vec3>* GetVertices();
-		vector<vec2>* GetUVs();
-		vector<vec3>* GetNormals();
+		vector<Vertex>* GetVertices();
 		vector<TriangleIndices>* GetTriangles();
 
 		int GetVertexSize();

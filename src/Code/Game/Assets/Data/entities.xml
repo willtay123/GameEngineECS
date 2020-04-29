@@ -11,18 +11,18 @@
 					<w>1.0</w>
 				</position>
 				<rotation>
-					<x>0.0</x>
+					<x>1.0</x>
 					<y>0.0</y>
 					<z>0.0</z>
 				</rotation>
 				<scale>
-					<x>1.0</x>
-					<y>0.5</y>
-					<z>1.0</z>
+					<x>0.1</x>
+					<y>0.1</y>
+					<z>0.1</z>
 				</scale>
 			</transformComponent>
 			<modelGLComponent>
-				<filepath>Assets/Models/cube.obj</filepath>
+				<filepath>Assets/Models/sphere.obj</filepath>
 			</modelGLComponent>
 			<textureComponent>
 				<filepath>Assets/Textures/testImage.png</filepath>

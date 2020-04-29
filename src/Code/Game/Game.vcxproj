@@ -216,7 +216,6 @@
     <ClInclude Include="Components\ComponentPhysics.h" />
     <ClInclude Include="Components\ComponentScore.h" />
     <ClInclude Include="Components\ComponentSphereCollider.h" />
-    <ClInclude Include="DataStructs\Vertex.h" />
     <ClInclude Include="Externals.h" />
     <ClInclude Include="Implementations\CollisionDetector.h" />
     <ClInclude Include="Implementations\CollisionManifold.h" />

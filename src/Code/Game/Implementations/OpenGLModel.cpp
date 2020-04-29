@@ -63,66 +63,34 @@ OpenGLModel& OpenGLModel::operator=(const OpenGLModel& rhs) {
 
 void OpenGLModel::GenerateBuffers(std::shared_ptr<Geometry> geometry) {
 	// Take data from geometry
-	vector<vec3>* vertices = geometry->GetVertices();
-	vector<vec2>* uvs = geometry->GetUVs();
-	vector<vec3>* normals = geometry->GetNormals();
+	vector<Vertex>* vertices = geometry->GetVertices();
 	vector<TriangleIndices>* triangles = geometry->GetTriangles();
 	
-	map<PointData, unsigned short> uniquePoints;
-	unsigned short indexCount = 0;
 	vector<float> tempData;
-	vector<unsigned short> tempIndices;
 
-	// --Turn data into GL format
-	for (int i = 0; i < (int)(triangles->size()); i += 1) {
-		TriangleIndices triangle = (*triangles)[i];
+	for (int i = 0; i < (int)(vertices->size()); i++) {
+
+		// Add indexed values to the data array
+		tempData.push_back((*vertices)[i].pos.x);
+		tempData.push_back((*vertices)[i].pos.y);
+		tempData.push_back((*vertices)[i].pos.z);
+
+		tempData.push_back((*vertices)[i].uv.x);
+		tempData.push_back((*vertices)[i].uv.y);
 		
-		// For each indices set in the triangle
-		for (int j = 0; j < 3; j += 1) {
-			PointData point = {
-				triangle.vertices[j],
-				triangle.uvs[j],
-				triangle.normals[j]
-			};
+		tempData.push_back((*vertices)[i].normal.x);
+		tempData.push_back((*vertices)[i].normal.y);
+		tempData.push_back((*vertices)[i].normal.z);
+	}
 
-			unsigned short index;
+	vector<unsigned short> temp_indices;
 
-			// Look in map for matching point
-			auto it = uniquePoints.find(point);
-			
-			// If current point is similar to one seen before
-			if (it != uniquePoints.end()) {
-				// Match
+	for (int i = 0; i < triangles->size(); i++) {
+		TriangleIndices triangle = (*triangles)[i];
 
-				// Use index value from matching map
-				index = it->second;
-			} 
-			else {
-				// No match
-
-				// Add current point to map
-				uniquePoints[point] = indexCount;
-				index = indexCount;
-
-				// Add indexed values to the data array
-				tempData.push_back((*vertices)[point.vertIndex].x);
-				tempData.push_back((*vertices)[point.vertIndex].y);
-				tempData.push_back((*vertices)[point.vertIndex].z);
-				
-				tempData.push_back((*uvs)[point.uvIndex].x);
-				tempData.push_back((*uvs)[point.uvIndex].y);
-				
-				tempData.push_back((*normals)[point.normalIndex].x);
-				tempData.push_back((*normals)[point.normalIndex].y);
-				tempData.push_back((*normals)[point.normalIndex].z);
-
-				// Increment indexCount
-				indexCount += 1;
-			}
-
-			// Add the new-format index to index list
-			tempIndices.push_back(index);
-		}
+		temp_indices.push_back(triangle.vertices[0]);
+		temp_indices.push_back(triangle.vertices[1]);
+		temp_indices.push_back(triangle.vertices[2]);
 	}
 
 	// Turn temp data into array format
@@ -132,13 +100,14 @@ void OpenGLModel::GenerateBuffers(std::shared_ptr<Geometry> geometry) {
 		_data[i] = tempData[i];
 	}
 
-	_indicesSize = tempIndices.size();
+	_triangleCount = triangles->size();
+
+	_indicesSize = temp_indices.size();
 	_indices = new unsigned short[_indicesSize];
-	for (int i = 0; i < _indicesSize; i += 1) {
-		_indices[i] = tempIndices[i];
+	for (int i = 0; i < _indicesSize; i++) {
+		_indices[i] = temp_indices[i];
 	}
 
-	_triangleCount = _indicesSize;
 
 	// --Generate buffers
 

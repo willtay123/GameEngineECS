@@ -70,45 +70,49 @@ std::shared_ptr<IResource> ResourceLoader::LoadResource(const string& filepath) 
 }
 
 std::shared_ptr<Geometry> ResourceLoader::LoadOBJ(const string& filepath) {
-	Logger::LogInfo("Loading Geometry from OBJ");
+	Logger::LogInfo("Loading OBJ: " + filepath);
 
 	Assimp::Importer importer;
 	const  aiScene* scene = importer.ReadFile(filepath, aiProcess_Triangulate);
 	aiMesh* mesh = scene->mMeshes[0];
 
-	std::vector<TriangleIndices> triangles;
-	std::vector<glm::vec3> temp_vertices;
-	std::vector<glm::vec2> temp_uvs;
-	std::vector<glm::vec3> temp_normals;
+	vector<Vertex> vertices;
+	std::vector<TriangleIndices> faces;
 
 	for (UINT i = 0; i < mesh->mNumVertices; i++) {
 		Vertex vertex;
-		temp_vertices.push_back(vec3(
+		vertex.pos = vec3(
 			mesh->mVertices[i].x,
 			mesh->mVertices[i].y,
 			mesh->mVertices[i].z
-		));
+		);
 
-		temp_normals.push_back(vec3(
+		vertex.normal = vec3(
 			mesh->mNormals[i].x,
 			mesh->mNormals[i].y,
 			mesh->mNormals[i].z
-		));
+		);
 
-		temp_uvs.push_back(vec2(
-			mesh->mTextureCoords[0][i].x,
-			mesh->mTextureCoords[0][i].y
-		));
+		//vertex.uv = vec2(
+		//	mesh->mTextureCoords[0][i].x,
+		//	mesh->mTextureCoords[0][i].y
+		//);
+
+		vertex.uv = vec2(0,0);
+
+		vertices.push_back(vertex);
 	}
 
-	vector<unsigned int> temp_indices;
 	for (UINT i = 0; i < mesh->mNumFaces; i++) {
 		aiFace face = mesh->mFaces[i];
+		TriangleIndices triangle;
 
-		temp_indices.push_back(face.mIndices[0]);
-		temp_indices.push_back(face.mIndices[1]);
-		temp_indices.push_back(face.mIndices[2]);
+		triangle.vertices[0] = face.mIndices[0];
+		triangle.vertices[1] = face.mIndices[1];
+		triangle.vertices[2] = face.mIndices[2];
+
+		faces.push_back(triangle);
 	}
 
-	return std::make_shared<Geometry>();
+	return std::make_shared<Geometry>(vertices, faces);
 }

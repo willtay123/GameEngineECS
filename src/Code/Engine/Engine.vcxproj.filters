@@ -138,6 +138,9 @@
     <ClInclude Include="DataStructs\ResourceTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DataStructs\Vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">

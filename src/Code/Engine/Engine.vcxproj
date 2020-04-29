@@ -229,6 +229,7 @@
     <ClInclude Include="DataStructs\ResourceData.h" />
     <ClInclude Include="DataStructs\ResourceID.h" />
     <ClInclude Include="DataStructs\ResourceTypes.h" />
+    <ClInclude Include="DataStructs\Vertex.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Interfaces\IBufferID.h" />

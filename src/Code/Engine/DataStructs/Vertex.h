@@ -11,6 +11,6 @@ private:
 
 public:
 	vec3 pos;
-	vec3 normal;
 	vec2 uv;
+	vec3 normal;
 };
