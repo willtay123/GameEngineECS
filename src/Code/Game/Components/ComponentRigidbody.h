@@ -8,7 +8,7 @@
 using namespace EngineECS;
 using glm::vec3;
 
-class ComponentPhysics : public IComponent {
+class ComponentRigibody : public IComponent {
 private:
 	bool _isGravityAffected;
 	float _gravityVal;
@@ -16,8 +16,8 @@ private:
 	vec3 _velocity;
 
 public:
-	ComponentPhysics(float gravity);
-	~ComponentPhysics();
+	ComponentRigibody(float gravity);
+	~ComponentRigibody();
 
 	IComponent* Clone();
 

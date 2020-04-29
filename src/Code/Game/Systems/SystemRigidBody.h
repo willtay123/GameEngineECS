@@ -8,7 +8,7 @@
 #include "Managers/ComponentManager.h"
 #include "Objects/Entity.h"
 #include "Components/ComponentTransform.h"
-#include "Components/ComponentPhysics.h"
+#include "Components/ComponentRigidbody.h"
 
 using namespace EngineECS;
 using std::vector;
@@ -16,14 +16,13 @@ using std::string;
 
 class SystemRigidBody : public ISystem {
 private:
-	string* _name;
-	vector<Entity*>* _entityList;
+	string _name;
 
 public:
 	SystemRigidBody();
 	~SystemRigidBody();
 
-	const string* GetName();
+	const string& GetName();
 
 	void GiveEntities(vector<Entity*>* entityList);
 	void OnAction(double deltaTime);

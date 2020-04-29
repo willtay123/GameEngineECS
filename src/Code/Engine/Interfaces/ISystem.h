@@ -12,9 +12,8 @@ namespace EngineECS {
 	public:
 		virtual ~ISystem() {}
 
-		virtual const string* GetName() = 0;
+		virtual const string& GetName() = 0;
 
-		virtual void GiveEntities(vector<Entity*>* entityList) = 0;
 		virtual void OnAction(double deltaTime) = 0;
 	};
 }

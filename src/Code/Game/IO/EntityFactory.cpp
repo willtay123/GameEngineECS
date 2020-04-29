@@ -2,7 +2,7 @@
 #include <Components\ComponentTransform.h>
 #include <Components\ComponentModelGL.h>
 #include <Components\ComponentTexture.h>
-#include <Components\ComponentPhysics.h>
+#include <Components\ComponentRigidbody.h>
 #include <Components\ComponentSphereCollider.h>
 #include <Components\ComponentScore.h>
 
@@ -56,7 +56,7 @@ IComponent* EntityFactory::LoadComponent(xml_node& componentNode) {
 		component = LoadComponentTexture(componentNode);
 	}
 	else if (componentName == "physicsComponent") {
-		component = LoadComponentPhysics(componentNode);
+		component = LoadComponentRigidbody(componentNode);
 	}
 	else if (componentName == "sphereColliderComponent") {
 		component = LoadComponentSphereCollider(componentNode);
@@ -127,11 +127,11 @@ IComponent* EntityFactory::LoadComponentTexture(xml_node& textureNode) {
 	return component;
 }
 
-IComponent* EntityFactory::LoadComponentPhysics(xml_node& physicsNode) {
+IComponent* EntityFactory::LoadComponentRigidbody(xml_node& physicsNode) {
 	float gravity = physicsNode.child("gravity").text().as_float();
 
-	ComponentPhysics* component;
-	component = new ComponentPhysics(gravity);
+	ComponentRigibody* component;
+	component = new ComponentRigibody(gravity);
 	return component;
 }
 

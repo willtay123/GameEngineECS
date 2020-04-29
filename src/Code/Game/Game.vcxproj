@@ -189,7 +189,7 @@
     <ClCompile Include="Buffers\GLBufferID.cpp" />
     <ClCompile Include="Components\ComponentBoxCollider.cpp" />
     <ClCompile Include="Components\ComponentModelGL.cpp" />
-    <ClCompile Include="Components\ComponentPhysics.cpp" />
+    <ClCompile Include="Components\ComponentRigidbody.cpp" />
     <ClCompile Include="Components\ComponentScore.cpp" />
     <ClCompile Include="Components\ComponentSphereCollider.cpp" />
     <ClCompile Include="glad.c" />
@@ -213,7 +213,7 @@
     <ClInclude Include="Components\BasicGL.h" />
     <ClInclude Include="Components\ComponentBoxCollider.h" />
     <ClInclude Include="Components\ComponentModelGL.h" />
-    <ClInclude Include="Components\ComponentPhysics.h" />
+    <ClInclude Include="Components\ComponentRigidbody.h" />
     <ClInclude Include="Components\ComponentScore.h" />
     <ClInclude Include="Components\ComponentSphereCollider.h" />
     <ClInclude Include="Externals.h" />

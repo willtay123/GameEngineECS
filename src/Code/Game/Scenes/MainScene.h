@@ -18,7 +18,7 @@
 
 #include "Components/ComponentTransform.h"
 #include "Components/BasicGL.h"
-#include "Components/ComponentPhysics.h"
+#include "Components/ComponentRigidbody.h"
 #include "Components/ComponentSphereCollider.h"
 #include "Components/ComponentScore.h"
 

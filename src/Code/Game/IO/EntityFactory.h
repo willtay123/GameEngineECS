@@ -25,7 +25,7 @@ private:
 	static IComponent* LoadComponentTransform(xml_node& transformComponent);
 	static IComponent* LoadComponentModelGL(xml_node& modelNode);
 	static IComponent* LoadComponentTexture(xml_node& textureNode);
-	static IComponent* LoadComponentPhysics(xml_node& physicsNode);
+	static IComponent* LoadComponentRigidbody(xml_node& physicsNode);
 	static IComponent* LoadComponentSphereCollider(xml_node& colliderNode);
 	static IComponent* LoadComponentScore(xml_node& scoreNode);
 

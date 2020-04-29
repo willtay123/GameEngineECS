@@ -3,7 +3,12 @@
 
 OpenGLModel::OpenGLModel() :
 	_DBO_Handle(0),
-	_IBO_Handle(0)
+	_IBO_Handle(0),
+	_dataSize(0),
+	_indicesSize(0),
+	_triangleCount(0),
+	_data(nullptr),
+	_indices(nullptr)
 {
 
 }
@@ -84,8 +89,8 @@ void OpenGLModel::GenerateBuffers(std::shared_ptr<Geometry> geometry) {
 	}
 
 	vector<unsigned short> temp_indices;
-
-	for (int i = 0; i < triangles->size(); i++) {
+	unsigned int triangleCount = static_cast<unsigned int>(triangles->size());
+	for (unsigned int i = 0; i < triangleCount; i++) {
 		TriangleIndices triangle = (*triangles)[i];
 
 		temp_indices.push_back(triangle.vertices[0]);

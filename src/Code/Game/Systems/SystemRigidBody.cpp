@@ -2,31 +2,27 @@
 
 
 
-SystemRigidBody::SystemRigidBody() {
-	_name = new string("Physics System");
+SystemRigidBody::SystemRigidBody() :
+	_name("Physics System") {
 }
 
 SystemRigidBody::~SystemRigidBody() {
 
 }
 
-const string* SystemRigidBody::GetName() {
+const string& SystemRigidBody::GetName() {
 	return _name;
-}
-
-void SystemRigidBody::GiveEntities(vector<Entity*>* entityList) {
-	_entityList = entityList;
 }
 
 void SystemRigidBody::OnAction(double deltaTime) {
 	int transformID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentTransform));
-	int physicsID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentPhysics));
+	int physicsID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentRigibody));
 
 	shared_ptr<EntityList> entityList = EntityManager::GetInstance().GetEntitiesEditable();
 
 	for (int i = 0; i < entityList->size(); i++) {
 		ComponentTransform* transfComponent = static_cast<ComponentTransform*>((*entityList)[i]->GetComponentEditable(transformID));
-		ComponentPhysics* physicsComponent = static_cast<ComponentPhysics*>((*entityList)[i]->GetComponentEditable(physicsID));
+		ComponentRigibody* physicsComponent = static_cast<ComponentRigibody*>((*entityList)[i]->GetComponentEditable(physicsID));
 
 		if (transfComponent &&
 			physicsComponent) {
