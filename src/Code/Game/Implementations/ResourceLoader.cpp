@@ -3,6 +3,11 @@
 #include <Tools/Logger.h>
 #include <sstream>
 
+#include "assimp/Importer.hpp"
+#include "assimp/scene.h"
+#include "assimp/postprocess.h"
+#include "DataStructs/Vertex.h"
+
 
 ResourceLoader::~ResourceLoader() {
 
@@ -67,95 +72,43 @@ std::shared_ptr<IResource> ResourceLoader::LoadResource(const string& filepath) 
 std::shared_ptr<Geometry> ResourceLoader::LoadOBJ(const string& filepath) {
 	Logger::LogInfo("Loading Geometry from OBJ");
 
-	ifstream inFile(filepath);
-	if (!inFile) {
-		string text = string("unable to load model - " + filepath);
-		Logger::LogError(text);
-		throw std::exception("Unable to load model, file missing?");
-		return NULL;
-	}
+	Assimp::Importer importer;
+	const  aiScene* scene = importer.ReadFile(filepath, aiProcess_Triangulate);
+	aiMesh* mesh = scene->mMeshes[0];
 
 	std::vector<TriangleIndices> triangles;
 	std::vector<glm::vec3> temp_vertices;
 	std::vector<glm::vec2> temp_uvs;
 	std::vector<glm::vec3> temp_normals;
 
-	string line;
-	string firstWord;
+	for (UINT i = 0; i < mesh->mNumVertices; i++) {
+		Vertex vertex;
+		temp_vertices.push_back(vec3(
+			mesh->mVertices[i].x,
+			mesh->mVertices[i].y,
+			mesh->mVertices[i].z
+		));
 
-	while (std::getline(inFile, line)) {
-		// Turn line into easily processed stream
-		std::stringstream linestream(line);
+		temp_normals.push_back(vec3(
+			mesh->mNormals[i].x,
+			mesh->mNormals[i].y,
+			mesh->mNormals[i].z
+		));
 
-		// Check that the line isn't empty
-		if (linestream.rdbuf()->in_avail() > 0) {
-			// Get the starting word of the line to decide action
-			linestream >> firstWord;
-
-			if (firstWord == "v") {
-				// Vertex line
-				float x, y, z;
-				linestream >> x >> y >> z;
-
-				temp_vertices.push_back(glm::vec3(x, y, z));
-			}
-			else if (firstWord == "vt") {
-				// Texture line
-				float x, y;
-				linestream >> x >> y;
-
-				temp_uvs.push_back(glm::vec2(x, y));
-			}
-			else if (firstWord == "vn") {
-				// Normal line
-				float x, y, z;
-				linestream >> x >> y >> z;
-
-				temp_normals.push_back(glm::vec3(x, y, z));
-			}
-			else if (firstWord == "f") {
-				// Face line
-				string group;
-				TriangleIndices triangle;
-
-				// Process string "v/vt/vn" into data
-				for (int i = 0; i < 3; i += 1) {
-					linestream >> group;
-
-					std::size_t found = group.find("/");
-
-					// V
-					string number = group.substr(0, found);
-					int numberAsInt = std::atoi(number.c_str());
-					group = group.erase(0, found + 1);
-					triangle.vertices[i] = numberAsInt - 1;
-
-					// T
-					number = group.substr(0, found);
-					numberAsInt = std::atoi(number.c_str());
-					group = group.erase(0, found + 1);
-					triangle.uvs[i] = numberAsInt - 1;
-
-					// N
-					number = group.substr(0, group.size());
-					numberAsInt = std::atoi(number.c_str());
-					triangle.normals[i] = numberAsInt - 1;
-				}
-
-				triangles.push_back(triangle);
-			}
-			else {
-				//ignore
-			}
-		}
+		temp_uvs.push_back(vec2(
+			mesh->mTextureCoords[0][i].x,
+			mesh->mTextureCoords[0][i].y
+		));
 	}
 
-	vector<unsigned short> indices;
-	vector<vec2> uvs;
-	vector<vec3> vertices, normals;
+	vector<unsigned int> temp_indices;
+	for (UINT i = 0; i < mesh->mNumFaces; i++) {
+		aiFace face = mesh->mFaces[i];
 
-	//model = new Geometry(vertices, uvs, normals, indices);
-	std::shared_ptr<Geometry> model = std::shared_ptr<Geometry>(new Geometry(temp_vertices, temp_uvs, temp_normals, triangles));
+		temp_indices.push_back(face.mIndices[0]);
+		temp_indices.push_back(face.mIndices[1]);
+		temp_indices.push_back(face.mIndices[2]);
+	}
 
-	return model;
+	return std::make_shared<Geometry>();
 }

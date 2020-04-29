@@ -3,6 +3,7 @@
 #include <vector>
 #include "Interfaces/ISystem.h"
 #include "Managers/EntityManager.h"
+#include "CleverPointers.h"
 
 
 using std::vector;
@@ -11,16 +12,16 @@ namespace EngineECS {
 	class SystemManager {
 	private:
 		static SystemManager* Instance;
-		vector<ISystem*> _updateSystems;
-		vector<ISystem*> _renderSystems;
+		vector<shared_ptr<ISystem>> _updateSystems;
+		vector<shared_ptr<ISystem>> _renderSystems;
 
 		SystemManager();
 	public:
 		~SystemManager();
 		static SystemManager& GetInstance();
 
-		void AddUpdateSystem(ISystem* system);
-		void AddRenderSystem(ISystem* system);
+		void AddUpdateSystem(shared_ptr<ISystem> system);
+		void AddRenderSystem(shared_ptr<ISystem> system);
 
 		void ClearUpdateSystems();
 		void ClearRenderSystems();
@@ -28,7 +29,7 @@ namespace EngineECS {
 		void ActionUpdateSystems(double deltaTime);
 		void ActionRenderSystems(double deltaTime);
 
-		const vector<ISystem*>* GetUpdateSystems() { return &_updateSystems; }
-		const vector<ISystem*>* GetRenderSystems() { return &_renderSystems; }
+		const vector<shared_ptr<ISystem>>& GetUpdateSystems() { return _updateSystems; }
+		const vector<shared_ptr<ISystem>>& GetRenderSystems() { return _renderSystems; }
 	};
 }

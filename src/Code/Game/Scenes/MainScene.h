@@ -14,6 +14,8 @@
 #include "Objects/Entity.h"
 #include "Interfaces/IComponent.h"
 
+#include "Systems/SystemRigidBody.h"
+
 #include "Components/ComponentTransform.h"
 #include "Components/BasicGL.h"
 #include "Components/ComponentPhysics.h"

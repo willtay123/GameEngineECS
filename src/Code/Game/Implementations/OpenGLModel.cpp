@@ -96,7 +96,8 @@ void OpenGLModel::GenerateBuffers(std::shared_ptr<Geometry> geometry) {
 
 				// Use index value from matching map
 				index = it->second;
-			} else {
+			} 
+			else {
 				// No match
 
 				// Add current point to map

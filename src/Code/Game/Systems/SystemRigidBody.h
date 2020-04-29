@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 
+#include "Managers/EntityManager.h"
 #include "Managers/ComponentManager.h"
 #include "Objects/Entity.h"
 #include "Components/ComponentTransform.h"

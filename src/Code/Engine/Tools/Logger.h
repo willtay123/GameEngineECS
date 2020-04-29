@@ -41,6 +41,7 @@ namespace EngineECS {
 		static void WriteLog();
 		static void WriteLogToFile(EngineECS::LogMessage& message);
 
+		static string LogLevelToString(LogLevel logLevel);
 
 	public:
 		static void LogInfo(const char* message);

@@ -25,7 +25,7 @@ void Logger::WriteLog() {
 		if (message._logLevel == LogLevel::Error) {
 			std::cout << "ERROR: ";
 		}
-		std::cout << message._message << std::endl;
+		std::cout << LogLevelToString(message._logLevel) << ":\t" << message._message << std::endl;
 		break;
 
 	case LoggingDestination::File:
@@ -88,6 +88,23 @@ void Logger::Log(LogMessage& logMessage) {
 	}
 	WriteLog();
 	_logIndex++;
+}
+
+string Logger::LogLevelToString(LogLevel logLevel) {
+	switch (logLevel) {
+	case LogLevel::Info:
+		return "Info";
+		break;
+	case LogLevel::Warning:
+		return "Warning";
+		break;
+	case LogLevel::Error:
+		return "Error";
+		break;
+	default:
+		return "";
+		break;
+	}
 }
 
 void Logger::LogInfo(const char* tag, const char* message) {

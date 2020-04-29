@@ -22,9 +22,11 @@ void SystemRigidBody::OnAction(double deltaTime) {
 	int transformID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentTransform));
 	int physicsID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentPhysics));
 
-	for (Entity* entity : (*_entityList)) {
-		ComponentTransform* transfComponent = static_cast<ComponentTransform*>(entity->GetComponentEditable(transformID));
-		ComponentPhysics* physicsComponent = static_cast<ComponentPhysics*>(entity->GetComponentEditable(physicsID));
+	shared_ptr<EntityList> entityList = EntityManager::GetInstance().GetEntitiesEditable();
+
+	for (int i = 0; i < entityList->size(); i++) {
+		ComponentTransform* transfComponent = static_cast<ComponentTransform*>((*entityList)[i]->GetComponentEditable(transformID));
+		ComponentPhysics* physicsComponent = static_cast<ComponentPhysics*>((*entityList)[i]->GetComponentEditable(physicsID));
 
 		if (transfComponent &&
 			physicsComponent) {
