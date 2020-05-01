@@ -28,7 +28,7 @@ void MainScene::Initialise() {
 	// Entities
 	//string filepath = "Assets/Data/entities.xml";
 	//EntityFactory::LoadFromFile("game", filepath);
-	CreatePyramid(vec3(0,0,0), 2);
+	CreatePyramid(vec3(0,0,0), 5);
 
 	// Create Systems
 	shared_ptr<ISystem> system = make_shared<SystemRigidBody>();

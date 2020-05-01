@@ -51,13 +51,6 @@ void SystemRigidBody::OnAction(double deltaTime) {
 				acc.y -= gravity;
 			}
 
-			// Velocity
-			vel += (acc * dt);
-			
-			// Friction
-			float frictionValue = 0.97f; // frictionCoeff * mass* gravity;
-			vel *= frictionValue;
-
 			// Position
 			vec4 newPos = vec4(
 				position.x + (vel.x * dt),
@@ -68,8 +61,10 @@ void SystemRigidBody::OnAction(double deltaTime) {
 
 			// If new position is in floor, bounce
 			if (newPos.y <= 0) {
+				float localDT = dt;
+
 				// Solve quadratic
-				float a = gravity;
+				float a = -gravity;
 				float b = vel.y;
 				float c = position.y;
 				float s = b * b - 4.0f * a * c;
@@ -83,12 +78,15 @@ void SystemRigidBody::OnAction(double deltaTime) {
 
 				// At collision
 				vel.y = vel.y + gravity * collisionT;
-				vel.y = -vel.y;
+				vel.y *= -1;
 
 				// Bounce
-				deltaTime -= collisionT;
-				newPos.y = vel.y * deltaTime + 0.5f * gravity * deltaTime * deltaTime;
+				localDT -= collisionT;
+				newPos.y = vel.y * localDT + 0.5f * gravity * localDT * localDT;
 			}
+
+			// Velocity
+			vel += (acc * dt);
 
 			// Set values
 			rigidbody->SetAcceleration(0, 0, 0);
