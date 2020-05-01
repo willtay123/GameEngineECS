@@ -29,8 +29,7 @@ namespace EngineECS {
 	public:
 		ComponentTransform();
 		ComponentTransform(float x, float y, float z);
-		ComponentTransform(float xPos, float yPos, float zPos, float xRot, float yRot, float zRot);
-		ComponentTransform(float xPos, float yPos, float zPos, float scale);
+		ComponentTransform(const vec3& position, const vec3& scale, const vec3& rotation);
 		ComponentTransform(float xPos, float yPos, float zPos, float xRot, float yRot, float zRot, float xScale, float yScale, float zScale);
 		ComponentTransform(const ComponentTransform& rhs);
 		~ComponentTransform();

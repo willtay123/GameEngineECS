@@ -13,12 +13,11 @@
 
 class CollisionDetector : public ICollisionDetector {
 private:
-	ICollisionManifold* CheckSphereSphere(const Entity& entity1, const Entity& entity2);
-	ICollisionManifold* CheckBoxSphere(const Entity& entity1, const Entity& entity2);
+	ICollisionManifold* CheckSphereSphere(shared_ptr<Entity> entity1, shared_ptr<Entity> entity2);
 
 public:
 	~CollisionDetector();
 
-	ICollisionManifold* DetectCollision(const Entity& entity1, const Entity& entity2);
+	ICollisionManifold* DetectCollision(shared_ptr<Entity> entity1, shared_ptr<Entity> entity2);
 	void DetectCollisions(const shared_ptr<const EntityList> entityList, vector<ICollisionManifold*>& collisions) override;
 };

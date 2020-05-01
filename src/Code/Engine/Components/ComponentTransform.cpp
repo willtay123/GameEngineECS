@@ -20,20 +20,10 @@ ComponentTransform::ComponentTransform(float x, float y, float z) :
 	Clean();
 }
 
-ComponentTransform::ComponentTransform(float xPos, float yPos, float zPos, float xRot, float yRot, float zRot) :
-	_position(xPos, yPos, zPos, 1),
-	_rotation(xRot, yRot, zRot),
-	_scale(1, 1, 1) {
-	//_componentType = ComponentManager::GenerateIDByType(this);
-	_componentType = ComponentManager::GetInstance().GetIDByType(typeid(ComponentTransform));
-	Clean();
-}
-
-ComponentTransform::ComponentTransform(float xPos, float yPos, float zPos, float scale) :
-	_position(xPos, yPos, zPos, 1),
-	_rotation(0, 0, 0),
-	_scale(scale) {
-	//_componentType = ComponentManager::GenerateIDByType(this);
+ComponentTransform::ComponentTransform(const vec3& position, const vec3& scale, const vec3& rotation) :
+	_position(position.x, position.y, position.z, 1),
+	_scale(scale),
+	_rotation(rotation) {
 	_componentType = ComponentManager::GetInstance().GetIDByType(typeid(ComponentTransform));
 	Clean();
 }

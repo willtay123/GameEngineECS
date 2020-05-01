@@ -33,7 +33,8 @@ private:
 	double _timeSinceStart;
 
 	void ProcessInput();
-	void CreatePyramid(vec3 origin, int size);
+	void CreatePyramid(const vec3& origin, int size);
+	void CreateSphere(const vec3& position);
 
 public:
 	MainScene();

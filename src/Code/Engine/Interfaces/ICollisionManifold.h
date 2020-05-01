@@ -4,6 +4,7 @@
 #include <GLM/glm/vec4.hpp>
 
 #include "Objects/Entity.h"
+#include "CleverPointers.h"
 
 using glm::vec3;
 using glm::vec4;
@@ -11,9 +12,8 @@ using glm::vec4;
 namespace EngineECS {
 	class ICollisionManifold {
 	protected:
-		Entity* _entity1;
-		Entity* _entity2;
-		vec4 _pointOfCollision;
+		shared_ptr<Entity> _entity1;
+		shared_ptr<Entity> _entity2;
 
 	public:
 		virtual ~ICollisionManifold() {}

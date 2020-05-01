@@ -2,7 +2,7 @@
 
 
 
-CollisionManifold::CollisionManifold(Entity* entity1, Entity* entity2) {
+CollisionManifold::CollisionManifold(shared_ptr<Entity> entity1, shared_ptr<Entity> entity2) {
 	_entity1 = entity1;
 	_entity2 = entity2;
 }
@@ -24,10 +24,10 @@ CollisionManifold& CollisionManifold::operator=(const CollisionManifold& rhs) {
 	return *this;
 }
 
-Entity* CollisionManifold::GetEntity1() const {
+shared_ptr<Entity> CollisionManifold::GetEntity1() const {
 	return _entity1;
 }
 
-Entity* CollisionManifold::GetEntity2() const {
+shared_ptr<Entity> CollisionManifold::GetEntity2() const {
 	return _entity2;
 }

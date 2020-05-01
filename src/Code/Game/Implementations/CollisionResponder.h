@@ -19,5 +19,5 @@ public:
 
 	void HandleCollisions(const vector<ICollisionManifold*>& manifoldList);
 
-	void HandlePlayerItem(Entity* player, Entity* item);
+	void HandleSphereSphere(shared_ptr<Entity> sphere1, shared_ptr<Entity> sphere2);
 };

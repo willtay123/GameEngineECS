@@ -6,29 +6,17 @@ CollisionDetector::~CollisionDetector() {
 
 }
 
-ICollisionManifold* CollisionDetector::DetectCollision(const Entity& entity1, const Entity& entity2) {
+ICollisionManifold* CollisionDetector::DetectCollision(shared_ptr<Entity> entity1, shared_ptr<Entity> entity2) {
 	// work out collider types, call relevant method
 	int colliderID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentSphereCollider));
-	ComponentCollider* collider1 = (ComponentCollider*)entity1.GetComponent(colliderID);
-	ComponentCollider* collider2 = (ComponentCollider*)entity2.GetComponent(colliderID);
+	ComponentCollider* collider1 = (ComponentCollider*)entity1->GetComponent(colliderID);
+	ComponentCollider* collider2 = (ComponentCollider*)entity2->GetComponent(colliderID);
 	string collider1Type = collider1->GetColliderType();
 	string collider2Type = collider2->GetColliderType();
 
 	if (collider1Type == "Sphere" && collider2Type == "Sphere") {
 		// Call Sphere Sphere
 		return CheckSphereSphere(entity1, entity2);
-	}
-
-	if (collider1Type == "Box" && collider2Type == "Sphere" ||
-		collider1Type == "Sphere" && collider2Type == "Box") {
-		if (collider1Type == "Box") {
-			// call Box Sphere
-			return CheckBoxSphere(entity1, entity2);
-		}
-		else {
-			// call Sphere Box
-			return CheckBoxSphere(entity2, entity1);
-		}
 	}
 
 	return NULL;
@@ -39,7 +27,7 @@ void CollisionDetector::DetectCollisions(const shared_ptr<const EntityList> enti
 		for (int j = i + 1; j < (int)(entityList->size()); j += 1) {
 			shared_ptr<Entity> ent1 = (*entityList)[i];
 			shared_ptr<Entity> ent2 = (*entityList)[j];
-			ICollisionManifold* manifold = DetectCollision(*ent1, *ent2);
+			ICollisionManifold* manifold = DetectCollision(ent1, ent2);
 			if (manifold) {
 				collisions.push_back(manifold);
 			}
@@ -47,7 +35,7 @@ void CollisionDetector::DetectCollisions(const shared_ptr<const EntityList> enti
 	}
 }
 
-ICollisionManifold* CollisionDetector::CheckSphereSphere(const Entity& entity1, const Entity& entity2) {
+ICollisionManifold* CollisionDetector::CheckSphereSphere(shared_ptr<Entity> entity1, shared_ptr<Entity> entity2) {
 	if (&entity1 == &entity2) {
 		return NULL;
 	}
@@ -55,10 +43,10 @@ ICollisionManifold* CollisionDetector::CheckSphereSphere(const Entity& entity1, 
 	int transformID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentTransform));
 	int sphereID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentSphereCollider));
 
-	ComponentTransform* transform1 = (ComponentTransform*)entity1.GetComponent(transformID);
-	ComponentSphereCollider* collider1 = (ComponentSphereCollider*)entity1.GetComponent(sphereID);
-	ComponentTransform* transform2 = (ComponentTransform*)entity2.GetComponent(transformID);
-	ComponentSphereCollider* collider2 = (ComponentSphereCollider*)entity2.GetComponent(sphereID);
+	ComponentTransform* transform1 = (ComponentTransform*)entity1->GetComponent(transformID);
+	ComponentSphereCollider* collider1 = (ComponentSphereCollider*)entity1->GetComponent(sphereID);
+	ComponentTransform* transform2 = (ComponentTransform*)entity2->GetComponent(transformID);
+	ComponentSphereCollider* collider2 = (ComponentSphereCollider*)entity2->GetComponent(sphereID);
 
 	if (transform1 && collider1 &&
 		transform2 && collider2) {
@@ -79,16 +67,12 @@ ICollisionManifold* CollisionDetector::CheckSphereSphere(const Entity& entity1, 
 
 		if (distance < radiiSum) {
 			// Collision
-			return new CollisionManifold(const_cast<Entity*>(&entity1), const_cast<Entity*>(&entity2));
+			return new CollisionManifold(entity1, entity2);
 		}
 		else {
 			return NULL;
 		}
 	}
 
-	return NULL;
-}
-
-ICollisionManifold* CollisionDetector::CheckBoxSphere(const Entity& entity1, const Entity& entity2) {
 	return NULL;
 }
