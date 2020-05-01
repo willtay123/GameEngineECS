@@ -28,7 +28,7 @@ void MainScene::Initialise() {
 	// Entities
 	//string filepath = "Assets/Data/entities.xml";
 	//EntityFactory::LoadFromFile("game", filepath);
-	CreatePyramid(vec3(0,0,0), 5);
+	CreatePyramid(vec3(0,0,0), 2);
 
 	// Create Systems
 	shared_ptr<ISystem> system = make_shared<SystemRigidBody>();
@@ -91,7 +91,8 @@ void MainScene::CreatePyramid(const vec3& origin, int size) {
 				float mod = 3;
 				vec3 position(origin.x + (x * mod), origin.y + (y * mod), origin.z + (z * mod));
 
-				CreateSphere(position);
+				bool isKinematic = (y == 0);
+				CreateSphere(position, 0.1, isKinematic);
 			}
 		}
 
@@ -99,13 +100,13 @@ void MainScene::CreatePyramid(const vec3& origin, int size) {
 	}
 }
 
-void MainScene::CreateSphere(const vec3& position) {
+void MainScene::CreateSphere(const vec3& position, float size, bool isKinematic) {
 	shared_ptr<Entity> entity = std::make_shared<Entity>("sphere");
 
 	// Transform
 	ComponentTransform* transform = new ComponentTransform(
 		position,
-		vec3(0.1, 0.1, 0.1),
+		vec3(size),
 		vec3(0, 0, 0)
 	);
 	entity->AddComponent(transform);
@@ -122,9 +123,9 @@ void MainScene::CreateSphere(const vec3& position) {
 	// Rigidbody
 	float gravity = 9.0f;
 	ComponentRigidbody* rigidbody = new ComponentRigidbody(gravity);
-	rigidbody->SetIsKinematic(true);
+	rigidbody->SetIsKinematic(isKinematic);
 	rigidbody->SetIsGravityAffected(true);
-	rigidbody->SetMass(1);
+	rigidbody->SetMass(size);
 	rigidbody->SetFrictionCoefficient(0.2);
 	entity->AddComponent(rigidbody);
 

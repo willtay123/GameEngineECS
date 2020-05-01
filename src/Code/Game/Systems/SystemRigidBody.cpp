@@ -66,6 +66,30 @@ void SystemRigidBody::OnAction(double deltaTime) {
 				1
 			);
 
+			// If new position is in floor, bounce
+			if (newPos.y <= 0) {
+				// Solve quadratic
+				float a = gravity;
+				float b = vel.y;
+				float c = position.y;
+				float s = b * b - 4.0f * a * c;
+				s = (s > 0.0f ? sqrt(s) : 0.0f);
+				float t1 = (-b + s) / (2.0f * a);
+				float t2 = (-b - s) / (2.0f * a);
+				float collisionT = (t1 > t2 ? t1 : t2);
+
+				// Check --- height should be zero
+				newPos.y = position.y + vel.y * collisionT + 0.5f * gravity * collisionT * collisionT;
+
+				// At collision
+				vel.y = vel.y + gravity * collisionT;
+				vel.y = -vel.y;
+
+				// Bounce
+				deltaTime -= collisionT;
+				newPos.y = vel.y * deltaTime + 0.5f * gravity * deltaTime * deltaTime;
+			}
+
 			// Set values
 			rigidbody->SetAcceleration(0, 0, 0);
 			rigidbody->SetVelocity(vel.x, vel.y, vel.z);
