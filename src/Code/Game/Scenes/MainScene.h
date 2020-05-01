@@ -34,7 +34,7 @@ private:
 
 	void ProcessInput();
 	void CreatePyramid(const vec3& origin, int size);
-	void CreateSphere(const vec3& position, float size, bool isKinematic);
+	void CreateSphere(const string& name, const vec3& position, float size, bool isKinematic);
 
 public:
 	MainScene();

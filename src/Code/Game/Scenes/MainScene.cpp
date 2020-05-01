@@ -28,7 +28,9 @@ void MainScene::Initialise() {
 	// Entities
 	//string filepath = "Assets/Data/entities.xml";
 	//EntityFactory::LoadFromFile("game", filepath);
-	CreatePyramid(vec3(0,0,0), 5);
+	//CreatePyramid(vec3(0,0,0), 5);
+	CreateSphere("sphere1", vec3(0,0.2,0), 0.1, true);
+	CreateSphere("sphere2", vec3(3.2,2,0), 0.1, false);
 
 	// Create Systems
 	shared_ptr<ISystem> system = make_shared<SystemRigidBody>();
@@ -73,6 +75,12 @@ void MainScene::ProcessInput() {
 	// Move right
 	if (Keyboard::KeyPressed(GLFW_KEY_D))
 		x += moveValue;
+
+	if (Keyboard::KeyPressed(GLFW_KEY_R)) {
+		shared_ptr<Entity> entity = EntityManager::GetInstance().GetEntitiesEditable()->GetEditableEntityByName("sphere2");
+		ComponentTransform* transform = (ComponentTransform*)entity->GetComponent(ComponentManager::GetInstance().GetIDByType(typeid(ComponentTransform)));
+		transform->SetPosition(3.0f, 10.0f, 0.0f);
+	}
 	
 	_camera->MoveBy(vec3(x, y, z));
 }
@@ -92,7 +100,7 @@ void MainScene::CreatePyramid(const vec3& origin, int size) {
 				vec3 position(origin.x + (x * mod), origin.y + (y * mod), origin.z + (z * mod));
 
 				bool isKinematic = (y == 0);
-				CreateSphere(position, 0.1, isKinematic);
+				CreateSphere("sphere", position, 0.1, isKinematic);
 			}
 		}
 
@@ -100,8 +108,8 @@ void MainScene::CreatePyramid(const vec3& origin, int size) {
 	}
 }
 
-void MainScene::CreateSphere(const vec3& position, float size, bool isKinematic) {
-	shared_ptr<Entity> entity = std::make_shared<Entity>("sphere");
+void MainScene::CreateSphere(const string& name, const vec3& position, float size, bool isKinematic) {
+	shared_ptr<Entity> entity = std::make_shared<Entity>(name);
 
 	// Transform
 	ComponentTransform* transform = new ComponentTransform(
@@ -132,6 +140,7 @@ void MainScene::CreateSphere(const vec3& position, float size, bool isKinematic)
 	// Sphere Collider
 	float radius = 1;
 	ComponentSphereCollider* collider = new ComponentSphereCollider(0, 0, 0, radius);
+	collider->SetRadius(20.0f * size);
 	entity->AddComponent(collider);
 
 	EntityManager::GetInstance().AddEntity(_name, entity);

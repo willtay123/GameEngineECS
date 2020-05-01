@@ -88,7 +88,11 @@ void SystemRigidBody::OnAction(double deltaTime) {
 			// Velocity
 			vel += (acc * dt);
 
+			// Friction
+			vel *= 0.98f;
+
 			// Set values
+			rigidbody->SetForce(vec3(0));
 			rigidbody->SetAcceleration(0, 0, 0);
 			rigidbody->SetVelocity(vel.x, vel.y, vel.z);
 
