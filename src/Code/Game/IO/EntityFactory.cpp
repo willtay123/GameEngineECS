@@ -55,7 +55,7 @@ IComponent* EntityFactory::LoadComponent(xml_node& componentNode) {
 	else if (componentName == "textureComponent") {
 		component = LoadComponentTexture(componentNode);
 	}
-	else if (componentName == "physicsComponent") {
+	else if (componentName == "rigidbody") {
 		component = LoadComponentRigidbody(componentNode);
 	}
 	else if (componentName == "sphereColliderComponent") {
@@ -100,9 +100,9 @@ IComponent* EntityFactory::LoadComponentTransform(xml_node& transformComponent) 
 
 	ComponentTransform* component;
 	component = new ComponentTransform();
-	component->SetPosition(&position);
-	component->SetRotation(&rotation);
-	component->SetScale(&scale);
+	component->SetPosition(position);
+	component->SetRotation(rotation);
+	component->SetScale(scale);
 
 	return component;
 }
@@ -128,10 +128,18 @@ IComponent* EntityFactory::LoadComponentTexture(xml_node& textureNode) {
 }
 
 IComponent* EntityFactory::LoadComponentRigidbody(xml_node& physicsNode) {
+	bool isKinematic = physicsNode.child("isKinematic").text().as_bool();
+	bool isGravityEnabled = physicsNode.child("isGravityEnabled").text().as_bool();
 	float gravity = physicsNode.child("gravity").text().as_float();
+	float mass = physicsNode.child("mass").text().as_float();
+	float frictionCoefficient = physicsNode.child("frictionCoefficient").text().as_float();
 
 	ComponentRigidbody* component;
 	component = new ComponentRigidbody(gravity);
+	component->SetIsKinematic(isKinematic);
+	component->SetIsGravityAffected(isGravityEnabled);
+	component->SetMass(mass);
+	component->SetFrictionCoefficient(frictionCoefficient);
 	return component;
 }
 

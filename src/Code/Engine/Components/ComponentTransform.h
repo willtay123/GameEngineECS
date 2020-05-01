@@ -18,8 +18,8 @@ namespace EngineECS {
 	private:
 		bool _dirty;
 
-		vec4 _pos;
-		vec3 _rot;
+		vec4 _position;
+		vec3 _rotation;
 		vec3 _scale;
 
 		mat4 _mTransform;
@@ -40,24 +40,24 @@ namespace EngineECS {
 		int ComponentType() const;
 		void Message(IMessage* message);
 
-		const vec4& GetPosition() const;
-		void SetPosition(vec4* pos);
-		void SetPosition(float x, float y, float z);
+		const vec4& GetPosition() const					{ return _position;	}
+		void SetPosition(const vec4& pos)				{ _position = pos; Clean(); }
+		void SetPosition(float x, float y, float z)		{ SetPosition(vec4(x, y, z, 1)); }
 
-		const vec3& GetRotation() const;
-		void SetRotation(vec3* rot);
-		void SetRotation(float x, float y, float z);
+		const vec3& GetRotation() const					{ return _rotation; }
+		void SetRotation(const vec3& rot)				{ _rotation = rot; Clean(); }
+		void SetRotation(float x, float y, float z)		{ SetRotation(vec3(x, y, z)); }
 
-		const vec3& GetScale() const;
-		void SetScale(vec3* scale);
-		void SetScale(float a);
-		void SetScale(float x, float y, float z);
+		const vec3& GetScale() const					{ return _scale; }
+		void SetScale(const vec3& scale)				{ _scale = scale; Clean(); }
+		void SetScale(float a)							{ SetScale(vec3(a, a, a)); }
+		void SetScale(float x, float y, float z)		{ SetScale(vec3(x, y, z)); }
 
 		void Clean();
 
-		const mat4& GetMatrixTransform() const;
-		const mat4& GetMatrixRotation() const;
-		const mat4& GetMatrixScale() const;
-		const mat4 GetMatrix() const;
+		const mat4& GetMatrixTransform() const			{ return _mTransform; }
+		const mat4& GetMatrixRotation() const			{ return _mRotation; }
+		const mat4& GetMatrixScale() const				{ return _mScale; }
+		const mat4 GetMatrix() const					{ return (_mTransform * _mScale * _mRotation); }
 	};
 }

@@ -27,8 +27,9 @@ void MainScene::Initialise() {
 	glfwSetKeyCallback(window, Keyboard::KeyCallback);
 
 	// Entities
-	string filepath = "Assets/Data/entities.xml";
-	EntityFactory::LoadFromFile("game", filepath);
+	//string filepath = "Assets/Data/entities.xml";
+	//EntityFactory::LoadFromFile("game", filepath);
+	CreatePyramid(vec3(0,0,0), 5);
 
 	// Create Systems
 	shared_ptr<ISystem> system = make_shared<SystemRigidBody>();
@@ -60,9 +61,9 @@ void MainScene::Render() {
 void MainScene::ProcessInput() {
 	shared_ptr<Entity> player = EntityManager::GetInstance().GetEntityEditable("game", "player");
 	int physID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentRigidbody));
-	ComponentRigidbody* physComp = (ComponentRigidbody*)player->GetComponentEditable(physID);
+	ComponentRigidbody* rigidbody = (ComponentRigidbody*)player->GetComponentEditable(physID);
 	
-	if (physComp) {
+	if (rigidbody) {
 		float x = 0, y = 0, z = 0;
 		float moveValue = 10;
 	
@@ -78,8 +79,19 @@ void MainScene::ProcessInput() {
 		// Move right
 		if (Keyboard::KeyPressed(GLFW_KEY_D))
 			x -= moveValue;
-	
-		physComp->SetAcceleration(x, y, z);
+		
+		rigidbody->AddForce(vec3(x, y, z));
+		rigidbody->SetAcceleration(x, y, z);
+	}
+}
+
+void MainScene::CreatePyramid(vec3 origin, int size) {
+	EntityManager::GetInstance().ClearCurrentEntities();
+
+	int length = size;
+
+	for (int y = 0; y < size; y++) {
+		// Create a square of lengthxlength
 	}
 }
 

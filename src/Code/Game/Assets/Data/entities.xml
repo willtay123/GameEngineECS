@@ -27,9 +27,13 @@
 			<textureComponent>
 				<filepath>Assets/Textures/testImage.png</filepath>
 			</textureComponent>
-			<physicsComponent>
-				<gravity>3</gravity>
-			</physicsComponent>
+			<rigidbody>
+        <isKinematic>true</isKinematic>
+        <isGravityEnabled>true</isGravityEnabled>
+				<gravity>9.81</gravity>
+        <mass>10</mass>
+        <frictionCoefficient>0.2</frictionCoefficient>
+			</rigidbody>
 			<sphereColliderComponent>
 				<offset>
 					<x>0.0</x>

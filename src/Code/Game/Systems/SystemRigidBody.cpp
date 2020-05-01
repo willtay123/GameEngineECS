@@ -15,6 +15,7 @@ const string& SystemRigidBody::GetName() {
 }
 
 void SystemRigidBody::OnAction(double deltaTime) {
+	float dt = static_cast<float>(deltaTime);
 	int transformID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentTransform));
 	int physicsID = ComponentManager::GetInstance().GetIDByType(typeid(ComponentRigidbody));
 
@@ -22,36 +23,54 @@ void SystemRigidBody::OnAction(double deltaTime) {
 
 	for (int i = 0; i < entityList->size(); i++) {
 		ComponentTransform* transfComponent = static_cast<ComponentTransform*>((*entityList)[i]->GetComponentEditable(transformID));
-		ComponentRigidbody* physicsComponent = static_cast<ComponentRigidbody*>((*entityList)[i]->GetComponentEditable(physicsID));
+		ComponentRigidbody* rigidbody = static_cast<ComponentRigidbody*>((*entityList)[i]->GetComponentEditable(physicsID));
 
 		if (transfComponent &&
-			physicsComponent) {
-			// Fetch values
-			float gravity = physicsComponent->GetGravity();
-			vec3 acc = physicsComponent->GetAcceleration();
-			vec3 vel = physicsComponent->GetVelocity();
+			rigidbody) {
 
-			const vec4 position = transfComponent->GetPosition();
-
-			// Calculate physics
-			if (physicsComponent->IsGravityAffected()) {
-				acc.y -= gravity * (float)deltaTime;
+			// Dont move if kinematic
+			if (rigidbody->IsKinematic()) {
+				continue;
 			}
 
-			float frictionValue = 0.97f;
-			vel += (acc * static_cast<float>(deltaTime));
+			// Fetch values
+			float gravity = rigidbody->GetGravity();
+			float mass = rigidbody->GetMass();
+			float frictionCoeff = rigidbody->GetFrictionCoefficient();
+			vec3 netForce = rigidbody->GetNetForce();
+			vec3 vel = rigidbody->GetVelocity();
+			const vec4 position = transfComponent->GetPosition();
+
+
+			// --Calculate physics
+			// Acc
+			vec3 acc = netForce / mass;
+
+			// Gravity
+			if (rigidbody->IsGravityAffected()) {
+				acc.y -= gravity;
+			}
+
+			// Velocity
+			vel += (acc * dt);
+			
+			// Friction
+			float frictionValue = 0.97f; // frictionCoeff * mass* gravity;
 			vel *= frictionValue;
 
-			// Set values
-			//physicsComponent->SetAcceleration(acc.x, acc.y, acc.z);
-			physicsComponent->SetAcceleration(0, 0, 0);
-			physicsComponent->SetVelocity(vel.x, vel.y, vel.z);
-
-			transfComponent->SetPosition(
-				position.x + (vel.x * (float)deltaTime),
-				position.y + (vel.y * (float)deltaTime),
-				position.z + (vel.z * (float)deltaTime)
+			// Position
+			vec4 newPos = vec4(
+				position.x + (vel.x * dt),
+				position.y + (vel.y * dt),
+				position.z + (vel.z * dt),
+				1
 			);
+
+			// Set values
+			rigidbody->SetAcceleration(0, 0, 0);
+			rigidbody->SetVelocity(vel.x, vel.y, vel.z);
+
+			transfComponent->SetPosition(newPos);
 		}
 	}
 }
