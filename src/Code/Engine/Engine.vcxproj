@@ -126,7 +126,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>..\..\External Resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
@@ -247,6 +247,7 @@
     <ClInclude Include="Interfaces\IScene.h" />
     <ClInclude Include="Interfaces\IShader.h" />
     <ClInclude Include="Interfaces\ISystem.h" />
+    <ClInclude Include="Managers\NetworkManager.h" />
     <ClInclude Include="Tools\Logger.h" />
     <ClInclude Include="Managers\CollisionManager.h" />
     <ClInclude Include="Managers\ComponentManager.h" />
@@ -270,6 +271,7 @@
     <ClCompile Include="Components\ComponentTransform.cpp" />
     <ClCompile Include="DataStructs\EntityList.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="Managers\NetworkManager.cpp" />
     <ClCompile Include="Tools\Logger.cpp" />
     <ClCompile Include="Managers\CollisionManager.cpp" />
     <ClCompile Include="Managers\ComponentManager.cpp" />
