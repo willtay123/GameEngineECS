@@ -31,6 +31,7 @@ namespace EngineECS {
 		static NetworkManager& GetInstance();
 
 		bool EnableNetworking(const string& targetIP);
+		void CloseConnection();
 
 		void SendPacket(); // Use string or create a network packet object
 	};

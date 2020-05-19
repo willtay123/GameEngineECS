@@ -13,7 +13,7 @@ NetworkManager* NetworkManager::Instance = nullptr;
 
 NetworkManager::NetworkManager() :
 	_networkState(NetworkState::Off),
-	_socket(),
+	_socket(0),
 	_bufferData("") {
 
 }
@@ -66,9 +66,15 @@ bool NetworkManager::EnableNetworking(const string& targetIP) {
 	}
 }
 
+void NetworkManager::CloseConnection() {
+	if (_socket != 0) {
+		closesocket(_socket);
+	}
+}
+
 void NetworkManager::SendPacket() {
 	if (_networkState == NetworkState::Running) {
-		if (send(_socket, "*", 1, 0) == SOCKET_ERROR) {
+		if (send(_socket, "t", 1, 0) == SOCKET_ERROR) {
 			Logger::LogError("Send failed with " + WSAGetLastError());
 		}
 		else if (recv(_socket, _bufferData, BUFFER_SIZE, 0) == SOCKET_ERROR) {

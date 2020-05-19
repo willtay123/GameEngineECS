@@ -8,4 +8,5 @@
 #include "MessageManager.h"
 #include "ResourceManager.h"
 #include "CollisionManager.h"
+#include "NetworkManager.h"
 //#include "MemoryManager.h"

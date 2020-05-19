@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "Engine.h"
-#include "Managers/SceneManager.h"
+#include "Managers/Managers.h"
 #include "Implementations/RendererGL.h"
 #include "Implementations/CollisionDetector.h"
 #include "Implementations/CollisionResponder.h"
@@ -23,6 +23,12 @@ int main(int argc, char* argv[]) {
 	ExternalLogger* logger = new ExternalLogger();
 	Logger::SetExternalLogger(logger);
 	Logger::SetLoggingDestination(LoggingDestination::Console);
+
+	// TEMP
+	NetworkManager::GetInstance().EnableNetworking("127.0.0.1");
+	NetworkManager::GetInstance().SendPacket();
+	NetworkManager::GetInstance().SendPacket();
+	//NetworkManager::GetInstance().CloseConnection();
 
 	// Create engine
 	Engine engine;
