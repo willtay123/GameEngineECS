@@ -8,6 +8,7 @@ MainScene::MainScene() {
 	_name = "Main Scene";
 	string text = string("Scene Created: " + _name);
 	Logger::LogInfo(text);
+	sphereIndex = 0;
 }
 
 MainScene::~MainScene() {
@@ -17,7 +18,7 @@ MainScene::~MainScene() {
 void MainScene::Initialise() {
 	// Camera
 	_camera = new Camera();
-	_camera->SetPosition(vec3(0, 0, 10));
+	_camera->SetPosition(vec3(0, 2, 10));
 	_camera->LookAt(vec3(0, 0, 0), vec3(0,1,0));
 
 	// IO
@@ -31,6 +32,30 @@ void MainScene::Initialise() {
 	//CreatePyramid(vec3(0,0,0), 5);
 	CreateSphere("sphere1", vec3(0,0.2,0), 0.1, true);
 	CreateSphere("sphere2", vec3(3.2,2,0), 0.1, false);
+
+	// Floor
+	shared_ptr<Entity> floor = std::make_shared<Entity>("floor");
+	// Transform
+	ComponentTransform* transform = new ComponentTransform(
+		vec3(0, -2.5, 0),
+		vec3(50	,1, 50),
+		vec3(0, 0, 0)
+	);
+	floor->AddComponent(transform);
+	// Model
+	ComponentModelGL* modelGL = new ComponentModelGL("Assets/Models/cube.obj");
+	floor->AddComponent(modelGL);
+	// Texture
+	ResourceID textureID = ResourceManager::GetInstance().LoadTextureByPath("Assets/Textures/ice.jpg");
+	ComponentTexture* textureComp = new ComponentTexture(textureID);
+	floor->AddComponent(textureComp);
+	// Collision
+	float radius = 0.1;
+	ComponentSphereCollider* collider = new ComponentSphereCollider(0, 0, 0, radius);
+	collider->SetRadius(radius);
+	floor->AddComponent(collider);
+	// Add it
+	EntityManager::GetInstance().AddEntity(_name, floor);
 
 	// Create Systems
 	shared_ptr<ISystem> system = make_shared<SystemRigidBody>();
@@ -76,10 +101,23 @@ void MainScene::ProcessInput() {
 	if (Keyboard::KeyPressed(GLFW_KEY_D))
 		x += moveValue;
 
-	if (Keyboard::KeyPressed(GLFW_KEY_R)) {
+	if (Keyboard::KeyDown(GLFW_KEY_R)) {
 		shared_ptr<Entity> entity = EntityManager::GetInstance().GetEntitiesEditable()->GetEditableEntityByName("sphere2");
 		ComponentTransform* transform = (ComponentTransform*)entity->GetComponent(ComponentManager::GetInstance().GetIDByType(typeid(ComponentTransform)));
-		transform->SetPosition(3.0f, 10.0f, 0.0f);
+		transform->SetPosition(3.0f, 6.0f, 0.0f);
+	}
+
+	if (Keyboard::KeyDown(GLFW_KEY_SPACE)) {
+		sphereIndex++;
+		int rem = sphereIndex % 4;
+		if (rem == 0)
+			CreateSphere("sphere" + std::to_string(sphereIndex), vec3(0.5, 5, 0.5), 0.1, false);
+		else if (rem == 1)
+			CreateSphere("sphere" + std::to_string(sphereIndex), vec3(0.5, 5, -0.5), 0.1, false);
+		else if (rem == 2)
+			CreateSphere("sphere" + std::to_string(sphereIndex), vec3(-0.5, 5, 0.5), 0.1, false);
+		else if (rem == 3)
+			CreateSphere("sphere" + std::to_string(sphereIndex), vec3(-0.5, 5, -0.5), 0.1, false);
 	}
 	
 	_camera->MoveBy(vec3(x, y, z));

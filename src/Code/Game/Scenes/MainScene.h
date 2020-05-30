@@ -31,6 +31,7 @@ class MainScene : public IScene {
 private:
 	Camera* _camera;
 	double _timeSinceStart;
+	int sphereIndex = 0;
 
 	void ProcessInput();
 	void CreatePyramid(const vec3& origin, int size);

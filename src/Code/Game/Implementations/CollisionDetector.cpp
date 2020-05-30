@@ -27,6 +27,9 @@ void CollisionDetector::DetectCollisions(const shared_ptr<const EntityList> enti
 		for (int j = i + 1; j < (int)(entityList->size()); j += 1) {
 			shared_ptr<Entity> ent1 = (*entityList)[i];
 			shared_ptr<Entity> ent2 = (*entityList)[j];
+
+			// Check entities have collision
+
 			ICollisionManifold* manifold = DetectCollision(ent1, ent2);
 			if (manifold) {
 				collisions.push_back(manifold);
